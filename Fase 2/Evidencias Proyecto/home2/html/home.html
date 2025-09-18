@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviclemant - Servicios de Limpieza Profesional</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Translate API -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <style>
+        :root {
+            --primary-cyan: #00BCD4;
+            --primary-aqua: #4de18b;
+            --secondary-cyan: #26C6DA;
+            --dark-cyan: #0097A7;
+            --light-aqua: #B2EBF2;
+            --text-dark: #2C3E50;
+            --text-light: #FFFFFF;
+            --bg-light: #F8F9FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Navbar Sticky */
+        .navbar {
+            background: transparent;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(0px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 188, 212, 0.3);
+        }
+
+        .navbar.scrolled .navbar-brand,
+        .navbar.scrolled .nav-link {
+            color: var(--dark-cyan) !important;
+        }
+
+        .navbar.scrolled .nav-link:hover {
+            color: var(--primary-cyan) !important;
+        }
+
+        .navbar-brand {
+
+            font-weight: 500;
+            font-size: 1.6rem;
+            color: var(--text-light) !important;
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--light-aqua) !important;
+            transform: translateY(-2px);
+        }
+
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-item {
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: var(--light-aqua);
+            color: var(--dark-cyan);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--text-light);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(45deg, var(--dark-cyan), var(--secondary-cyan));
+            border: none;
+            padding: 15px 30px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 151, 167, 0.4);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 151, 167, 0.6);
+        }
+
+        /* Carousel Principal */
+        .carousel-item {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .carousel-item:nth-child(1) {
+            background-image: linear-gradient(rgba(0, 188, 212, 0.7), rgba(77, 208, 225, 0.7)), url('https://images.unsplash.com/photo-1581578731548-c6d0f3b4e3c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+        }
+
+        .carousel-item:nth-child(2) {
+            background-image: linear-gradient(rgba(0, 188, 212, 0.7), rgba(77, 208, 225, 0.7)), url('https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+        }
+
+        .carousel-item:nth-child(3) {
+            background-image: linear-gradient(rgba(0, 188, 212, 0.7), rgba(77, 208, 225, 0.7)), url('https://images.unsplash.com/photo-1581578731548-c6d0f3b4e3c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+        }
+
+        /* Ocultar controles del carousel por defecto */
+        .carousel-control-prev,
+        .carousel-control-next {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Mostrar controles al hover */
+        .carousel:hover .carousel-control-prev,
+        .carousel:hover .carousel-control-next {
+            opacity: 1;
+        }
+
+        /* Ocultar indicadores */
+        .carousel-indicators {
+            display: none;
+        }
+
+        /* Carousel Secundario */
+        .secondary-carousel {
+            background: var(--bg-light);
+            padding: 60px 0;
+        }
+
+        .secondary-carousel .carousel-item {
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            margin: 0 10px;
+        }
+
+        /* Controles del carousel secundario */
+        .secondary-carousel .carousel-control-prev,
+        .secondary-carousel .carousel-control-next {
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 188, 212, 0.8);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .secondary-carousel .carousel-control-prev {
+            left: 20px;
+        }
+
+        .secondary-carousel .carousel-control-next {
+            right: 20px;
+        }
+
+        .secondary-carousel:hover .carousel-control-prev,
+        .secondary-carousel:hover .carousel-control-next {
+            opacity: 1;
+        }
+
+        /* Indicadores del carousel secundario */
+        .secondary-carousel .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .secondary-carousel .carousel-indicators button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0, 188, 212, 0.3);
+            border: none;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+
+        .secondary-carousel .carousel-indicators button.active {
+            background: var(--primary-cyan);
+        }
+
+        .carousel-img {
+            height: 350px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            margin: 0 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive para carousel secundario */
+        @media (max-width: 768px) {
+            .secondary-carousel .carousel-item {
+                height: 300px;
+            }
+            
+            .carousel-img {
+                height: 250px;
+            }
+            
+            .secondary-carousel .carousel-control-prev,
+            .secondary-carousel .carousel-control-next {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .secondary-carousel .carousel-control-prev {
+                left: 10px;
+            }
+            
+            .secondary-carousel .carousel-control-next {
+                right: 10px;
+            }
+        }
+
+        .carousel-caption {
+            bottom: 50%;
+            transform: translateY(50%);
+            text-align: center;
+        }
+
+        .carousel-caption h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-caption p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-img {
+                height: 250px;
+                background-size: cover;
+                background-position: center;
+                border-radius: 12px;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.2);
+            border-color: var(--primary-cyan);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-cyan);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark-cyan), var(--primary-cyan));
+            color: var(--text-light);
+            padding: 60px 0 30px;
+        }
+
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .footer p, .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--light-aqua);
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--light-aqua);
+            color: var(--dark-cyan);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 40px;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .carousel-caption h1 {
+                font-size: 2.5rem;
+            }
+            
+            .carousel-caption p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .carousel-caption h1 {
+                font-size: 2rem;
+            }
+            
+            .carousel-caption p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar --> 
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container " >
+            <img src="img/logo2.png" class="logo-navbar" style="width: 90px; height: 90px;"> 
+            <a class="navbar-brand" href="#">
+                   SERVICLEMANT 
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="page-1.html">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="empresa.html">Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrarse</a>
+                    </li>
+                    <!-- Selector de idioma -->
+                    <li class="nav-item">
+                        <div id="google_translate_element" class="translate-selector"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section / Carousel Principal -->
+    <section id="inicio">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- COMENTARIO: Los indicadores están ocultos por CSS -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            </div>
+            
+            <div class="carousel-inner">
+                <!-- COMENTARIO: Reemplazar estas URLs con las imágenes reales de la empresa -->
+                <div class="carousel-item active">
+                    <div class="carousel-caption">
+                        <h1>Limpieza Profesional</h1>
+                        <p>Servicios de limpieza de alta calidad para hogares y empresas</p>
+                        <a href="#contacto" class="btn btn-primary-custom btn-lg">Solicitar Presupuesto</a>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="carousel-caption">
+                        <h1>Resultados Garantizados</h1>
+                        <p>Comprometidos con la excelencia en cada servicio</p>
+                        <a href="#servicios" class="btn btn-primary-custom btn-lg">Ver Servicios</a>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="carousel-caption">
+                        <h1>Experiencia y Confianza</h1>
+                        <p>Más de 10 años brindando servicios de limpieza</p>
+                        <a href="#nosotros" class="btn btn-primary-custom btn-lg">Conocer Más</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COMENTARIO: Las flechas aparecen solo al hacer hover -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Carousel Secundario -->
+    <section class="secondary-carousel">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Galería de Trabajos</h2>
+                <p>Algunos ejemplos de nuestros trabajos realizados</p>
+            </div>
+            
+            <div id="secondaryCarousel" class="carousel slide" data-bs-ride="carousel">
+                <!-- COMENTARIO: Los indicadores están ocultos por CSS -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#secondaryCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#secondaryCarousel" data-bs-slide-to="1"></button>
+                </div>
+                
+                <div class="carousel-inner">
+                    <!-- COMENTARIO: Reemplazar estas URLs con las imágenes reales de trabajos -->
+                    <div class="carousel-item active">
+                        <div class="carousel-img" style="background-image: url('img/carrousel2.jpg');"></div>
+                    </div>
+                    
+                    <div class="carousel-item">
+                        <div class="carousel-img" style="background-image: url('img/carrousel2.jpg');"></div>
+                    </div>
+                    
+                    <div class="carousel-item">
+                        <div class="carousel-img" style="background-image: url('img/carrousel2.jpg');"></div>
+                    </div>
+                </div>
+                
+                <!-- COMENTARIO: Las flechas aparecen solo al hacer hover -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#secondaryCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#secondaryCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="services-section">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Nuestros Servicios</h2>
+                <p>Ofrecemos una amplia gama de servicios de limpieza profesional</p>
+            </div>
+            
+            <div class="row">
+                <!-- COMENTARIO: Personalizar estos servicios según las necesidades de la empresa -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>Limpieza Residencial</h3>
+                        <p>Servicios de limpieza para hogares, apartamentos y residencias. Incluye limpieza general, profunda y mantenimiento.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Limpieza Comercial</h3>
+                        <p>Limpieza especializada para oficinas, tiendas, restaurantes y espacios comerciales de todo tipo.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h3>Limpieza Industrial</h3>
+                        <p>Servicios de limpieza para fábricas, almacenes y espacios industriales con equipos especializados.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Limpieza Post-Obra</h3>
+                        <p>Limpieza especializada después de construcciones, remodelaciones y trabajos de construcción.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Limpieza Programada</h3>
+                        <p>Servicios de limpieza regulares y programados para mantener sus espacios siempre impecables.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Limpieza Sanitaria</h3>
+                        <p>Servicios especializados en desinfección y limpieza sanitaria para espacios que requieren máxima higiene.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="nosotros" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="fade-in">
+                        <h2 class="mb-4" style="color: var(--dark-cyan);">¿Por qué elegir Serviclemant?</h2>
+                        <p class="lead mb-4">Somos una empresa especializada en servicios de limpieza profesional con más de 10 años de experiencia en el mercado.</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Personal capacitado y confiable</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Productos ecológicos y seguros</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Equipos modernos y eficientes</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Garantía de satisfacción</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Precios competitivos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="fade-in">
+                        <img src="img/img-home.jpg" 
+                             alt="Equipo de limpieza profesional" class="img-fluid rounded shadow">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto" class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5><i class="fas fa-broom me-2"></i>Serviclemant</h5>
+                    <p>Tu empresa de confianza para servicios de limpieza profesional. Comprometidos con la excelencia y la satisfacción del cliente.</p>
+                    <!-- COMENTARIO: Actualizar con los enlaces reales de redes sociales -->
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Servicios</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#servicios">Limpieza Residencial</a></li>
+                        <li><a href="#servicios">Limpieza Comercial</a></li>
+                        <li><a href="#servicios">Limpieza Industrial</a></li>
+                        <li><a href="#servicios">Limpieza Post-Obra</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <!-- COMENTARIO: Actualizar con la información de contacto real -->
+                        <li><i class="fas fa-phone me-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@serviclemant.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>123 Calle Principal, Ciudad</li>
+                        <li><i class="fas fa-clock me-2"></i>Lun - Vie: 8:00 - 18:00</li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Serviclemant. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Función para Google Translate
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'es',
+                includedLanguages: 'es,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Auto-advance carousel principal
+        const heroCarousel = document.getElementById('heroCarousel');
+        if (heroCarousel) {
+            const heroCarouselInstance = new bootstrap.Carousel(heroCarousel, {
+                interval: 5000,
+                wrap: true
+            });
+        }
+
+        // Auto-advance carousel secundario
+        const secondaryCarousel = document.getElementById('secondaryCarousel');
+        if (secondaryCarousel) {
+            const secondaryCarouselInstance = new bootstrap.Carousel(secondaryCarousel, {
+                interval: 4000,
+                wrap: true
+            });
+        }
+    </script>
+</body>
+</html>
