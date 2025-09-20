@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de la Empresa - Serviclemant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary-cyan: #00BCD4;
+            --primary-aqua: #4de18b;
+            --secondary-cyan: #26C6DA;
+            --dark-cyan: #0097A7;
+            --light-aqua: #B2EBF2;
+            --text-dark: #2C3E50;
+            --text-light: #FFFFFF;
+            --bg-light: #F8F9FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            box-shadow: 0 2px 20px rgba(0, 188, 212, 0.3);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: var(--text-light) !important;
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--light-aqua) !important;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            padding: 100px 0 60px;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Cards Section */
+        .cards-section {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 2px solid transparent;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.2);
+            border-color: var(--primary-cyan);
+        }
+
+        .info-card h3 {
+            color: var(--dark-cyan);
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .info-card p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-card ul li {
+            padding: 8px 0;
+            color: #666;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .info-card ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-cyan);
+            font-weight: bold;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+
+        .chart-title {
+            text-align: center;
+            color: var(--dark-cyan);
+            font-weight: 600;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        /* Map Section */
+        .map-section {
+            background: linear-gradient(135deg, var(--light-aqua), var(--secondary-cyan));
+            padding: 80px 0;
+        }
+
+        .map-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .map-title {
+            text-align: center;
+            color: var(--dark-cyan);
+            font-weight: 600;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        #map {
+            height: 300px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para el mapa de Leaflet */
+        .leaflet-container {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .leaflet-popup-content-wrapper {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .leaflet-popup-tip {
+            background: white;
+        }
+
+        .custom-div-icon {
+            background: transparent !important;
+            border: none !important;
+        }
+
+        .address-info {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .address-text {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .btn-maps {
+            background: linear-gradient(45deg, var(--dark-cyan), var(--secondary-cyan));
+            border: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 151, 167, 0.4);
+            color: var(--text-light);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-maps:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 151, 167, 0.6);
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark-cyan), var(--primary-cyan));
+            color: var(--text-light);
+            padding: 40px 0 20px;
+        }
+
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .footer p, .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--light-aqua);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 30px;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .info-card {
+                padding: 30px 20px;
+                margin-bottom: 30px;
+            }
+            
+            .chart-container {
+                padding: 30px 20px;
+            }
+            
+            .map-container {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .info-card {
+                padding: 25px 15px;
+            }
+        }
+
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <img src="img/logo2.png" class="me-2" style="width: 40px; height: 40px;">
+                SERVICLEMANT
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="page-1.html">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="empresa.html">Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html#contacto">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title fade-in">Información de la Empresa</h1>
+            <p class="hero-subtitle fade-in">Conoce más sobre Serviclemant y nuestro compromiso con la excelencia</p>
+        </div>
+    </section>
+
+    <!-- Cards Section -->
+    <section class="cards-section">
+        <div class="container">
+            <div class="row">
+                <!-- Card 1 - 5 columnas -->
+                <div class="col-lg-5 col-md-6 mb-4">
+                    <div class="info-card fade-in">
+                        <h3><i class="fas fa-building me-2"></i>Nuestra Empresa</h3>
+                        <p>Serviclemant es una empresa líder en servicios de limpieza profesional con más de 10 años de experiencia en el mercado. Nos especializamos en brindar soluciones integrales de limpieza para hogares, oficinas y espacios industriales.</p>
+                        <ul>
+                            <li>Fundada en 2014</li>
+                            <li>Más de 500 clientes satisfechos</li>
+                            <li>Equipo de 50+ profesionales</li>
+                            <li>Cobertura en toda la región</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Card 2 - 7 columnas -->
+                <div class="col-lg-7 col-md-6 mb-4">
+                    <div class="info-card fade-in">
+                        <h3><i class="fas fa-star me-2"></i>Nuestros Valores y Compromiso</h3>
+                        <p>En Serviclemant, nos comprometemos con la excelencia en cada proyecto que realizamos. Nuestros valores fundamentales incluyen:</p>
+                        <ul>
+                            <li><strong>Calidad Garantizada:</strong> Utilizamos productos y equipos de primera calidad</li>
+                            <li><strong>Personal Capacitado:</strong> Nuestro equipo recibe formación continua</li>
+                            <li><strong>Puntualidad:</strong> Respetamos los horarios acordados</li>
+                            <li><strong>Sostenibilidad:</strong> Productos ecológicos y prácticas responsables</li>
+                            <li><strong>Innovación:</strong> Adoptamos las últimas tecnologías en limpieza</li>
+                            <li><strong>Satisfacción del Cliente:</strong> Garantía de satisfacción en todos nuestros servicios</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chart Section -->
+    <section class="chart-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-8 col-sm-10">
+                    <div class="chart-container fade-in">
+                        <h3 class="chart-title">Crecimiento de la Empresa</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="companyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <div class="map-container fade-in">
+                <h3 class="map-title">Nuestra Ubicación</h3>
+                <div id="map"></div>
+                <div class="address-info">
+                    <p class="address-text">Av. Ejemplo 123, Ciudad, País</p>
+                    <a href="https://maps.google.com" target="_blank" class="btn-maps">
+                        <i class="fas fa-map-marker-alt me-2"></i>Abrir mapa
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5><i class="fas fa-broom me-2"></i>Serviclemant</h5>
+                    <p>Tu empresa de confianza para servicios de limpieza profesional. Comprometidos con la excelencia y la satisfacción del cliente.</p>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Servicios</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="page-1.html">Limpieza Residencial</a></li>
+                        <li><a href="page-1.html">Limpieza Comercial</a></li>
+                        <li><a href="page-1.html">Limpieza Industrial</a></li>
+                        <li><a href="page-1.html">Limpieza Post-Obra</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@serviclemant.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>Av. Ejemplo 123, Ciudad</li>
+                        <li><i class="fas fa-clock me-2"></i>Lun - Vie: 8:00 - 18:00</li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="home.html">Inicio</a></li>
+                        <li><a href="page-1.html">Servicios</a></li>
+                        <li><a href="empresa.html">Empresa</a></li>
+                        <li><a href="home.html#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Serviclemant. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Chart.js Configuration
+        const ctx = document.getElementById('companyChart').getContext('2d');
+        const companyChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+                datasets: [{
+                    label: 'Clientes Activos',
+                    data: [120, 150, 180, 220, 280, 350],
+                    borderColor: '#00BCD4',
+                    backgroundColor: 'rgba(0, 188, 212, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Empleados',
+                    data: [15, 20, 25, 30, 35, 50],
+                    borderColor: '#4de18b',
+                    backgroundColor: 'rgba(77, 225, 139, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                aspectRatio: 1.5,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#2C3E50',
+                            font: {
+                                family: 'Poppins',
+                                size: 14
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            color: '#2C3E50',
+                            font: {
+                                family: 'Poppins'
+                            }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            color: '#2C3E50',
+                            font: {
+                                family: 'Poppins'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Mapa interactivo con Leaflet.js
+        function initMap() {
+            // Coordenadas de ejemplo - REEMPLAZAR con las coordenadas reales de tu empresa
+            const companyLat = -33.4489; // Latitud de tu ubicación
+            const companyLng = -70.6693; // Longitud de tu ubicación
+            
+            // Inicializar el mapa
+            const map = L.map('map').setView([companyLat, companyLng], 15);
+            
+            // Agregar capa de mapa base de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Crear icono personalizado
+            const customIcon = L.divIcon({
+                html: `
+                    <div style="
+                        background: linear-gradient(135deg, #00BCD4, #4de18b);
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        border: 3px solid white;
+                        box-shadow: 0 4px 12px rgba(0, 188, 212, 0.4);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-size: 20px;
+                    ">
+                        <i class="fas fa-building"></i>
+                    </div>
+                `,
+                className: 'custom-div-icon',
+                iconSize: [50, 50],
+                iconAnchor: [25, 25],
+                popupAnchor: [0, -25]
+            });
+            
+            // Agregar marcador personalizado
+            const marker = L.marker([companyLat, companyLng], { icon: customIcon }).addTo(map);
+            
+            // Agregar popup con información de la empresa
+            marker.bindPopup(`
+                <div style="text-align: center; padding: 10px;">
+                    <h4 style="color: #00BCD4; margin-bottom: 10px;">
+                        <i class="fas fa-building"></i> Serviclemant
+                    </h4>
+                    <p style="margin: 5px 0; color: #2C3E50;">
+                        <i class="fas fa-map-marker-alt"></i> Av. Ejemplo 123, Ciudad, País
+                    </p>
+                    <p style="margin: 5px 0; color: #2C3E50;">
+                        <i class="fas fa-phone"></i> +1 (555) 123-4567
+                    </p>
+                    <p style="margin: 5px 0; color: #2C3E50;">
+                        <i class="fas fa-clock"></i> Lun - Vie: 8:00 - 18:00
+                    </p>
+                    <a href="https://maps.google.com" target="_blank" 
+                       style="background: linear-gradient(45deg, #0097A7, #26C6DA); 
+                              color: white; padding: 8px 16px; border-radius: 20px; 
+                              text-decoration: none; font-size: 12px; margin-top: 10px; display: inline-block;">
+                        <i class="fas fa-external-link-alt"></i> Abrir en Google Maps
+                    </a>
+                </div>
+            `).openPopup();
+            
+            // Agregar controles de zoom personalizados
+            map.zoomControl.setPosition('topright');
+            
+            // Agregar información de copyright
+            L.control.attribution({
+                position: 'bottomright',
+                prefix: false
+            }).addTo(map);
+        }
+
+        // Llamar a initMap cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
