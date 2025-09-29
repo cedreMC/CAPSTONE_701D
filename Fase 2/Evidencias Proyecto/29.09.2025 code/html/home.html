@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviclemant - Servicios de Limpieza Profesional</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Translate API -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <style>
+        :root {
+            --primary-cyan: #00BCD4;
+            --primary-aqua: #4de18b;
+            --secondary-cyan: #26C6DA;
+            --dark-cyan: #0097A7;
+            --light-aqua: #B2EBF2;
+            --text-dark: #2C3E50;
+            --text-light: #FFFFFF;
+            --bg-light: #F8F9FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Navbar */
+        .navbar {
+            background: transparent;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(0px);
+            padding: 15px 0;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.329);
+            backdrop-filter: blur(2px);
+            box-shadow:0 4px 12px rgba(0, 187, 212, 0.329);
+            padding: 10px 0;
+        }
+        
+        /* Navbar Toggler (Hamburguesa) */
+        .navbar-toggler {
+            border: none;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.25);
+        }
+
+        .navbar-toggler:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            width: 24px;
+            height: 24px;
+            transition: all 0.3s ease;
+        }
+
+        /* Animación del botón hamburguesa cuando está activo */
+        .navbar-toggler.active .navbar-toggler-icon {
+            transform: rotate(90deg);
+        }
+
+        /* Efecto de pulso en el botón hamburguesa */
+        .navbar-toggler::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(0, 188, 212, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .navbar-toggler:active::after {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* Menú desplegable móvil */
+        .navbar-collapse {
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            margin-top: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 188, 212, 0.2);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enlaces del menú móvil */
+        .navbar-collapse .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            padding: 12px 20px;
+            margin: 5px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar-collapse .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 188, 212, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .navbar-collapse .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .navbar-collapse .nav-link:hover {
+            background: linear-gradient(135deg, var(--light-aqua), rgba(0, 188, 212, 0.1));
+            color: var(--dark-cyan) !important;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 188, 212, 0.2);
+        }
+
+        /* Separador entre enlaces */
+        .navbar-collapse .nav-item:not(:last-child) .nav-link {
+            border-bottom: 1px solid rgba(0, 188, 212, 0.1);
+        }
+
+        .navbar-collapse .nav-item:last-child .nav-link {
+            border-bottom: none;
+        }
+        
+
+        .navbar.scrolled .navbar-brand,
+        .navbar.scrolled .nav-link {
+            color: var(--dark-cyan) !important;
+        }
+
+        .navbar.scrolled .nav-link:hover {
+            color: var(--primary-cyan) !important;
+        }
+
+        /* Menú móvil cuando navbar está scrolled */
+        .navbar.scrolled .navbar-collapse {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 15px 35px rgba(0, 188, 212, 0.2);
+            border: 1px solid rgba(0, 188, 212, 0.3);
+        }
+
+        .navbar.scrolled .navbar-toggler {
+            background: rgba(0, 188, 212, 0.1);
+        }
+
+        .navbar.scrolled .navbar-toggler:hover {
+            background: rgba(0, 188, 212, 0.2);
+        }
+
+        .navbar.scrolled .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 188, 212, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .navbar-brand {
+
+            font-weight: 500;
+            font-size: 1.6rem;
+            color: var(--text-light) !important;
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--light-aqua) !important;
+            transform: translateY(-2px);
+        }
+
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-item {
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: var(--light-aqua);
+            color: var(--dark-cyan);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--text-light);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(45deg, var(--dark-cyan), var(--secondary-cyan));
+            border: none;
+            padding: 15px 30px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgb(0, 150, 167);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 151, 167, 0.6);
+        }
+
+        /* Carrusel Principal */
+        .carousel-item {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .carousel-item:nth-child(1) {
+            background-image: linear-gradient(rgba(0, 187, 212, 0.596), rgba(77, 208, 225, 0.171)), url('img/Como-limpiar-oficinas-con-gente-trabajando-scaled.jpg');
+        }
+
+        .carousel-item:nth-child(2) {
+            background-image: linear-gradient(rgba(0, 187, 212, 0.692), rgba(77, 208, 225, 0)), url('img/limpieza-de-pisos-industriales.jpg');
+        }
+
+        .carousel-item:nth-child(3) {
+            background-image: linear-gradient(rgba(0, 187, 212, 0.733), rgba(77, 208, 225, 0)), url('img/oficina-limpieza-personas-tiro-completo_23-2150454568.jpg');
+        }
+
+        /* Ocultar controles del carousel por defecto */
+        .carousel-control-prev,
+        .carousel-control-next {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Mostrar controles al hover */
+        .carousel:hover .carousel-control-prev,
+        .carousel:hover .carousel-control-next {
+            opacity: 1;
+        }
+
+        /* Ocultar indicadores */
+        .carousel-indicators {
+            display: none;
+        }
+
+        
+        
+
+        .carousel-caption {
+            bottom: 50%;
+            transform: translateY(50%);
+            text-align: center;
+        }
+
+        .carousel-caption h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-caption p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Wrapper personalizado para limpieza industrial */
+        .industrial-services-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 60px 15px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Bloque de texto específico */
+        .industrial-services-text-block {
+            max-width: 600px;
+            padding: 40px 20px;
+            color: var(--text-dark);
+        }
+
+        .industrial-services-text-block h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--dark-cyan);
+            margin-bottom: 20px;
+        }
+
+        .industrial-services-text-block p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .industrial-services-text-block strong {
+            color: var(--primary-cyan);
+        }
+
+        .industrial-services-text-block em {
+            font-style: italic;
+            color: var(--secondary-cyan);
+        }
+
+        /* Imagen con clase específica */
+        .industrial-services-image-block img {
+            max-width: 460px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 188, 212, 0.15);
+        }
+
+        /* Botón acorde */
+        .industrial-services-text-block .btn {
+            background: linear-gradient(45deg, var(--dark-cyan), var(--secondary-cyan));
+            border: none;
+            padding: 14px 28px;
+            font-weight: 600;
+            border-radius: 50px;
+            color: var(--text-light);
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 150, 167, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .industrial-services-text-block .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 151, 167, 0.9);
+        }
+
+
+
+        
+
+        /* Services Section */
+        .services-section {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.2);
+            border-color: var(--primary-cyan);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-cyan);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* CTA form/button inside service cards */
+        .cta-form {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark-cyan), var(--primary-cyan));
+            color: var(--text-light);
+            padding: 60px 0 30px;
+        }
+
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .footer p, .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--light-aqua);
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--light-aqua);
+            color: var(--dark-cyan);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 40px;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .carousel-caption h1 {
+                font-size: 2.5rem;
+            }
+            
+            .carousel-caption p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .navbar-brand,
+            .nav-link {
+                -webkit-text-stroke-width: 0.5px;  
+            }
+
+            /* Navbar responsive para tablets */
+            .navbar {
+                padding: 12px 0;
+            }
+
+            .navbar-brand {
+                font-size: 1.4rem;
+            }
+
+            .navbar-collapse {
+                margin-top: 12px;
+                padding: 15px;
+            }
+
+            .navbar-collapse .nav-link {
+                padding: 10px 15px;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            /* Navbar responsive para móviles pequeños */
+            .navbar {
+                padding: 10px 0;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .navbar-toggler {
+                padding: 6px 10px;
+            }
+
+            .navbar-toggler-icon {
+                width: 20px;
+                height: 20px;
+            }
+
+            .navbar-collapse {
+                margin-top: 10px;
+                padding: 12px;
+                border-radius: 12px;
+            }
+
+            .navbar-collapse .nav-link {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                margin: 3px 0;
+            }
+
+            /* Ajustar el logo en móviles */
+            .logo-navbar {
+                width: 50px !important;
+                height: 50px !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .carousel-caption h1 {
+                font-size: 2rem;
+            }
+            
+            .carousel-caption p {
+                font-size: 1rem;
+            }
+            .industrial-services-wrapper {
+                flex-direction: column;
+                text-align: center;
+            }
+            .industrial-services-image-block img {
+                max-width: 100%;
+                margin-top: 30px;
+            }
+            .industrial-services-text-block {
+                max-width: 100%;
+                padding: 0 10px;
+            }
+        }
+
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar --> 
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container " >
+            <img src="img/logo2.png" class="logo-navbar" style="width: 70px; height: 70px;"> 
+            <a class="navbar-brand" href="#">
+                   SERVICLEMANT 
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="page-1.html">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="empresa.html">Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section / Carrusel Principal -->
+    <section id="inicio">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">           
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            </div>
+            
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="carousel-caption">
+                        <h1>Limpieza Profesional</h1>
+                        <p>Servicios de limpieza de alta calidad para edificios institucionales y empresas</p>
+                        <a href="page-1.html" class="btn btn-primary-custom btn-lg">Solicitar Presupuesto</a>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="carousel-caption">
+                        <h1>Resultados Garantizados</h1>
+                        <p>Comprometidos con la excelencia en cada servicio</p>
+                        <a href="#servicios" class="btn btn-primary-custom btn-lg">Ver Servicios</a>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="carousel-caption">
+                        <h1>Experiencia y Confianza</h1>
+                        <p>llevamos 11 años trabajando para ustedse</p><p> años brindando servicios de limpieza de nivel indusrtial</p>
+                        <a href="empresa.html" class="btn btn-primary-custom btn-lg">Conocer Más</a>
+                    </div>
+                </div>
+            </div>
+        
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </section>
+    <div class="industrial-services-wrapper">
+        <div class="industrial-services-text-block">
+            <h2>Servicios de <strong>Limpieza Industrial</strong></h2>
+            <p>
+                <strong>Expertos en limpieza profesional para empresas en Santiago.</strong><br>
+                En Serviclemant no solo limpiamos; garantizamos espacios impecables, seguros y eficientes para operar. Nuestros servicios de <em>limpieza industrial en Santiago</em> están diseñados para plantas, centros logísticos, oficinas corporativas y entornos de alta exigencia.
+            </p>
+            <button class="btn">Ver Servicios de Limpieza Industrial</button>
+        </div>
+        <div class="industrial-services-image-block">
+            <img src="img/funciones-del-personal-de-limpieza-en-hospitales.jpg" alt="Equipo de limpieza industrial" />
+        </div>
+    </div>
+    
+    
+
+    <!-- Services Section -->
+
+    <!--
+    mantenimiento de oficinas
+    mantenimiento de instalaciones industriales
+    mantenimiento de edificios institucionales
+    Limpieza de vidrios
+    Lavado de alfombras-->
+    <section id="servicios" class="services-section">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Nuestros Servicios</h2>
+                <p>Ofrecemos una amplia gama de servicios de limpieza profesional</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-card fade-in">
+                        <div  class="service-icon">
+                            <i class="fa-solid fa-city"></i>
+                        </div>
+                        <h3>mantenimiento de oficinas</h3>
+                        <p>Ofrecemos un servicio integral de mantenimiento de oficinas, que incluye limpieza de pisos, mobiliario, vidrios y alfombras, desinfección de baños y áreas comunes, recolección de residuos y reposición de insumos, asegurando espacios limpios, seguros y funcionales para su empresa. </p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>mantenimiento de instalaciones industriales</h3>
+                        <p>Brindamos un servicio especializado en mantenimiento de instalaciones industriales, enfocado en la limpieza profunda de áreas de producción, bodegas y maquinarias, control de residuos y desinfección de espacios críticos.  nuestro equipo garantiza ambientes seguros.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h3>mantenimiento de edificios institucionales</h3>
+                        <p>Ofrecemos mantenimiento integral para edificios institucionales, asegurando que cada área se mantenga en perfecto estado. Desde limpieza y reparación hasta el cuidado de instalaciones, confortables y eficientes para todas las actividades institucionales.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-droplet"></i>
+                        </div>
+                        <h3>Limpieza de vidrios</h3>
+                        <p>Ofrecemos servicios de limpieza de vidrios en oficinas, edificios y espacios industriales, garantizando superficies limpias, transparentes y libres de manchas, mejorando la imagen y la luminosidad de los ambientes.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <h3>Lavado de alfombras</h3>
+                        <p>Ofrecemos servicios profesionales de limpieza de vidrios para oficinas, edificios y espacios industriales, asegurando superficies impecables, libres de manchas y con máxima transparencia, mejorando tanto la imagen como la luminosidad de sus instalaciones..</p>
+                        <form  action="empresa.html" method="post" class="cta-form">
+                            <button href="empresa.html"  type="submit" class="btn btn-primary-custom btn-lg">Conocer mas!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="nosotros" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="fade-in">
+                        <h2 class="mb-4" style="color: var(--dark-cyan);">¿Por qué elegir Serviclemant?</h2>
+                        <p class="lead mb-4">Somos una empresa especializada en servicios de limpieza profesional con más de 10 años de experiencia en el mercado.</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Personal capacitado y confiable</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Productos ecológicos y seguros</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Equipos modernos y eficientes</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Garantía de satisfacción</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Precios competitivos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="fade-in">
+                        <img src="img/img-home.jpg" 
+                             alt="Equipo de limpieza profesional" class="img-fluid rounded shadow">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto" class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5><i class="fas fa-broom me-2"></i>Serviclemant</h5>
+                    <p>Tu empresa de confianza para servicios de limpieza profesional. Comprometidos con la excelencia y la satisfacción del cliente.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Servicios</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#servicios">Limpieza Residencial</a></li>
+                        <li><a href="#servicios">Limpieza Comercial</a></li>
+                        <li><a href="#servicios">Limpieza Industrial</a></li>
+                        <li><a href="#servicios">Limpieza Post-Obra</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@serviclemant.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>123 Calle Principal, Ciudad</li>
+                        <li><i class="fas fa-clock me-2"></i>Lun - Vie: 8:00 - 18:00</li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a href="home.html#contacto">Trabaja con nosotros!</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Serviclemant. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Función para Google Translate
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'es',
+                includedLanguages: 'es,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Auto-advance carousel principal
+        const heroCarousel = document.getElementById('heroCarousel');
+        if (heroCarousel) {
+            const heroCarouselInstance = new bootstrap.Carousel(heroCarousel, {
+                interval: 5000,
+                wrap: true
+            });
+        }
+
+        // Mejorar funcionalidad del menú móvil
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+        const navLinks = document.querySelectorAll('.navbar-collapse .nav-link');
+
+        // Cerrar menú móvil al hacer clic en un enlace
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navbarCollapse.classList.contains('show')) {
+                    navbarToggler.click();
+                }
+            });
+        });
+
+        // Agregar efecto de animación al botón hamburguesa
+        navbarToggler.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+
+        // Mejorar la experiencia táctil en móviles
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.navbar-collapse .nav-link').forEach(link => {
+                link.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                link.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        }
+
+        
+    </script>
+</body>
+</html>
