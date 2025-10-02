@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario - Serviclemant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-cyan: #00BCD4;
+            --primary-aqua: #4de18b;
+            --secondary-cyan: #26C6DA;
+            --dark-cyan: #0097A7;
+            --light-aqua: #B2EBF2;
+            --text-dark: #2C3E50;
+            --text-light: #FFFFFF;
+            --bg-light: #F8F9FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+
+        /* Layout Principal */
+        .profile-container {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            color: var(--text-light);
+            position: fixed;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding-top: 100px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-header h3 {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--light-aqua);
+            color: var(--text-light);
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-left-color: var(--light-aqua);
+        }
+
+        .nav-link i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+
+
+        .breadcrumb {
+      list-style: none;
+      display: flex;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .breadcrumb li + li:before {
+      content: ">";
+      margin: 0 8px;
+      color: gray;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: gray;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .breadcrumb .active {
+      font-weight: bold;
+      color: black;
+    }
+
+        /* Contenido Principal */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            color: var(--dark-cyan);
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary-cyan);
+        }
+
+        /* Información del Usuario */
+        .user-info-card {
+            background: linear-gradient(135deg, var(--light-aqua), rgba(255, 255, 255, 0.8));
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 188, 212, 0.2);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px 0;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-item i {
+            color: var(--primary-cyan);
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-right: 10px;
+            min-width: 80px;
+        }
+
+        .info-value {
+            color: #666;
+        }
+
+        /* Botones */
+        .btn-custom {
+            background: linear-gradient(45deg, var(--dark-cyan), var(--secondary-cyan));
+            border: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 151, 167, 0.4);
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 151, 167, 0.6);
+            color: var(--text-light);
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            border: 2px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--primary-cyan);
+            color: var(--text-light);
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            border: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger-custom:hover {
+            transform: translateY(-2px);
+            color: var(--text-light);
+        }
+
+        /* Tabla de Servicios */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            color: var(--text-light);
+            padding: 20px;
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: var(--text-light);
+            width: 100%;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-box:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-color: var(--light-aqua);
+        }
+
+        .table {
+            margin: 0;
+        }
+
+        .table th {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            font-weight: 600;
+            border: none;
+            padding: 15px;
+        }
+
+        .table td {
+            padding: 15px;
+            border: none;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(0, 188, 212, 0.05);
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .status-completed {
+            background: rgba(0, 123, 255, 0.1);
+            color: #007bff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px 15px;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .sidebar-toggle {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
+                background: var(--primary-cyan);
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 8px;
+                font-size: 1.2rem;
+            }
+        }
+
+        .sidebar-toggle {
+            display: none;
+        }
+
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Overlay para móvil */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-overlay {
+                display: none;
+            }
+            
+            .sidebar-overlay.show {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+     <!-- Navbar -->
+     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));">
+         <div class="container d-flex justify-content-center align-items-center">
+             <a class="navbar-brand d-flex align-items-center" href="home.html">
+                 <img src="img/logo2.png" class="me-3" style="width: 90px; height: 90px;">
+                 <span class="fw-bold fs-4"><h1>SERVICLEMANT</h1></span>
+             </a>
+         </div>
+     </nav>
+<br>
+    <!-- Botón para abrir sidebar en móvil -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Overlay para móvil -->
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <div class="profile-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Mi Perfil</h2>
+                <p>Gestión de cuenta</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-item">
+                    <a href="#" class="nav-link active" onclick="showSection('general')">
+                        <i class="fas fa-user"></i>
+                        General
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('edit-profile')">
+                        <i class="fas fa-edit"></i>
+                        Editar perfil
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('services')">
+                        <i class="fas fa-list"></i>
+                        Servicios
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('request-service')">
+                        <i class="fas fa-plus-circle"></i>
+                        Solicitar servicio
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('mas-info')">
+                        <i class="fas fa-plus"></i>
+                        Conocer servicios
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar sesión
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+
+        
+        <!-- Contenido Principal -->
+        <div class="main-content">
+            <!-- direcciuom l -->
+            <ul class="breadcrumb">
+                <li><a href="home.html">Inicio</a></li>
+                <li class="active">Cuenta</li>
+              </ul>
+
+              <!-- Sección General -->
+            <div id="general" class="content-section active fade-in">
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i>
+                    Información General
+                </h2>
+                
+                <div class="user-info-card">
+                    <div class="info-item">
+                        <i class="fas fa-user"></i>
+                        <span class="info-label">Nombre:</span>
+                        <span class="info-value" id="userName">Juan Pérez González</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span class="info-label">Correo:</span>
+                        <span class="info-value" id="userEmail">juan.perez@email.com</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="info-label">Dirección:</span>
+                        <span class="info-value" id="userAddress">Av. Libertador 123, Santiago, Chile</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Editar Perfil -->
+            <div id="edit-profile" class="content-section fade-in">
+                <h2 class="section-title">
+                    <i class="fas fa-edit"></i>
+                    Editar Perfil
+                </h2>
+                
+                <form id="editProfileForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="editName" value="Juan Pérez González">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="editEmail" value="juan.perez@email.com">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editPhone" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="editPhone" value="+56 9 1234 5678">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editAddress" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="editAddress" value="Av. Libertador 123, Santiago, Chile">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBio" class="form-label">Biografía</label>
+                        <textarea class="form-control" id="editBio" rows="3" placeholder="Cuéntanos sobre ti..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-custom">
+                        <i class="fas fa-save me-2"></i>
+                        Guardar Cambios
+                    </button>
+                </form>
+            </div>
+
+            <!-- Sección Servicios -->
+            <div id="services" class="content-section fade-in">
+                <h2 class="section-title">
+                    <i class="fas fa-list"></i>
+                    Mis Servicios
+                </h2>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h5 class="mb-0">Historial de Servicios</h5>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="search-box" id="serviceSearch" placeholder="Buscar servicios...">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table" id="servicesTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Servicio</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#001</td>
+                                    <td>Limpieza Industrial</td>
+                                    <td>15/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$150.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#002</td>
+                                    <td>Limpieza de Oficinas</td>
+                                    <td>20/01/2024</td>
+                                    <td><span class="status-badge status-active">En Proceso</span></td>
+                                    <td>$80.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#003</td>
+                                    <td>Limpieza Post-Obra</td>
+                                    <td>25/01/2024</td>
+                                    <td><span class="status-badge status-pending">Pendiente</span></td>
+                                    <td>$120.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Solicitar Servicio -->
+            <div id="request-service" class="content-section fade-in">
+                <h2 class="section-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Solicitar Nuevo Servicio
+                </h2>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Serás redirigido a nuestra página de solicitud de servicios.
+                </div>
+                
+                <div class="text-center">
+                    <a href="page-1.html" class="btn btn-custom btn-lg">
+                        <i class="fas fa-external-link-alt me-2"></i>
+                        Ir a Solicitar Servicio
+                    </a>
+                </div>
+            </div>
+
+            <!--dirigir a la informacion-->
+            <div id="mas-info" class="content-section fade-in">
+                <h2 class="section-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Saber mas sobre los servicios!
+                </h2>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Serás redirigido a nuestra página informativa de los servicios.
+                </div>
+                
+                <div class="text-center">
+                    <a href="empresa.html" class="btn btn-custom btn-lg">
+                        <i class="fas fa-external-link-alt me-2"></i>
+                        Ir a informativa de los servicios
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Mostrar sección específica
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remover clase active de todos los enlaces
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Mostrar sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Agregar clase active al enlace correspondiente
+            event.target.classList.add('active');
+            
+            // Cerrar sidebar en móvil
+            closeSidebar();
+        }
+
+        // Toggle sidebar en móvil
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+
+        // Cerrar sidebar
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+        }
+
+        // Búsqueda en tabla de servicios
+        document.getElementById('serviceSearch').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const tableRows = document.querySelectorAll('#servicesTable tbody tr');
+            
+            tableRows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Formulario de edición de perfil
+        document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obtener valores del formulario
+            const name = document.getElementById('editName').value;
+            const email = document.getElementById('editEmail').value;
+            const phone = document.getElementById('editPhone').value;
+            const address = document.getElementById('editAddress').value;
+            
+            // Actualizar información en la sección general
+            document.getElementById('userName').textContent = name;
+            document.getElementById('userEmail').textContent = email;
+            document.getElementById('userAddress').textContent = address;
+            
+            // Mostrar mensaje de éxito
+            alert('Perfil actualizado correctamente');
+            
+            // Cambiar a sección general
+            showSection('general');
+        });
+
+        // Función de cerrar sesión
+        function logout() {
+            if (!confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+                return;
+            }
+            try {
+                localStorage.removeItem('usuario');
+                sessionStorage.clear();
+            } catch (e) {
+                // Ignorar errores de almacenamiento
+            } finally {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Animaciones al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // Cerrar sidebar al hacer clic fuera en móvil
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.sidebar-toggle');
+            
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                    closeSidebar();
+                }
+            }
+        });
+
+        // Poblar datos del perfil desde API usando el usuario en localStorage
+        (function loadProfileFromApi() {
+            try {
+                const stored = localStorage.getItem('usuario');
+                if (!stored) {
+                    // No hay sesión: redirigir a login
+                    window.location.href = 'login.html';
+                    return;
+                }
+                const user = JSON.parse(stored);
+                if (!user || !user.id) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                // Mostrar datos básicos mientras carga
+                if (user.nombre) document.getElementById('userName').textContent = user.nombre;
+                if (user.email) document.getElementById('userEmail').textContent = user.email;
+
+                // Obtener datos actualizados desde el backend
+                fetch(`http://localhost:3000/usuarios/${user.id}`)
+                    .then(res => {
+                        if (!res.ok) throw new Error('No se pudo cargar el usuario');
+                        return res.json();
+                    })
+                    .then(fresh => {
+                        if (fresh.nombre) document.getElementById('userName').textContent = fresh.nombre;
+                        if (fresh.email) document.getElementById('userEmail').textContent = fresh.email;
+                    })
+                    .catch(() => {
+                        // Si falla la API, mantener los datos locales
+                    });
+            } catch (_) {
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
+</body>
+</html>
