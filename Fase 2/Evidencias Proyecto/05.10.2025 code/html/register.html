@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse - Serviclemant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Auth CSS -->
+    <link rel="stylesheet" href="style/auth.css">
+
+    <style>
+        /* Estilos adicionales aquí */
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="auth-page">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark auth-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <img src="img/logo2.png" class="me-2" style="width: 70px; height: 70px;">
+                SERVICLEMANT
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="servicio.html">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="empresa.html">Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Formulario de Registro -->
+    <div class="auth-container" style="margin-top: 60px; margin-bottom: 20px;">
+        <div class="form-container">
+            <h2 class="text-center">Registro de Usuario</h2>
+
+            <form id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="nombre" class="form-label">
+                        <i class="fas fa-user me-2"></i>Nombre Completo
+                    </label>
+                    <input 
+                        type="text" 
+                        id="nombre" 
+                        name="nombre" 
+                        class="form-input" 
+                        placeholder="Ingresa tu nombre completo"
+                        required
+                    >
+                    <div class="error-message" id="nombreError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope me-2"></i>Email
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="Ingresa tu email"
+                        required
+                    >
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contraseña" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Contraseña
+                    </label>
+                    <input 
+                        type="password" 
+                        id="contraseña" 
+                        name="contraseña" 
+                        class="form-input" 
+                        placeholder="Crea una contraseña segura"
+                        required
+                    >
+                    <div class="error-message" id="contraseñaError"></div>
+                    <div class="password-strength" id="passwordStrength"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmarContraseña" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Confirmar Contraseña
+                    </label>
+                    <input 
+                        type="password" 
+                        id="confirmarContraseña" 
+                        name="confirmarContraseña" 
+                        class="form-input" 
+                        placeholder="Confirma tu contraseña"
+                        required
+                    >
+                    <div class="error-message" id="confirmarContraseñaError"></div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="terminos" required>
+                        <label class="form-check-label" for="terminos">
+                            Acepto los <a href="#" class="auth-link">términos y condiciones</a> y la <a href="#" class="auth-link">política de privacidad</a>
+                        </label>
+                    </div>
+                    <div class="error-message" id="terminosError"></div>
+                </div>
+
+                <button type="submit" class="btn-auth">
+                    <i href="perfil.html" class="fas fa-user-plus me-2"></i>Registrarse
+                </button>
+
+                <div class="text-center mt-4">
+                    <p class="mb-0" style="color: #666;">
+                        ¿Ya tienes cuenta? 
+                        <a  class="auth-link">Inicia sesión aquí</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Validación del formulario de registro
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Limpiar errores anteriores
+            clearErrors();
+            
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const contraseña = document.getElementById('contraseña').value;
+            const confirmarContraseña = document.getElementById('confirmarContraseña').value;
+            const terminos = document.getElementById('terminos').checked;
+            
+            let isValid = true;
+            
+            // Validar nombre completo
+            if (nombre === '') {
+                showError('nombreError', 'El nombre completo es requerido');
+                document.getElementById('nombre').classList.add('error');
+                isValid = false;
+            } else if (nombre.length < 2) {
+                showError('nombreError', 'El nombre debe tener al menos 2 caracteres');
+                document.getElementById('nombre').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validar email
+            if (email === '') {
+                showError('emailError', 'El email es requerido');
+                document.getElementById('email').classList.add('error');
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                showError('emailError', 'Ingresa un email válido');
+                document.getElementById('email').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validar contraseña
+            if (contraseña === '') {
+                showError('contraseñaError', 'La contraseña es requerida');
+                document.getElementById('contraseña').classList.add('error');
+                isValid = false;
+            } else if (contraseña.length < 8) {
+                showError('contraseñaError', 'La contraseña debe tener al menos 8 caracteres');
+                document.getElementById('contraseña').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validar confirmación de contraseña
+            if (confirmarContraseña === '') {
+                showError('confirmarContraseñaError', 'Confirma tu contraseña');
+                document.getElementById('confirmarContraseña').classList.add('error');
+                isValid = false;
+            } else if (contraseña !== confirmarContraseña) {
+                showError('confirmarContraseñaError', 'Las contraseñas no coinciden');
+                document.getElementById('confirmarContraseña').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validar términos y condiciones
+            if (!terminos) {
+                showError('terminosError', 'Debes aceptar los términos y condiciones');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Enviar los datos al servidor
+                const usuario = {
+                    nombre: nombre,
+                    email: email,
+                    contraseña: contraseña
+                };
+
+                fetch('http://localhost:3000/usuarios', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(usuario)
+                    
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Usuario registrado exitosamente');
+                        window.location.href = 'perfil.html';
+                    } else {
+                        alert('Hubo un error al registrar el usuario');
+                    }
+                })
+                .catch(error => {
+                    alert('Error en la conexión con el servidor');
+                });
+            }
+        });
+
+        // Función para validar email
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Función para mostrar errores
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        // Función para limpiar errores
+        function clearErrors() {
+            const errorElements = document.querySelectorAll('.error-message');
+            errorElements.forEach(element => {
+                element.style.display = 'none';
+                element.textContent = '';
+            });
+
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.classList.remove('error');
+            });
+        }
+    </script>
+</body>
+</html>
