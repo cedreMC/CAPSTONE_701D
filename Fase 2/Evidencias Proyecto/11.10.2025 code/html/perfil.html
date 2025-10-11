@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario - Serviclemant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-cyan: #00BCD4;
+            --primary-aqua: #4de18b;
+            --secondary-cyan: #26C6DA;
+            --dark-cyan: #0097A7;
+            --light-aqua: #B2EBF2;
+            --text-dark: #2C3E50;
+            --text-light: #FFFFFF;
+            --bg-light: #F8F9FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+
+        /* Layout Principal */
+        .profile-container {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            color: var(--text-light);
+            position: fixed;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding-top: 100px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-header h3 {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--light-aqua);
+            color: var(--text-light);
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-left-color: var(--light-aqua);
+        }
+
+        .nav-link i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+
+
+        .breadcrumb {
+        list-style: none;
+        display: flex;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        }
+
+        .breadcrumb li + li:before {
+        content: ">";
+        margin: 0 8px;
+        color: gray;
+        }
+
+        .breadcrumb a {
+        text-decoration: none;
+        color: gray;
+        }
+
+        .breadcrumb a:hover {
+        text-decoration: underline;
+        }
+
+        .breadcrumb .active {
+        font-weight: bold;
+        color: black;
+        }
+
+        /* Contenido Principal */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Estilos para las secciones sin clases problemáticas */
+        #general, #edit-profile, #services, #request-service, #mas-info {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        #general.active, #edit-profile.active, #services.active, #request-service.active, #mas-info.active {
+            display: block;
+        }
+
+        .section-title {
+            color: var(--dark-cyan);
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary-cyan);
+        }
+
+        /* Información del Usuario */
+        .user-info-card {
+            background: linear-gradient(135deg, var(--light-aqua), rgba(255, 255, 255, 0.8));
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 188, 212, 0.2);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px 0;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-item i {
+            color: var(--primary-cyan);
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-right: 10px;
+            min-width: 80px;
+        }
+
+        .info-value {
+            color: #666;
+        }
+
+        /* Botones */
+        .btn-custom {
+            background: linear-gradient(45deg, var(--dark-cyan), var(--secondary-cyan));
+            border: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 151, 167, 0.4);
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 151, 167, 0.6);
+            color: var(--text-light);
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            border: 2px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--primary-cyan);
+            color: var(--text-light);
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            border: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger-custom:hover {
+            transform: translateY(-2px);
+            color: var(--text-light);
+        }
+
+        /* Tabla de Servicios */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            color: var(--text-light);
+            padding: 20px;
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: var(--text-light);
+            width: 100%;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-box:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-color: var(--light-aqua);
+        }
+
+        .table {
+            margin: 0;
+        }
+
+        .table th {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            font-weight: 600;
+            border: none;
+            padding: 15px;
+        }
+
+        .table td {
+            padding: 15px;
+            border: none;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(0, 188, 212, 0.05);
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .status-completed {
+            background: rgba(0, 123, 255, 0.1);
+            color: #007bff;
+        }
+
+        /* Responsive mobile rules removed per request */
+
+        /* Mobile sidebar (off-canvas) rules */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100vh;
+                transform: translateX(-100%);
+                transition: transform 0.28s cubic-bezier(.2,.9,.3,1);
+                width: 260px;
+                padding-top: 80px;
+                z-index: 1200;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px 15px;
+            }
+
+            .sidebar-toggle {
+                display: block;
+                position: fixed;
+                right: 16px;
+                bottom: 18px;
+                z-index: 1400; /* por encima del overlay */
+                background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+                color: var(--text-light);
+                border: none;
+                padding: 12px 14px;
+                border-radius: 14px;
+                font-size: 1.25rem;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 62px;
+                height: 62px;
+            }
+
+            .sidebar-overlay {
+                display: block;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.45);
+                z-index: 1100;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+            }
+
+            .sidebar-overlay.show {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* evitar scroll del body cuando el sidebar esté abierto */
+            body.no-scroll {
+                overflow: hidden;
+                touch-action: none;
+            }
+        }
+
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+
+/* ===== MODAL DE CERRAR SESIÓN (estilo fijo, inspirado en home.html) ===== */
+        #modalLogout {
+            display: none; /* se muestra cuando se añade .show */
+            position: fixed;
+            inset: 0;
+            z-index: 3000; /* muy alto para que esté por encima de todo */
+            background: rgba(5, 18, 24, 0.45); /* más oscuro y sutil */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 200ms ease-in-out, visibility 200ms ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #modalLogout.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-logout-content {
+            background: #ffffff;
+            color: #1A1A1A;
+            padding: 20px 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            max-width: 420px;
+            width: 100%;
+            transform: translateY(-8px) scale(0.98);
+            transition: transform 220ms ease-in-out, opacity 220ms ease-in-out;
+            opacity: 0;
+        }
+
+        /* animar el contenido cuando el modal aparece */
+        #modalLogout.show .modal-logout-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* pequeña barra de acento y icono decorativo */
+        .modal-logout-accent {
+            height: 6px;
+            width: 72px;
+            background: linear-gradient(90deg, #00BCD4, #0097A7);
+            border-radius: 6px;
+            margin: 0 auto 12px auto;
+            box-shadow: 0 6px 18px rgba(0,188,212,0.08);
+        }
+
+        .modal-logout-icon {
+            font-size: 26px;
+            color: #00BCD4;
+            margin-bottom: 8px;
+        }
+
+        .modal-logout-message {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+
+        .modal-logout-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .btn-logout-confirm,
+        .btn-logout-cancel {
+            padding: 0.55rem 1rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            min-width: 110px;
+            transition: transform 150ms ease-in-out, box-shadow 150ms ease-in-out;
+        }
+
+        .btn-logout-confirm {
+            background: linear-gradient(90deg, #00BCD4, #0097A7);
+            color: #ffffff;
+            box-shadow: 0 8px 24px rgba(0,188,212,0.18);
+        }
+
+        .btn-logout-cancel {
+            background: transparent;
+            color: #1A1A1A;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .btn-logout-confirm:hover { transform: translateY(-3px); }
+        .btn-logout-cancel:hover { background: rgba(0,0,0,0.04); }
+
+        #modalLogout .btn-logout-confirm:focus,
+        #modalLogout .btn-logout-cancel:focus {
+            outline: 3px solid rgba(38,198,218,0.22);
+            outline-offset: 2px;
+        }
+
+        /* Ajustes para móviles */
+        @media (max-width: 480px) {
+            .modal-logout-content { padding: 14px; max-width: 95%; }
+            .modal-logout-message { font-size: 1rem; }
+            .btn-logout-confirm, .btn-logout-cancel { padding: 0.45rem 0.75rem; min-width: 90px; font-size: 0.95rem; }
+            .modal-logout-accent { width: 56px; height: 5px; }
+        }
+
+        /* Preferencias de movimiento reducido */
+        @media (prefers-reduced-motion: reduce) {
+            .modal-logout-content,
+            #modalLogout { transition: none; transform: none; }
+        }
+
+    </style>
+</head>
+<body>
+     <!-- Navbar -->
+     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));">
+         <div class="container d-flex justify-content-center align-items-center">
+             <a class="navbar-brand d-flex align-items-center" href="home.html">
+                 <img src="img/logo2.png" class="me-3" style="width: 90px; height: 90px;">
+                 <span class="fw-bold fs-4"><h1>SERVICLEMANT</h1></span>
+             </a>
+         </div>
+     </nav>
+    <br>
+    <!-- Botón hamburguesa para móvil y overlay -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menú">☰</button>
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+    <div class="profile-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Mi Perfil</h2>
+                <p>Gestión de cuenta</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-item">
+                    <a href="#" class="nav-link active" onclick="showSection('general')">
+                        <i class="fas fa-user"></i>
+                        General
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('edit-profile')">
+                        <i class="fas fa-edit"></i>
+                        Editar perfil
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('services')">
+                        <i class="fas fa-list"></i>
+                        Servicios
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('request-service')">
+                        <i class="fas fa-plus-circle"></i>
+                        Solicitar servicio
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('mas-info')">
+                        <i class="fas fa-plus"></i>
+                        Conocer servicios
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar sesión
+                    </a>
+                </div>
+
+ 
+                 <!-- Coloca esto antes de body -->
+                <div id="modalLogout" aria-hidden="true">
+                    <div class="modal-logout-content" role="dialog" aria-modal="true" aria-labelledby="modalLogoutTitle">
+                            <p id="modalLogoutTitle" class="modal-logout-message">¿Quieres cerrar sesión?</p>
+                        <div class="modal-logout-actions">
+                            <button id="btnSi" class="btn-logout-confirm" type="button">Sí</button>
+                            <button id="btnNo" class="btn-logout-cancel" type="button">No</button>
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+
+
+        
+        <!-- Contenido Principal -->
+        <div class="main-content">
+
+
+            <!-- direcciuom l -->
+            <ul class="breadcrumb">
+                <li><a href="home.html">Inicio</a></li>
+                <li class="active">Cuenta</li>
+            </ul>
+
+
+
+
+            <!-- Sección General -->
+            <div id="general" >
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i>
+                    Información General
+                </h2>
+                
+                <div class="user-info-card">
+                    <div class="info-item">
+                        <i class="fas fa-user"></i>
+                        <span class="info-label">Nombre:</span>
+                        <span class="info-value" id="userNameGeneral">—</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span class="info-label">Correo:</span>
+                        <span class="info-value" id="userEmailGeneral">—</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span class="info-label">Teléfono:</span>
+                        <span class="info-value" id="userPhoneGeneral">—</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="info-label">Dirección:</span>
+                        <span class="info-value" id="userAddressGeneral">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Editar Perfil -->
+            <div id="edit-profile">
+                <h2 class="section-title">
+                    <i class="fas fa-edit"></i>
+                    Editar Perfil
+                </h2>
+                
+                <form id="editProfileForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="editName" value="Juan Pérez González">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="editEmail" value="juan.perez@email.com">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editPhone" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="editPhone" value="+56 9 1234 5678">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editAddress" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="editAddress" value="Av. Libertador 123, Santiago, Chile">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-custom">
+                        <i class="fas fa-save me-2"></i>
+                        Guardar Cambios
+                    </button>
+                </form>
+            </div>
+
+            <!-- Sección Servicios -->
+            <div id="services">
+                <h2 class="section-title">
+                    <i class="fas fa-list"></i>
+                    Mis Servicios
+                </h2>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h5 class="mb-0">Historial de Servicios</h5>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="search-box" id="serviceSearch" placeholder="Buscar servicios...">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table" id="servicesTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Servicio</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#001</td>
+                                    <td>Limpieza Industrial</td>
+                                    <td>15/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$150.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#002</td>
+                                    <td>Limpieza de Oficinas</td>
+                                    <td>20/01/2024</td>
+                                    <td><span class="status-badge status-active">En Proceso</span></td>
+                                    <td>$80.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#003</td>
+                                    <td>Limpieza Post-Obra</td>
+                                    <td>25/01/2024</td>
+                                    <td><span class="status-badge status-pending">Pendiente</span></td>
+                                    <td>$120.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                                <tr>
+                                    <td>#004</td>
+                                    <td>Limpieza de Vidrios</td>
+                                    <td>30/01/2024</td>
+                                    <td><span class="status-badge status-completed">Completado</span></td>
+                                    <td>$45.000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Solicitar Servicio -->
+            <div id="request-service">
+                <h2 class="section-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Solicitar Nuevo Servicio
+                </h2>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Serás redirigido a nuestra página de solicitud de servicios.
+                </div>
+                
+                <div class="text-center">
+                    <a href="servicio.html" class="btn btn-custom btn-lg">
+                        <i class="fas fa-external-link-alt me-2"></i>
+                        Ir a Solicitar Servicio
+                    </a>
+                </div>
+            </div>
+
+            <!--dirigir a la informacion-->
+            <div id="mas-info">
+                <h2 class="section-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Saber mas sobre los servicios!
+                </h2>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Serás redirigido a nuestra página informativa de los servicios.
+                </div>
+                
+                <div class="text-center">
+                    <a href="empresa.html" class="btn btn-custom btn-lg">
+                        <i class="fas fa-external-link-alt me-2"></i>
+                        Ir a informativa de los servicios
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        const stored = localStorage.getItem('usuario');
+        if (!stored) {
+            return (window.location.href = 'login.html');
+        }
+        
+        const user = JSON.parse(stored);
+
+        // Función para actualizar la interfaz
+        function updateUserInterface(userData) {
+            // Actualizar sección general
+            const nameEl = document.getElementById('userNameGeneral');
+            const emailEl = document.getElementById('userEmailGeneral');
+            const phoneEl = document.getElementById('userPhoneGeneral');
+            const addressEl = document.getElementById('userAddressGeneral');
+            
+            if (nameEl) nameEl.textContent = userData.nombre || '—';
+            if (emailEl) emailEl.textContent = userData.email || '—';
+            if (phoneEl) phoneEl.textContent = userData.telefono || '—';
+            if (addressEl) addressEl.textContent = userData.direccion || '—';
+
+            // Llenar formulario de edición
+            const editName = document.getElementById('editName');
+            const editEmail = document.getElementById('editEmail');
+            const editPhone = document.getElementById('editPhone');
+            const editAddress = document.getElementById('editAddress');
+            
+            if (editName) editName.value = userData.nombre || '';
+            if (editEmail) editEmail.value = userData.email || '';
+            if (editPhone) editPhone.value = userData.telefono || '';
+            if (editAddress) editAddress.value = userData.direccion || '';
+        }
+
+        // Mostrar datos del localStorage inmediatamente
+        updateUserInterface(user);
+        
+        // Mostrar la sección general por defecto
+        showSection('general');
+
+        // Intentar cargar datos actualizados desde el servidor
+        if (user.id) {
+            fetch(`http://localhost:3000/usuarios/${user.id}`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`Error del servidor: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then(u => {
+                    updateUserInterface(u);
+                })
+                .catch(err => {
+                    // Usar datos del localStorage si falla el servidor
+                });
+        }
+
+        // Guardar cambios
+        const form = document.getElementById('editProfileForm');
+        if (form) {
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+
+                const updatedUser = {
+                    nombre: document.getElementById('editName').value.trim(),
+                    email: document.getElementById('editEmail').value.trim(),
+                    telefono: document.getElementById('editPhone').value.trim(),
+                    direccion: document.getElementById('editAddress').value.trim()
+                };
+
+                // Validar campos requeridos
+                if (!updatedUser.nombre || !updatedUser.email) {
+                    alert('❌ Nombre y email son obligatorios');
+                    return;
+                }
+
+                // Actualizar localStorage inmediatamente
+                const updatedUserData = { ...user, ...updatedUser };
+                localStorage.setItem('usuario', JSON.stringify(updatedUserData));
+
+                // Actualizar interfaz
+                updateUserInterface(updatedUserData);
+
+                // Intentar guardar en servidor
+                if (user.id) {
+                    fetch(`http://localhost:3000/usuarios/${user.id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updatedUser)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('✅ Perfil actualizado correctamente');
+                        } else {
+                            alert('⚠️ Error en servidor, pero datos guardados localmente');
+                        }
+                    })
+                    .catch(err => {
+                        alert('⚠️ No se pudo conectar al servidor, pero datos guardados localmente');
+                    });
+                } else {
+                    alert('✅ Perfil actualizado correctamente');
+                }
+            });
+        }
+        });
+
+         // Cerrar sesión (mejor experiencia accesible)
+        function logout() {
+            const modal = document.getElementById('modalLogout');
+            const btnSi = document.getElementById('btnSi');
+            const btnNo = document.getElementById('btnNo');
+
+            if (!modal || !btnSi || !btnNo) return;
+
+            // abrir modal
+            modal.classList.add('show');
+            modal.setAttribute('aria-hidden', 'false');
+
+            // focus management
+            btnNo.focus();
+
+            const confirmHandler = function() {
+                localStorage.removeItem('usuario');
+                cleanup();
+                window.location.href = 'login.html';
+            };
+
+            const cancelHandler = function() { cleanup(); };
+
+            const backdropHandler = function(e) { if (e.target === modal) cleanup(); };
+
+            const escHandler = function(e) { if (e.key === 'Escape') cleanup(); };
+
+            function cleanup() {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                btnSi.removeEventListener('click', confirmHandler);
+                btnNo.removeEventListener('click', cancelHandler);
+                modal.removeEventListener('click', backdropHandler);
+                document.removeEventListener('keydown', escHandler);
+            }
+
+            btnSi.addEventListener('click', confirmHandler);
+            btnNo.addEventListener('click', cancelHandler);
+            modal.addEventListener('click', backdropHandler);
+            document.addEventListener('keydown', escHandler);
+        }
+
+        // Función para mostrar secciones
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const allSections = ['general', 'edit-profile', 'services', 'request-service', 'mas-info'];
+            allSections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) {
+                    section.classList.remove('active');
+                }
+            });
+
+            // Mostrar la sección seleccionada
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Actualizar navegación activa
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Marcar como activo el enlace correspondiente
+            const activeLink = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+
+
+        // Función para búsqueda de servicios
+        function searchServices() {
+            const searchInput = document.getElementById('serviceSearch');
+            const table = document.getElementById('servicesTable');
+            const rows = table.getElementsByTagName('tr');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const filter = this.value.toLowerCase();
+                    
+                    for (let i = 1; i < rows.length; i++) {
+                        const row = rows[i];
+                        const cells = row.getElementsByTagName('td');
+                        let found = false;
+                        
+                        for (let j = 0; j < cells.length; j++) {
+                            if (cells[j].textContent.toLowerCase().indexOf(filter) > -1) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        
+                        row.style.display = found ? '' : 'none';
+                    }
+                });
+            }
+        }
+
+        // Inicializar búsqueda cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            searchServices();
+            // Sidebar móvil: toggle, overlay y smooth scroll
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.getElementById('sidebarToggle');
+            const overlay = document.getElementById('sidebarOverlay');
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+
+            function openSidebar() {
+                if (sidebar) sidebar.classList.add('open');
+                if (overlay) overlay.classList.add('show');
+                document.body.classList.add('no-scroll');
+                // focus first link for accessibility
+                const first = sidebar && sidebar.querySelector('.nav-link');
+                if (first) first.focus();
+            }
+
+            function closeSidebar() {
+                if (sidebar) sidebar.classList.remove('open');
+                if (overlay) overlay.classList.remove('show');
+                document.body.classList.remove('no-scroll');
+            }
+
+            if (toggle) toggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (sidebar && sidebar.classList.contains('open')) closeSidebar(); else openSidebar();
+            });
+
+            if (overlay) overlay.addEventListener('click', function() {
+                closeSidebar();
+            });
+
+            // Desplazamiento suave y cierre de la barra lateral al hacer clic en un enlace de navegación en el móvil
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                        // cerrar sidebar en móvil
+                        if (window.innerWidth <= 768) closeSidebar();
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
