@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario - Serviclemant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    
+    <style>
+
+
+
+        :root {
+            --primary-cyan: #00BCD4;
+            --primary-aqua: #4de18b;
+            --secondary-cyan: #26C6DA;
+            --dark-cyan: #0097A7;
+            --light-aqua: #B2EBF2;
+            --text-dark: #2C3E50;
+            --text-light: #FFFFFF;
+            --bg-light: #F8F9FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+
+        /* Layout Principal */
+        .profile-container {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            color: var(--text-light);
+            position: fixed;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding-top: 100px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-header h3 {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--light-aqua);
+            color: var(--text-light);
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-left-color: var(--light-aqua);
+        }
+
+        .nav-link i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+
+
+        .breadcrumb {
+        list-style: none;
+        display: flex;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        }
+
+        .breadcrumb li + li:before {
+        content: ">";
+        margin: 0 8px;
+        color: gray;
+        }
+
+        .breadcrumb a {
+        text-decoration: none;
+        color: gray;
+        }
+
+        .breadcrumb a:hover {
+        text-decoration: underline;
+        }
+
+        .breadcrumb .active {
+        font-weight: bold;
+        color: black;
+        }
+
+        /* Contenido Principal */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Estilos para las secciones sin clases problemáticas */
+        #general, #edit-profile, #services, #request-service, #mas-info {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        #general.active, #edit-profile.active, #services.active, #request-service.active, #mas-info.active {
+            display: block;
+        }
+
+        .section-title {
+            color: var(--dark-cyan);
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary-cyan);
+        }
+
+        /* Información del Usuario */
+        .user-info-card {
+            background: linear-gradient(135deg, var(--light-aqua), rgba(255, 255, 255, 0.8));
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 188, 212, 0.2);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px 0;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-item i {
+            color: var(--primary-cyan);
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-right: 10px;
+            min-width: 80px;
+        }
+
+        .info-value {
+            color: #666;
+        }
+
+        /* Botones */
+        .btn-custom {
+            background: linear-gradient(45deg, var(--dark-cyan), var(--secondary-cyan));
+            border: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 151, 167, 0.4);
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 151, 167, 0.6);
+            color: var(--text-light);
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            border: 2px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--primary-cyan);
+            color: var(--text-light);
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            border: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger-custom:hover {
+            transform: translateY(-2px);
+            color: var(--text-light);
+        }
+
+       
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: var(--text-light);
+            width: 100%;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-box:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-color: var(--light-aqua);
+        }
+
+         /* Tabla de Servicios */
+        /* 🧩 Contenedor general de tablas */
+        .table-container {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        }
+
+        /* 🔹 Encabezado superior de cada tabla */
+        .table-header {
+        background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+        color: var(--text-light);
+        padding: 20px;
+        border-radius: 12px 12px 0 0;
+        }
+
+        /* 🧾 Tabla base */
+        .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 0;
+        }
+
+        /* 🧠 Encabezado */
+        .table th {
+        background: var(--bg-light);
+        color: var(--text-dark);
+        font-weight: 600;
+        border: none;
+        padding: 15px;
+        }
+
+        /* 🔹 Celdas */
+        .table td {
+        padding: 15px;
+        border: none;
+        border-bottom: 1px solid #eee;
+        }
+
+        /* 🌟 Hover fila */
+        .table tbody tr:hover {
+        background: rgba(0, 188, 212, 0.05);
+        transition: background 0.2s ease-in-out;
+        }
+
+        /* ============================= */
+        /* 🧠 TABLA HISTORIAL DE SERVICIOS */
+        /* ============================= */
+        .tabla-historial {
+        width: 100%;
+        border-collapse: separate; /* ✅ permite bordes redondeados */
+        border-spacing: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* 🎨 Encabezado con gradiente */
+        .tabla-historial thead {
+        background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+        }
+
+        /* 🧩 Estilo de títulos */
+        .tabla-historial th {
+        color: white;
+        text-align: left;
+        padding: 12px 10px;
+        font-weight: 600;
+        border: none;
+        }
+
+        /* 🧾 Celdas del cuerpo */
+        .tabla-historial td {
+        padding: 10px;
+        border-top: 1px solid #eee;
+        }
+
+        /* 🧩 Filas alternas */
+        .tabla-historial tr:nth-child(even) td {
+        background-color: #f9f9f9;
+        }
+
+        /* 🎯 Hover */
+        .tabla-historial tr:hover td {
+        background-color: #e8fdf4;
+        transition: background-color 0.2s ease-in-out;
+        }
+
+        /* ✅ Select de estado (para admin) */
+        .estado-select {
+        padding: 5px 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: white;
+        font-size: 0.9rem;
+        outline: none;
+        transition: all 0.2s;
+        }
+
+        .estado-select:hover {
+        border-color: var(--primary-cyan);
+        }
+
+        .estado-select:focus {
+        border-color: var(--primary-aqua);
+        box-shadow: 0 0 5px rgba(0, 188, 212, 0.3);
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .status-completed {
+            background: rgba(0, 123, 255, 0.1);
+            color: #007bff;
+        }
+
+        /* ✅ Corrige el solapamiento del degradado superior */
+        .table-container {
+        background: transparent; /* elimina el fondo blanco detrás */
+        border: none;
+        }
+
+        /* 🔹 Hace que el degradado superior y el encabezado se unan suavemente */
+        .table-header {
+        border-radius: 12px 12px 0 0;
+        margin-bottom: -1px; /* elimina el espacio blanco entre header y tabla */
+        }
+
+        /* 🔹 Alinea la tabla con el header sin que se vea borde blanco */
+        .tabla-historial {
+        border-radius: 0 0 12px 12px; /* solo esquinas inferiores */
+        margin-top: 0;
+        border-top: none;
+        }
+
+        /* Botón hamburguesa - solo visible en móvil, esquina inferior derecha */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            color: white;
+            border: none;
+            padding: 15px 18px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4);
+            transition: all 0.3s ease;
+            width: 60px;
+            height: 60px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-toggle:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 188, 212, 0.5);
+        }
+
+        .sidebar-toggle:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        /* Animación de pulso para llamar la atención */
+        .sidebar-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            opacity: 0.3;
+            animation: pulse 2s infinite;
+        }
+
+        /* 🌟 Contenedor general */
+        .table-container {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin-top: 20px;
+        font-family: 'Poppins', sans-serif;
+        }
+
+        /* Título de sección */
+        .table-container h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+        border-left: 5px solid #007bff;
+        padding-left: 10px;
+        }
+
+        /* 🧾 Tabla principal */
+        #tablaServicios {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        }
+
+        #tablaServicios thead {
+        background: #007bff;
+        color: #fff;
+        }
+
+        #tablaServicios th,
+        #tablaServicios td {
+        padding: 12px 16px;
+        border-bottom: 1px solid #ddd;
+        }
+
+        #tablaServicios tbody tr:hover {
+        background: #f9f9f9;
+        transition: 0.3s;
+        }
+
+        /* 🔒 Ocultar columna de ID (título y valores) */
+        #tablaServicios th:first-child,
+        #tablaServicios td:first-child {
+        display: none;
+        }
+
+        /* ✏️ Celdas editables */
+        #tablaServicios td[contenteditable="true"] {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        transition: background-color 0.2s;
+        }
+
+        #tablaServicios td[contenteditable="true"]:focus {
+        background-color: #fffbe6;
+        outline: 2px solid #007bff;
+        }
+
+        /* ✅ Checkbox de activo */
+        #tablaServicios input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        }
+
+        /* 🎛️ Botones de acción */
+        #tablaServicios button {
+        margin: 0 4px;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        }
+
+        #tablaServicios .btn-primary {
+        background-color: #007bff;
+        }
+
+        #tablaServicios .btn-primary:hover {
+        background-color: #0069d9;
+        }
+
+        #tablaServicios .btn-danger {
+        background-color: #dc3545;
+        }
+
+        #tablaServicios .btn-danger:hover {
+        background-color: #c82333;
+        }
+
+        /* ➕ Botón agregar servicio */
+        #btnNuevoServicio {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        padding: 10px 18px;
+        font-size: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+        transition: background-color 0.3s;
+        }
+
+        #btnNuevoServicio:hover {
+        background-color: #218838;
+        }
+
+        .estado-select {
+        padding: 4px 6px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 0.9rem;
+        }
+        .estado-select:focus {
+        border-color: #007bff;
+        outline: none;
+        }
+
+        /* 🎯 Select para modificar estado */
+        .estado-select {
+        padding: 5px 8px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background-color: #f8f9fa;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        }
+
+        .estado-select:hover {
+        background-color: #e9ecef;
+        }
+
+        .estado-select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                width: 280px;
+                z-index: 1002;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px 15px;
+                padding-bottom: 100px; /* Espacio para el botón flotante */
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .sidebar-toggle {
+                display: flex !important;
+            }
+
+            /* Asegurar que el navbar no interfiera */
+            .navbar {
+                z-index: 1000;
+            }
+        }
+
+        /* En pantallas grandes, ocultar el botón y mostrar sidebar */
+        @media (min-width: 769px) {
+            .sidebar-toggle {
+                display: none !important;
+            }
+            
+            .sidebar {
+                transform: translateX(0) !important;
+            }
+            
+            .main-content {
+                padding-bottom: 30px; /* Restaurar padding normal */
+            }
+        }
+
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Overlay para móvil */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+
+        /* Solo mostrar overlay en móvil */
+        @media (max-width: 768px) {
+            .sidebar-overlay {
+                display: none;
+            }
+            
+            .sidebar-overlay.show {
+                display: block;
+            }
+        }
+
+        /* En pantallas grandes, ocultar overlay */
+        @media (min-width: 769px) {
+            .sidebar-overlay {
+                display: none !important;
+            }
+        }
+
+        /* ===== MODAL DE CERRAR SESIÓN (estilo fijo, inspirado en home.html) ===== */
+        #modalLogout {
+            display: none; /* se muestra cuando se añade .show */
+            position: fixed;
+            inset: 0;
+            z-index: 3000; /* muy alto para que esté por encima de todo */
+            background: rgba(5, 18, 24, 0.45); /* más oscuro y sutil */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 200ms ease-in-out, visibility 200ms ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #modalLogout.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-logout-content {
+            background: #ffffff;
+            color: #1A1A1A;
+            padding: 20px 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            max-width: 420px;
+            width: 100%;
+            transform: translateY(-8px) scale(0.98);
+            transition: transform 220ms ease-in-out, opacity 220ms ease-in-out;
+            opacity: 0;
+        }
+
+        /* animar el contenido cuando el modal aparece */
+        #modalLogout.show .modal-logout-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* pequeña barra de acento y icono decorativo */
+        .modal-logout-accent {
+            height: 6px;
+            width: 72px;
+            background: linear-gradient(90deg, #00BCD4, #0097A7);
+            border-radius: 6px;
+            margin: 0 auto 12px auto;
+            box-shadow: 0 6px 18px rgba(0,188,212,0.08);
+        }
+
+        .modal-logout-icon {
+            font-size: 26px;
+            color: #00BCD4;
+            margin-bottom: 8px;
+        }
+
+        .modal-logout-message {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+
+        .modal-logout-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .btn-logout-confirm,
+        .btn-logout-cancel {
+            padding: 0.55rem 1rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            min-width: 110px;
+            transition: transform 150ms ease-in-out, box-shadow 150ms ease-in-out;
+        }
+
+        .btn-logout-confirm {
+            background: linear-gradient(90deg, #00BCD4, #0097A7);
+            color: #ffffff;
+            box-shadow: 0 8px 24px rgba(0,188,212,0.18);
+        }
+
+        .btn-logout-cancel {
+            background: transparent;
+            color: #1A1A1A;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .btn-logout-confirm:hover { transform: translateY(-3px); }
+        .btn-logout-cancel:hover { background: rgba(0,0,0,0.04); }
+
+        #modalLogout .btn-logout-confirm:focus,
+        #modalLogout .btn-logout-cancel:focus {
+            outline: 3px solid rgba(38,198,218,0.22);
+            outline-offset: 2px;
+        }
+
+        /* Ajustes para móviles */
+        @media (max-width: 480px) {
+            .modal-logout-content { padding: 14px; max-width: 95%; }
+            .modal-logout-message { font-size: 1rem; }
+            .btn-logout-confirm, .btn-logout-cancel { padding: 0.45rem 0.75rem; min-width: 90px; font-size: 0.95rem; }
+            .modal-logout-accent { width: 56px; height: 5px; }
+        }
+
+        /* Preferencias de movimiento reducido */
+        @media (prefers-reduced-motion: reduce) {
+            .modal-logout-content,
+            #modalLogout { transition: none; transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));">
+        <div class="container d-flex justify-content-center align-items-center">
+            <a class="navbar-brand d-flex align-items-center" href="home.html">
+                <img src="img/logo2.png" class="me-3" style="width: 90px; height: 90px;">
+                <span class="fw-bold fs-4"><h1>SERVICLEMANT</h1></span>
+            </a>
+        </div>
+    </nav>
+    <br>
+    <!-- Botón flotante para abrir sidebar en móvil -->
+    <button id="sidebarToggle" class="sidebar-toggle" title="Abrir menú de navegación">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Overlay para móvil -->
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <div class="profile-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Mi Perfil</h2>
+                <p>Gestión de cuenta</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-item">
+                    <a href="#" class="nav-link active" onclick="showSection('general')">
+                        <i class="fas fa-user"></i>
+                        General
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('edit-profile')">
+                        <i class="fas fa-edit"></i>
+                        Editar perfil
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('services')">
+                        <i class="fas fa-list"></i>
+                        Servicios
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('request-service')">
+                        <i class="fas fa-plus-circle"></i>
+                        Solicitar servicio
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('mas-info')">
+                        <i class="fas fa-plus"></i>
+                        Conocer servicios
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar sesión
+                    </a>
+                </div>
+
+                <!-- Modal removed from here (kept at end of document) -->
+            </nav>
+        </div>
+
+
+        
+        <!-- Contenido Principal -->
+        <div class="main-content">
+
+            <!-- direcciuom l -->
+            <ul class="breadcrumb">
+                <li><a href="home.html">Inicio</a></li>
+                <li class="active">Cuenta</li>
+            </ul>
+
+
+            <!-- Sección General -->
+            <div id="general" >
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i>
+                    Información General
+                </h2>
+                
+                <div class="user-info-card">
+                    <div class="info-item">
+                        <i class="fas fa-user"></i>
+                        <span class="info-label">Nombre:</span>
+                        <span class="info-value" id="userNameGeneral">—</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span class="info-label">Correo:</span>
+                        <span class="info-value" id="userEmailGeneral">—</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span class="info-label">Teléfono:</span>
+                        <span class="info-value" id="userPhoneGeneral">—</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="info-label">Dirección:</span>
+                        <span class="info-value" id="userAddressGeneral">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Editar Perfil -->
+            <div id="edit-profile">
+                <h2 class="section-title">
+                    <i class="fas fa-edit"></i>
+                    Editar Perfil
+                </h2>
+                
+                <form id="editProfileForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editName" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="editName" value="Juan Pérez González">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editEmail" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="editEmail" value="juan.perez@email.com">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editPhone" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="editPhone" value="+56 9 1234 5678">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="editAddress" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="editAddress" value="Av. Libertador 123, Santiago, Chile">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-custom">
+                        <i class="fas fa-save me-2"></i>
+                        Guardar Cambios
+                    </button>
+                </form>
+            </div>
+            
+
+            <!-- Sección Servicios -->
+            <div id="services">
+                <h2 class="section-title">
+                    <i class="fas fa-list"></i>
+                    Mis Servicios
+                </h2>
+                
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h5 class="mb-0">Historial de Servicios</h5>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="search-box" id="serviceSearch" placeholder="Buscar servicios...">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table" id="servicesTable">
+                            <tbody>
+                                <section id="historial-solicitudes" class="section-content">
+                                
+                                <div id="contenedorHistorial">
+                                    <p>Cargando solicitudes...</p>
+                                </div>
+                                </section>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 🔒 Panel solo visible para administradores -->
+                    <div id="adminPanel" style="display: none;">
+                    <div class="table-container">
+                        <h3>Gestión de Servicios</h3>
+
+                        <table id="tablaServicios" class="table">
+                        <thead>
+                            <tr>
+                                <th>Servicio</th>
+                                <th>Servicio</th>
+                                <th>Precio Base</th>
+                                <th>Activo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        </table>
+
+                        <button id="btnNuevoServicio" class="btn btn-success">➕ Agregar Servicio</button>
+                    </div>
+                    </div>
+                </div>
+                
+
+                <!-- Sección Solicitar Servicio -->
+                <div id="request-service">
+                    <h2 class="section-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Solicitar Nuevo Servicio
+                    </h2>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Serás redirigido a nuestra página de solicitud de servicios.
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="page-1.html" class="btn btn-custom btn-lg">
+                            <i class="fas fa-external-link-alt me-2"></i>
+                            Ir a Solicitar Servicio
+                        </a>
+                    </div>
+                </div>
+
+                <!--dirigir a la informacion-->
+                <div id="mas-info">
+                    <h2 class="section-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Saber mas sobre los servicios!
+                    </h2>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Serás redirigido a nuestra página informativa de los servicios.
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="empresa.html" class="btn btn-custom btn-lg">
+                            <i class="fas fa-external-link-alt me-2"></i>
+                            Ir a informativa de los servicios
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const stored = localStorage.getItem('usuario');
+    if (!stored) {
+        return (window.location.href = 'login.html');
+    }
+
+    const user = JSON.parse(stored);
+
+    // Función para actualizar la interfaz
+    function updateUserInterface(userData) {
+        const nameEl = document.getElementById('userNameGeneral');
+        const emailEl = document.getElementById('userEmailGeneral');
+        const phoneEl = document.getElementById('userPhoneGeneral');
+        const addressEl = document.getElementById('userAddressGeneral');
+
+        if (nameEl) nameEl.textContent = userData.nombre || '—';
+        if (emailEl) emailEl.textContent = userData.email || '—';
+        if (phoneEl) phoneEl.textContent = userData.telefono || '—';
+        if (addressEl) addressEl.textContent = userData.direccion || '—';
+
+        const editName = document.getElementById('editName');
+        const editEmail = document.getElementById('editEmail');
+        const editPhone = document.getElementById('editPhone');
+        const editAddress = document.getElementById('editAddress');
+
+        if (editName) editName.value = userData.nombre || '';
+        if (editEmail) editEmail.value = userData.email || '';
+        if (editPhone) editPhone.value = userData.telefono || '';
+        if (editAddress) editAddress.value = userData.direccion || '';
+    }
+
+    updateUserInterface(user);
+
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    // cargarHistorialSolicitudes(usuario.email, usuario.rol);
+
+    showSection('general');
+
+    if (user.id) {
+        fetch(`http://localhost:3000/usuarios/${user.id}`)
+        .then(res => {
+            if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
+            return res.json();
+        })
+        .then(u => updateUserInterface(u))
+        .catch(() => {});
+    }
+
+    const form = document.getElementById('editProfileForm');
+    if (form) {
+        form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const updatedUser = {
+            nombre: document.getElementById('editName').value.trim(),
+            email: document.getElementById('editEmail').value.trim(),
+            telefono: document.getElementById('editPhone').value.trim(),
+            direccion: document.getElementById('editAddress').value.trim()
+        };
+
+        if (!updatedUser.nombre || !updatedUser.email) {
+            alert('❌ Nombre y email son obligatorios');
+            return;
+        }
+
+        const updatedUserData = { ...user, ...updatedUser };
+        localStorage.setItem('usuario', JSON.stringify(updatedUserData));
+        updateUserInterface(updatedUserData);
+
+        if (user.id) {
+            fetch(`http://localhost:3000/usuarios/${user.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedUser)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) alert('✅ Perfil actualizado correctamente');
+                else alert('⚠️ Error en servidor, pero datos guardados localmente');
+            })
+            .catch(() => {
+                alert('⚠️ No se pudo conectar al servidor, pero datos guardados localmente');
+            });
+        } else {
+            alert('✅ Perfil actualizado correctamente');
+        }
+        });
+    }
+    });
+
+    function logout() {
+    const modal = document.getElementById('modalLogout');
+    modal.style.display = 'flex';
+
+    document.getElementById('btnSi').onclick = function () {
+        localStorage.removeItem('usuario');
+        window.location.href = 'login.html';
+    };
+
+    document.getElementById('btnNo').onclick = function () {
+        modal.style.display = 'none';
+    };
+    }
+
+    function showSection(sectionId) {
+    const allSections = ['general', 'edit-profile', 'services', 'request-service', 'mas-info'];
+    allSections.forEach(id => {
+        const section = document.getElementById(id);
+        if (section) section.classList.remove('active');
+    });
+
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) targetSection.classList.add('active');
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => link.classList.remove('active'));
+
+    const activeLink = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
+    if (activeLink) activeLink.classList.add('active');
+
+    closeSidebar();
+    }
+
+    function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('show');
+    }
+
+    function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    }
+
+    function searchServices() {
+    const searchInput = document.getElementById('serviceSearch');
+    const table = document.getElementById('servicesTable');
+    const rows = table.getElementsByTagName('tr');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+        const filter = this.value.toLowerCase();
+
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            const cells = row.getElementsByTagName('td');
+            let found = false;
+
+            for (let j = 0; j < cells.length; j++) {
+            if (cells[j].textContent.toLowerCase().indexOf(filter) > -1) {
+                found = true;
+                break;
+            }
+            }
+
+            row.style.display = found ? '' : 'none';
+        }
+        });
+    }
+    }
+
+    // =======================
+    // HISTORIAL DE SOLICITUDES (versión corregida)
+    // =======================
+    function cargarHistorialSolicitudes(email, rol) {
+    fetch(`http://localhost:3000/historial?email=${encodeURIComponent(email)}&rol=${rol}`)
+        .then(res => res.json())
+        .then(data => {
+        const contenedor = document.getElementById('contenedorHistorial');
+
+        if (!data.success || !data.data || data.data.length === 0) {
+            contenedor.innerHTML = '<p>No hay solicitudes registradas aún.</p>';
+            return;
+        }
+
+        let encabezado =
+            rol === 'admin'
+            ? `
+            <tr>
+                <th>Usuario</th>
+                <th>Servicio</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Precio</th>
+            </tr>`
+            : `
+            <tr>
+                <th>Servicio</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Precio</th>
+            </tr>`;
+
+        let tablaHTML = `
+            <table class="tabla-historial">
+            <thead>${encabezado}</thead>
+            <tbody>`;
+
+        data.data.forEach(s => {
+            const fechaFormateada =
+            s.fecha && typeof s.fecha === 'string'
+                ? s.fecha.replace('T', ' ').split('.')[0]
+                : 'Sin fecha';
+
+            // ✅ Corrección: prioriza s.servicio, luego s.nombre
+            const servicioMostrado = s.servicio || s.nombre || 'Sin servicio';
+
+            if (rol === 'admin') {
+            tablaHTML += `
+            <tr>
+                <td>${s.correo_usuario || '—'}</td>
+                <td>${servicioMostrado}</td>
+                <td>${fechaFormateada}</td>
+                <td>
+                <select class="estado-select" data-id="${s.id}">
+                    <option value="Pendiente" ${s.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                    <option value="En proceso" ${s.estado === 'En proceso' ? 'selected' : ''}>En proceso</option>
+                    <option value="Completado" ${s.estado === 'Completado' ? 'selected' : ''}>Completado</option>
+                    <option value="Cancelado" ${s.estado === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+                </select>
+                </td>
+                <td>$${s.precio ? s.precio.toLocaleString('es-CL') : '—'}</td>
+            </tr>`;
+            } else {
+            tablaHTML += `
+            <tr>
+                <td>${servicioMostrado}</td>
+                <td>${fechaFormateada}</td>
+                <td>${s.estado || 'Pendiente'}</td>
+                <td>$${s.precio ? s.precio.toLocaleString('es-CL') : '—'}</td>
+            </tr>`;
+            }
+        });
+
+        tablaHTML += '</tbody></table>';
+        contenedor.innerHTML = tablaHTML;
+        })
+        .catch(err => {
+        console.error('❌ Error cargando historial:', err);
+        document.getElementById('contenedorHistorial').innerHTML =
+            '<p>Error al cargar el historial.</p>';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarServicios);
+
+    async function cargarServicios() {
+    const res = await fetch('http://localhost:3000/servicios');
+    const data = await res.json();
+
+    const tbody = document.querySelector('#tablaServicios tbody');
+    tbody.innerHTML = '';
+
+    data.data.forEach(s => {
+        const fila = document.createElement('tr');
+        fila.dataset.id = s.id;
+        fila.innerHTML = `
+        <td style="display:none;">${s.id}</td>
+        <td contenteditable="true" class="nombre">${s.nombre}</td>
+        <td contenteditable="true" class="precio">${s.precio_base}</td>
+        <td><input type="checkbox" class="activo" ${s.activo ? 'checked' : ''}></td>
+        <td>
+            <button class="btn btn-primary btn-sm" onclick="actualizarServicio(${s.id}, this)">💾 Guardar</button>
+            <button class="btn btn-danger btn-sm" onclick="eliminarServicio(${s.id})">🗑️ Eliminar</button>
+        </td>`;
+        tbody.appendChild(fila);
+    });
+    }
+
+    async function actualizarServicio(id, btn) {
+    const fila = btn.closest('tr');
+    const nombre = fila.querySelector('.nombre').textContent.trim();
+    const precio = parseInt(fila.querySelector('.precio').textContent);
+    const activo = fila.querySelector('.activo').checked ? 1 : 0;
+
+    const res = await fetch(`http://localhost:3000/servicios/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, precio_base: precio, activo })
+    });
+
+    const data = await res.json();
+    alert(data.message);
+    }
+
+    async function eliminarServicio(id) {
+    if (!confirm('¿Seguro que deseas eliminar este servicio?')) return;
+
+    const res = await fetch(`http://localhost:3000/servicios/${id}`, { method: 'DELETE' });
+    const data = await res.json();
+    alert(data.message);
+    cargarServicios();
+    }
+
+    document.getElementById('btnNuevoServicio').addEventListener('click', async () => {
+    const nombre = prompt('Nombre del nuevo servicio:');
+    const precio = prompt('Precio base:');
+    if (!nombre || !precio) return;
+
+    const res = await fetch('http://localhost:3000/servicios', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, precio_base: parseInt(precio) })
+    });
+
+    const data = await res.json();
+    alert(data.message);
+    cargarServicios();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    if (!usuario) {
+        console.warn('⚠️ No hay usuario logueado');
+        return;
+    }
+
+    
+
+    if (usuario.rol === 'admin') {
+        document.getElementById('adminPanel').style.display = 'block';
+        cargarServicios();
+    } else {
+        const adminPanel = document.getElementById('adminPanel');
+        if (adminPanel) adminPanel.remove();
+    }
+    });
+
+    document.addEventListener('change', async e => {
+    if (e.target.classList.contains('estado-select')) {
+        const solicitudId = e.target.getAttribute('data-id');
+        const nuevoEstado = e.target.value;
+
+        try {
+        const res = await fetch(`http://localhost:3000/solicitudes/${solicitudId}/estado`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nuevoEstado })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            alert(`✅ ${data.message}`);
+        } else {
+            alert(`⚠️ ${data.message}`);
+        }
+        } catch (err) {
+        console.error('Error al actualizar estado:', err);
+        alert('❌ Error al actualizar el estado');
+        }
+    }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    if (!usuario || !usuario.email) {
+        document.getElementById('contenedorHistorial').innerHTML =
+        '<p>⚠️ Debes iniciar sesión para ver tu historial.</p>';
+        return;
+    }
+    cargarHistorialSolicitudes(usuario.email, usuario.rol);
+    });
+    </script>
+
+    <!-- Modal de cierre de sesión (colocado al final del body para overlay centrado) -->
+    <div id="modalLogout" aria-hidden="true">
+        <div class="modal-logout-content" role="dialog" aria-modal="true" aria-labelledby="modalLogoutTitle">
+            <div class="modal-logout-accent" aria-hidden="true"></div>
+            <div class="modal-logout-icon"><i class="fas fa-sign-out-alt"></i></div>
+            <p id="modalLogoutTitle" class="modal-logout-message">¿Quieres cerrar sesión?</p>
+            <div class="modal-logout-actions">
+                <button id="btnSi" class="btn-logout-confirm" type="button">Sí</button>
+                <button id="btnNo" class="btn-logout-cancel" type="button">No</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+ 
+   
