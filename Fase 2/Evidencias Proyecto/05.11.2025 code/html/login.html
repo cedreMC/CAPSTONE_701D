@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Serviclemant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Auth CSS -->
+    <link rel="stylesheet" href="style/auth.css">
+</head>
+<body class="auth-page">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark auth-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <img src="img/logo2.png" class="me-2" style="width: 70px; height: 70px;">
+                SERVICLEMANT
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="servicio.html">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="empresa.html">Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Formulario de Login -->
+    <div class="auth-container" style="margin-top: 60px; margin-bottom: 20px;">
+        <div class="form-container">
+            <h2 class="text-center">Iniciar Sesión</h2>
+
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope me-2"></i>Email
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="Ingresa tu email"
+                        required
+                    >
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contraseña" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Contraseña
+                    </label>
+                    <input 
+                        type="password" 
+                        id="contraseña" 
+                        name="contraseña" 
+                        class="form-input" 
+                        placeholder="Ingresa tu contraseña"
+                        required
+                    >
+                    <div class="error-message" id="contraseñaError"></div>
+                </div>
+
+                <button type="submit" class="btn-auth">
+                    <i  class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                </button>
+
+                <div class="text-center mt-4">
+                    <p class="mb-0" style="color: #666;">
+                        ¿No tienes cuenta?
+                        <a href="register.html" class="auth-link">Regístrate aquí</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/validaciones.js"></script>
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        if (usuario) {
+            // Si ya está logueado, redirigir automáticamente a home.html
+            window.location.href = 'home.html';
+        }
+
+        // Validación y envío de formulario de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Limpiar errores previos
+            clearErrors();
+
+            const email = document.getElementById('email').value.trim();
+            const contraseña = document.getElementById('contraseña').value.trim();
+            let isValid = true;
+
+            // Validar email
+            if (email === '') {
+                showError('emailError', 'El email es requerido');
+                document.getElementById('email').classList.add('error');
+                isValid = false;
+            }
+
+            // Validar contraseña
+            if (contraseña === '') {
+                showError('contraseñaError', 'La contraseña es requerida');
+                document.getElementById('contraseña').classList.add('error');
+                isValid = false;
+            }
+
+            if (isValid) {
+                const loginData = { email, contraseña };
+                console.log("[FRONT] Enviando datos de login:", loginData);
+
+                fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(loginData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error || 'Credenciales inválidas'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Bienvenido, ' + data.usuario.nombre);
+                    localStorage.setItem('usuario', JSON.stringify(data.usuario));
+                    window.location.href = 'home.html';
+                })
+                .catch(error => {
+                    showError('contraseñaError', error.message);
+                    console.error("[FRONT] Error en login:", error);
+                });
+            }
+        });
+
+        // Funciones de validación
+        function showError(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.style.display = 'block';
+        }
+
+        function clearErrors() {
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(e => {
+                e.style.display = 'none';
+                e.textContent = '';
+            });
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(i => i.classList.remove('error', 'success'));
+        }
+    </script>
+</body>
+</html>
