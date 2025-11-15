@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Serviclemant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Auth CSS -->
+    <link rel="stylesheet" href="style/auth.css">
+    
+    <style>
+        /* Estilos para el Modal de Bienvenida */
+        .welcome-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .welcome-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.3) 0%, rgba(77, 225, 139, 0.3) 100%);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .welcome-modal-content {
+            position: relative;
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 50%, #ecfeff 100%);
+            border-radius: 28px;
+            padding: 52px 44px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 70px rgba(0, 188, 212, 0.25), 0 10px 30px rgba(77, 225, 139, 0.2);
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid rgba(0, 188, 212, 0.15);
+            overflow: hidden;
+        }
+
+        .welcome-modal-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 188, 212, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .welcome-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 28px;
+            background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-aqua) 50%, var(--secondary-cyan) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), pulse 2s ease-in-out infinite;
+            box-shadow: 0 15px 40px rgba(0, 188, 212, 0.4), 0 5px 15px rgba(77, 225, 139, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-icon i {
+            font-size: 50px;
+            color: white;
+            animation: checkmark 0.6s ease-in-out 0.2s both;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .welcome-title {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-aqua) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            animation: fadeInUp 0.5s ease-out 0.2s both;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-message {
+            font-size: 19px;
+            color: #4a5568;
+            margin-bottom: 36px;
+            line-height: 1.7;
+            animation: fadeInUp 0.5s ease-out 0.3s both;
+            position: relative;
+            z-index: 1;
+            font-weight: 500;
+        }
+
+        .welcome-actions {
+            margin-bottom: 20px;
+            animation: fadeInUp 0.5s ease-out 0.4s both;
+        }
+
+        .btn-welcome {
+            background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-aqua) 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4), 0 3px 10px rgba(77, 225, 139, 0.3);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .btn-welcome:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 188, 212, 0.5), 0 5px 15px rgba(77, 225, 139, 0.4);
+            background: linear-gradient(135deg, var(--secondary-cyan) 0%, #5ef0a0 100%);
+        }
+
+        .btn-welcome:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .welcome-countdown {
+            font-size: 15px;
+            color: #718096;
+            margin-top: 20px;
+            animation: fadeInUp 0.5s ease-out 0.5s both;
+            position: relative;
+            z-index: 1;
+            font-weight: 500;
+        }
+
+        .welcome-countdown #countdown {
+            font-weight: 800;
+            font-size: 18px;
+            background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-aqua) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes checkmark {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-45deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2) rotate(5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Modo oscuro (si existe) */
+        @media (prefers-color-scheme: dark) {
+            .welcome-modal-overlay {
+                background: linear-gradient(135deg, rgba(0, 188, 212, 0.4) 0%, rgba(77, 225, 139, 0.4) 100%);
+            }
+
+            .welcome-modal-content {
+                background: linear-gradient(135deg, #1a202c 0%, #2d3748 50%, #1a365d 100%);
+                border-color: rgba(0, 188, 212, 0.4);
+            }
+
+            .welcome-title {
+                background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-aqua) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .welcome-message {
+                color: #cbd5e0;
+            }
+
+            .welcome-countdown {
+                color: #a0aec0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .welcome-modal-content {
+                padding: 36px 24px;
+                max-width: 90%;
+            }
+
+            .welcome-title {
+                font-size: 24px;
+            }
+
+            .welcome-message {
+                font-size: 16px;
+            }
+
+            .welcome-icon {
+                width: 85px;
+                height: 85px;
+            }
+
+            .welcome-icon i {
+                font-size: 42px;
+            }
+
+            .btn-welcome {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body class="auth-page">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark auth-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <img src="img/logo2.png" class="me-2" style="width: 70px; height: 70px;">
+                SERVICLEMANT
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="servicio.html">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="empresa.html">Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Formulario de Login -->
+    <div class="auth-container" style="margin-top: 60px; margin-bottom: 20px;">
+        <div class="form-container">
+            <h2 class="text-center">Iniciar Sesión</h2>
+
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope me-2"></i>Email
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="Ingresa tu email"
+                        required
+                    >
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contraseña" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Contraseña
+                    </label>
+                    <input 
+                        type="password" 
+                        id="contraseña" 
+                        name="contraseña" 
+                        class="form-input" 
+                        placeholder="Ingresa tu contraseña"
+                        required
+                    >
+                    <div class="error-message" id="contraseñaError"></div>
+                </div>
+
+                <button type="submit" class="btn-auth">
+                    <i  class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                </button>
+
+                <div class="text-center mt-4">
+                    <p class="mb-0" style="color: #666;">
+                        ¿No tienes cuenta?
+                        <a href="register.html" class="auth-link">Regístrate aquí</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Bienvenida -->
+    <div id="welcomeModal" class="welcome-modal" style="display: none;">
+        <div class="welcome-modal-overlay"></div>
+        <div class="welcome-modal-content">
+            <div class="welcome-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="welcome-title" id="welcomeTitle">¡Bienvenido de nuevo!</h2>
+            <p class="welcome-message" id="welcomeMessage">Nos alegra verte otra vez 😊</p>
+            <div class="welcome-actions">
+                <button class="btn-welcome" id="btnGoToProfile">
+                    <i class="fas fa-user-circle me-2"></i>Ir a mi perfil
+                </button>
+            </div>
+            <div class="welcome-countdown">
+                <span id="countdownText">Redirigiendo en <span id="countdown">3</span> segundos...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/validaciones.js"></script>
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        if (usuario) {
+            // Si ya está logueado, redirigir automáticamente a home.html
+            window.location.href = 'home.html';
+        }
+
+        // Validación y envío de formulario de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Limpiar errores previos
+            clearErrors();
+
+            const email = document.getElementById('email').value.trim();
+            const contraseña = document.getElementById('contraseña').value.trim();
+            let isValid = true;
+
+            // Validar email
+            if (email === '') {
+                showError('emailError', 'El email es requerido');
+                document.getElementById('email').classList.add('error');
+                isValid = false;
+            }
+
+            // Validar contraseña
+            if (contraseña === '') {
+                showError('contraseñaError', 'La contraseña es requerida');
+                document.getElementById('contraseña').classList.add('error');
+                isValid = false;
+            }
+
+            if (isValid) {
+                const loginData = { email, contraseña };
+                console.log("[FRONT] Enviando datos de login:", loginData);
+
+                fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(loginData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error || 'Credenciales inválidas'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Guardar usuario en localStorage
+                    localStorage.setItem('usuario', JSON.stringify(data.usuario));
+                    
+                    // Mostrar modal de bienvenida
+                    mostrarModalBienvenida(data.usuario.nombre);
+                })
+                .catch(error => {
+                    showError('contraseñaError', error.message);
+                    console.error("[FRONT] Error en login:", error);
+                });
+            }
+        });
+
+        // Funciones de validación
+        function showError(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.style.display = 'block';
+        }
+
+        function clearErrors() {
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(e => {
+                e.style.display = 'none';
+                e.textContent = '';
+            });
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(i => i.classList.remove('error', 'success'));
+        }
+
+        // Variable para almacenar el intervalo del contador
+        let countdownInterval = null;
+
+        // Función para mostrar el modal de bienvenida
+        function mostrarModalBienvenida(nombreUsuario) {
+            const modal = document.getElementById('welcomeModal');
+            const welcomeTitle = document.getElementById('welcomeTitle');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const btnGoToProfile = document.getElementById('btnGoToProfile');
+            const countdownElement = document.getElementById('countdown');
+            const countdownText = document.getElementById('countdownText');
+
+            // Limpiar cualquier intervalo previo
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+
+            // Personalizar mensaje según si tiene nombre o no
+            if (nombreUsuario && nombreUsuario.trim() !== '') {
+                welcomeTitle.textContent = `¡Bienvenido de nuevo, ${nombreUsuario}!`;
+            } else {
+                welcomeTitle.textContent = '¡Bienvenido de nuevo!';
+            }
+            welcomeMessage.textContent = 'Nos alegra verte otra vez 😊';
+
+            // Resetear el texto del contador
+            countdownText.innerHTML = 'Redirigiendo en <span id="countdown">3</span> segundos...';
+            const countdownSpan = document.getElementById('countdown');
+
+            // Mostrar modal
+            modal.style.display = 'flex';
+
+            // Configurar botón de redirección (usando once para evitar múltiples listeners)
+            btnGoToProfile.onclick = () => {
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+                redirigirAPerfil();
+            };
+
+            // Contador regresivo y redirección automática
+            let segundos = 5;
+            countdownSpan.textContent = segundos;
+
+            countdownInterval = setInterval(() => {
+                segundos--;
+                if (segundos > 0) {
+                    countdownSpan.textContent = segundos;
+                } else {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                    countdownText.textContent = 'Redirigiendo...';
+                    setTimeout(() => {
+                        redirigirAPerfil();
+                    }, 300);
+                }
+            }, 1000);
+        }
+
+        // Función para redirigir al perfil
+        function redirigirAPerfil() {
+            const modal = document.getElementById('welcomeModal');
+            modal.style.animation = 'fadeOut 0.3s ease-in-out';
+            setTimeout(() => {
+                window.location.href = 'perfil.html';
+            }, 300);
+        }
+
+        // Agregar animación de salida
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

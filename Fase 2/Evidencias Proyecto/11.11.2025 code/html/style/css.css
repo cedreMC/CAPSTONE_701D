@@ -1,0 +1,69 @@
+:root {
+  --primary-color: #00ffff;  
+  --secondary-color: #20c997; 
+  --dark-color: #0d6efd;      
+}
+
+/* General */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--primary-color);
+}
+
+.navbar .nav-link {
+  color: white !important;
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: var(--secondary-color) !important;
+}
+
+/* Carrusel */
+.carousel-item img {
+  object-fit: cover;
+  height: 500px;
+}
+
+.carousel-caption h5 {
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+}
+
+.carousel-caption p {
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+}
+
+/* Secciones */
+.section-title {
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+/* Footer */
+footer {
+  background-color: #f8f9fa;
+  padding: 40px 0;
+}
+
+footer h5 {
+  color: var(--dark-color);
+  margin-bottom: 15px;
+}
+
+footer a {
+  text-decoration: none;
+  color: var(--secondary-color);
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: var(--dark-color);
+}
