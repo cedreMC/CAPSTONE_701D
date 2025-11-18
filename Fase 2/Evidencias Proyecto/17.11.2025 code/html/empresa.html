@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de la Empresa - Serviclemant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <link rel="icon" href="img/logo2.png" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary-cyan: #00BCD4;
+            --primary-aqua: #4de18b;
+            --secondary-cyan: #26C6DA;
+            --dark-cyan: #0097A7;
+            --light-aqua: #B2EBF2;
+            --text-dark: #2C3E50;
+            --text-light: #FFFFFF;
+            --bg-light: #F8F9FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #1a2f4a 0%, #2a4a6b 25%, #1e3a5f 50%, #2a4a6b 75%, #1a2f4a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Fondo animado con partículas y ondas - Más visible */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 188, 212, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(77, 225, 161, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 40% 20%, rgba(38, 198, 218, 0.2) 0%, transparent 60%),
+                radial-gradient(circle at 60% 70%, rgba(0, 188, 212, 0.15) 0%, transparent 50%);
+            animation: particleMove 18s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes particleMove {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            25% { 
+                transform: translate(60px, -60px) scale(1.3);
+                opacity: 1.2;
+            }
+            50% { 
+                transform: translate(-50px, 50px) scale(0.8);
+                opacity: 0.9;
+            }
+            75% { 
+                transform: translate(50px, 60px) scale(1.2);
+                opacity: 1.1;
+            }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 188, 212, 0.08) 2px,
+                    rgba(0, 188, 212, 0.08) 4px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(77, 225, 161, 0.08) 2px,
+                    rgba(77, 225, 161, 0.08) 4px
+                );
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100px, 100px) rotate(360deg); }
+        }
+
+        body > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            transition: all 0.3s ease;
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 188, 212, 0.2);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: var(--text-light) !important;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: var(--light-aqua) !important;
+            transform: translateY(-2px);
+        }
+
+        .navbar-brand img {
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--light-aqua) !important;
+            transform: translateY(-2px);
+        }
+        
+        
+        /* Hero Section - Mejorado */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            padding: 140px 0 80px;
+            color: var(--text-light);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.15;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 
+                2px 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(0, 188, 212, 0.3);
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 2;
+            animation: heroTitleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes heroTitleGlow {
+            0%, 100% { 
+                text-shadow: 
+                    2px 2px 8px rgba(0, 0, 0, 0.3),
+                    0 0 25px rgba(0, 188, 212, 0.5);
+            }
+            50% { 
+                text-shadow: 
+                    2px 2px 8px rgba(0, 0, 0, 0.3),
+                    0 0 40px rgba(0, 188, 212, 0.8),
+                    0 0 60px rgba(77, 225, 161, 0.5),
+                    0 0 80px rgba(0, 188, 212, 0.3);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 400;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Cards Section - Mejorado */
+        .cards-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 45px;
+            box-shadow: 
+                0 20px 60px rgba(0, 188, 212, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+                0 0 40px rgba(0, 188, 212, 0.1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            border: 2px solid rgba(0, 188, 212, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(0, 188, 212, 0.1) 50%,
+                transparent 70%
+            );
+            transform: rotate(45deg);
+            animation: shine 8s infinite;
+            transition: opacity 0.6s;
+        }
+
+        @keyframes shine {
+            0% { 
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+                opacity: 0;
+            }
+            50% { 
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+                opacity: 0.4;
+            }
+            100% { 
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        .info-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, 
+                var(--primary-cyan) 0%,
+                var(--primary-aqua) 50%,
+                var(--primary-cyan) 100%
+            );
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: shimmerBar 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmerBar {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .info-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .info-card:hover {
+            transform: translateY(-12px) scale(1.02) rotate(0deg);
+            box-shadow: 
+                0 30px 80px rgba(0, 188, 212, 0.3),
+                0 0 0 2px rgba(0, 188, 212, 0.3) inset,
+                0 0 60px rgba(77, 225, 161, 0.2);
+            border-color: rgba(0, 188, 212, 0.5);
+            animation: none;
+        }
+
+        .info-card:hover::before {
+            opacity: 0.3;
+        }
+
+        .info-card h3 {
+            color: var(--dark-cyan);
+            font-weight: 700;
+            margin-bottom: 24px;
+            font-size: 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-card h3 i {
+            color: var(--primary-cyan);
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.15), rgba(0, 188, 212, 0.08));
+            padding: 12px;
+            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .info-card:hover h3 i {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.3);
+        }
+
+        .info-card p {
+            color: #444;
+            line-height: 1.9;
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .info-card ul li {
+            padding: 12px 0;
+            color: #444;
+            position: relative;
+            padding-left: 32px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-card ul li:hover {
+            color: var(--dark-cyan);
+            transform: translateX(5px);
+        }
+
+        .info-card ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-cyan);
+            font-weight: 700;
+            font-size: 1.2rem;
+            width: 26px;
+            height: 26px;
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.15), rgba(0, 188, 212, 0.08));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0, 188, 212, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .info-card ul li:hover:before {
+            transform: scale(1.15);
+            box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+        }
+
+        /* Chart Section - Mejorado */
+        .chart-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .chart-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 50px;
+            box-shadow: 
+                0 25px 70px rgba(0, 188, 212, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.3) inset,
+                0 0 60px rgba(0, 188, 212, 0.15);
+            margin: 0 auto;
+            max-width: 900px;
+            border: 2px solid rgba(0, 188, 212, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chart-container:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 35px 90px rgba(0, 188, 212, 0.3),
+                0 0 0 2px rgba(255, 255, 255, 0.5) inset,
+                0 0 100px rgba(77, 225, 161, 0.25);
+        }
+
+        .chart-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, 
+                transparent,
+                var(--primary-cyan),
+                var(--primary-aqua),
+                var(--primary-cyan),
+                transparent
+            );
+            background-size: 200% 100%;
+            animation: shimmerWave 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmerWave {
+            0% { 
+                left: -100%;
+                background-position: 0% 50%;
+            }
+            50% { 
+                left: 100%;
+                background-position: 100% 50%;
+            }
+            100% { 
+                left: -100%;
+                background-position: 0% 50%;
+            }
+        }
+
+        .chart-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 188, 212, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(77, 225, 161, 0.05) 0%, transparent 50%);
+            animation: chartGlow 10s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes chartGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 450px;
+            width: 100%;
+            margin-top: 20px;
+            z-index: 2;
+        }
+
+        /* Stats panel next to chart */
+        .stats-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 16px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 
+                0 15px 40px rgba(0, 188, 212, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            border-left: 6px solid var(--primary-cyan);
+            width: 100%;
+            max-width: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                var(--primary-cyan) 0%,
+                var(--primary-aqua) 50%,
+                var(--primary-cyan) 100%
+            );
+            background-size: 100% 200%;
+            animation: gradientFlow 3s ease infinite;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 0%; }
+            50% { background-position: 0% 100%; }
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 
+                0 25px 60px rgba(0, 188, 212, 0.3),
+                0 0 0 2px rgba(0, 188, 212, 0.4) inset,
+                0 0 50px rgba(77, 225, 161, 0.2);
+        }
+
+        .stat-card:hover::before {
+            width: 10px;
+        }
+
+        .stat-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            color: white;
+            font-size: 24px;
+            box-shadow: 
+                0 8px 25px rgba(0, 188, 212, 0.3),
+                0 0 20px rgba(0, 188, 212, 0.2) inset;
+            flex: 0 0 64px;
+            aspect-ratio: 1 / 1;
+            line-height: 1;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1);
+            box-shadow: 
+                0 12px 35px rgba(0, 188, 212, 0.4),
+                0 0 25px rgba(77, 225, 161, 0.3) inset;
+        }
+
+        .stat-content h4 {
+            margin: 0;
+            color: var(--dark-cyan);
+            font-weight: 700;
+            font-size: 2rem;
+            line-height: 1.2;
+        }
+
+        .stat-content p {
+            margin: 6px 0 0 0;
+            color: #61707d;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .stat-content { 
+            text-align: center;
+            flex: 1;
+        }
+
+        /* Alineación en pantallas grandes */
+        @media (min-width: 992px) {
+            .stats-panel {
+                flex-direction: row;
+                align-items: stretch;
+                margin-top: 24px;
+            }
+            .stat-card {
+                flex: 1 1 calc(50% - 12px);
+            }
+        }
+
+        /* Responsive mejorado */
+        @media (max-width: 768px) {
+            .cards-section {
+                padding: 60px 0;
+            }
+
+            .info-card {
+                padding: 35px 28px;
+                margin-bottom: 24px;
+            }
+
+            .info-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .chart-section {
+                padding: 60px 0;
+            }
+
+            .chart-container {
+                padding: 35px 25px;
+            }
+
+            .chart-title {
+                font-size: 1.8rem;
+            }
+
+            .map-section {
+                padding: 60px 0;
+            }
+
+            .map-container {
+                padding: 30px 20px;
+            }
+
+            .map-title {
+                font-size: 1.8rem;
+            }
+
+            .stat-card {
+                padding: 28px 24px;
+            }
+
+            .stat-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 20px;
+            }
+
+            .stat-content h4 {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .info-card {
+                padding: 30px 20px;
+            }
+
+            .info-card h3 {
+                font-size: 1.3rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .chart-container {
+                padding: 25px 20px;
+            }
+
+            .chart-title {
+                font-size: 1.5rem;
+                flex-direction: column;
+            }
+
+            .map-container {
+                padding: 25px 18px;
+            }
+
+            .map-title {
+                font-size: 1.5rem;
+                flex-direction: column;
+            }
+
+            #map {
+                height: 280px;
+            }
+
+            .stat-card {
+                flex-direction: column;
+                padding: 24px 20px;
+            }
+
+            .stat-content h4 {
+                font-size: 1.4rem;
+            }
+        }
+
+        .chart-title {
+            text-align: center;
+            color: var(--dark-cyan);
+            font-weight: 700;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            z-index: 2;
+            animation: titleGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                text-shadow: 0 0 15px rgba(0, 188, 212, 0.4);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 30px rgba(0, 188, 212, 0.7), 
+                    0 0 50px rgba(77, 225, 161, 0.5),
+                    0 0 70px rgba(0, 188, 212, 0.3);
+            }
+        }
+
+        .chart-title i {
+            color: var(--primary-cyan);
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(0, 188, 212, 0.05));
+            padding: 12px;
+            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .chart-title span {
+            display: inline-block;
+        }
+
+        /* Map Section - Mejorado */
+        .map-section {
+            background: linear-gradient(135deg, var(--light-aqua), var(--secondary-cyan));
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .map-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .map-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: 
+                0 25px 70px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.3) inset,
+                0 0 50px rgba(0, 188, 212, 0.2);
+            margin: 0 auto;
+            max-width: 700px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+            z-index: 2;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .map-container:hover {
+            transform: scale(1.03) translateY(-10px);
+            box-shadow: 
+                0 35px 90px rgba(0, 0, 0, 0.3),
+                0 0 0 2px rgba(255, 255, 255, 0.5) inset,
+                0 0 80px rgba(77, 225, 161, 0.35);
+        }
+
+        .map-title {
+            text-align: center;
+            color: var(--dark-cyan);
+            font-weight: 700;
+            margin-bottom: 35px;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            z-index: 2;
+            animation: titleGlow 4s ease-in-out infinite;
+        }
+
+        .map-title i {
+            color: var(--primary-cyan);
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(0, 188, 212, 0.05));
+            padding: 12px;
+            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .map-title span {
+            display: inline-block;
+        }
+
+        #map {
+            height: 350px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        /* Estilos para el mapa de Leaflet */
+        .leaflet-container {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .leaflet-popup-content-wrapper {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .leaflet-popup-tip {
+            background: white;
+        }
+
+        .custom-div-icon {
+            background: transparent !important;
+            border: none !important;
+        }
+
+        .address-info {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        .address-text {
+            color: var(--text-dark);
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            line-height: 1.7;
+        }
+
+        .btn-maps {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            border: none;
+            padding: 14px 32px;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.3);
+            color: var(--text-light);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        .btn-maps:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 188, 212, 0.4);
+            color: var(--text-light);
+        }
+
+        .btn-maps i {
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark-cyan), var(--primary-cyan));
+            color: var(--text-light);
+            padding: 40px 0 20px;
+        }
+
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .footer p, .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--light-aqua);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 30px;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .info-card {
+                padding: 30px 20px;
+                margin-bottom: 30px;
+            }
+            
+            .chart-container {
+                padding: 30px 20px;
+            }
+            
+            .map-container {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .info-card {
+                padding: 25px 15px;
+            }
+        }
+
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+/* ===== MODAL DE CERRAR SESIÓN (estilo fijo, inspirado en home.html) ===== */
+        #modalLogout {
+            display: none; /* se muestra cuando se añade .show */
+            position: fixed;
+            inset: 0;
+            z-index: 3000; /* muy alto para que esté por encima de todo */
+            background: rgba(5, 18, 24, 0.45); /* más oscuro y sutil */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 200ms ease-in-out, visibility 200ms ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #modalLogout.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-logout-content {
+            background: #ffffff;
+            color: #1A1A1A;
+            padding: 20px 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            max-width: 420px;
+            width: 100%;
+            transform: translateY(-8px) scale(0.98);
+            transition: transform 220ms ease-in-out, opacity 220ms ease-in-out;
+            opacity: 0;
+        }
+
+        /* animar el contenido cuando el modal aparece */
+        #modalLogout.show .modal-logout-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* pequeña barra de acento y icono decorativo */
+        .modal-logout-accent {
+            height: 6px;
+            width: 72px;
+            background: linear-gradient(90deg, #00BCD4, #0097A7);
+            border-radius: 6px;
+            margin: 0 auto 12px auto;
+            box-shadow: 0 6px 18px rgba(0,188,212,0.08);
+        }
+
+        .modal-logout-icon {
+            font-size: 26px;
+            color: #00BCD4;
+            margin-bottom: 8px;
+        }
+
+        .modal-logout-message {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+
+        .modal-logout-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .btn-logout-confirm,
+        .btn-logout-cancel {
+            padding: 0.55rem 1rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            min-width: 110px;
+            transition: transform 150ms ease-in-out, box-shadow 150ms ease-in-out;
+        }
+
+        .btn-logout-confirm {
+            background: linear-gradient(90deg, #00BCD4, #0097A7);
+            color: #ffffff;
+            box-shadow: 0 8px 24px rgba(0,188,212,0.18);
+        }
+
+        .btn-logout-cancel {
+            background: transparent;
+            color: #1A1A1A;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .btn-logout-confirm:hover { transform: translateY(-3px); }
+        .btn-logout-cancel:hover { background: rgba(0,0,0,0.04); }
+
+        #modalLogout .btn-logout-confirm:focus,
+        #modalLogout .btn-logout-cancel:focus {
+            outline: 3px solid rgba(38,198,218,0.22);
+            outline-offset: 2px;
+        }
+
+        /* Ajustes para móviles */
+        @media (max-width: 480px) {
+            .modal-logout-content { padding: 14px; max-width: 95%; }
+            .modal-logout-message { font-size: 1rem; }
+            .btn-logout-confirm, .btn-logout-cancel { padding: 0.45rem 0.75rem; min-width: 90px; font-size: 0.95rem; }
+            .modal-logout-accent { width: 56px; height: 5px; }
+        }
+
+        /* Preferencias de movimiento reducido */
+        @media (prefers-reduced-motion: reduce) {
+            .modal-logout-content,
+            #modalLogout { transition: none; transform: none; }
+        }
+
+        /* Modal de Términos y Condiciones */
+        #modalTerminos {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        #modalTerminos.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-terminos-content {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            width: 75%;
+            height: 75%;
+            max-width: 900px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(-20px) scale(0.95);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            position: relative;
+        }
+
+        #modalTerminos.show .modal-terminos-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-terminos-header {
+            padding: 20px 30px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-terminos-header h2 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-terminos-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .modal-terminos-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-terminos-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            color: var(--text-dark);
+        }
+
+        .modal-terminos-body h3 {
+            color: var(--dark-cyan);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .modal-terminos-body h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .modal-terminos-body p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-terminos-body ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-terminos-body ol li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-terminos-body strong {
+            color: var(--dark-cyan);
+        }
+
+        /* Scrollbar personalizado */
+        .modal-terminos-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-terminos-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal-terminos-body::-webkit-scrollbar-thumb {
+            background: var(--primary-cyan);
+            border-radius: 10px;
+        }
+
+        .modal-terminos-body::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-cyan);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .modal-terminos-content {
+                width: 90%;
+                height: 85%;
+            }
+
+            .modal-terminos-header {
+                padding: 15px 20px;
+            }
+
+            .modal-terminos-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .modal-terminos-body {
+                padding: 20px;
+            }
+
+            .modal-terminos-body h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #modalTerminos,
+            .modal-terminos-content {
+                transition: none;
+            }
+        }
+
+        /* Modal de Política de Privacidad */
+        #modalPrivacidad {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        #modalPrivacidad.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-privacidad-content {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            width: 75%;
+            height: 75%;
+            max-width: 900px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(-20px) scale(0.95);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            position: relative;
+        }
+
+        #modalPrivacidad.show .modal-privacidad-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-privacidad-header {
+            padding: 20px 30px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-privacidad-header h2 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-privacidad-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .modal-privacidad-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-privacidad-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            color: var(--text-dark);
+        }
+
+        .modal-privacidad-body h3 {
+            color: var(--dark-cyan);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .modal-privacidad-body h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .modal-privacidad-body p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-privacidad-body ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-privacidad-body ul li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-privacidad-body strong {
+            color: var(--dark-cyan);
+        }
+
+        /* Scrollbar personalizado */
+        .modal-privacidad-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-privacidad-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal-privacidad-body::-webkit-scrollbar-thumb {
+            background: var(--primary-cyan);
+            border-radius: 10px;
+        }
+
+        .modal-privacidad-body::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-cyan);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .modal-privacidad-content {
+                width: 90%;
+                height: 85%;
+            }
+
+            .modal-privacidad-header {
+                padding: 15px 20px;
+            }
+
+            .modal-privacidad-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .modal-privacidad-body {
+                padding: 20px;
+            }
+
+            .modal-privacidad-body h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #modalPrivacidad,
+            .modal-privacidad-content {
+                transition: none;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar --> 
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container " >
+            <img src="img/logo2.png" class="logo-navbar" style="width: 70px; height: 70px;"> 
+            <a class="navbar-brand" href="home.html">
+                   SERVICLEMANT 
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="servicio.html">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="empresa.html">Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html#contacto">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+     <div id="modalLogout" aria-hidden="true">
+        <div class="modal-logout-content" role="dialog" aria-modal="true" aria-labelledby="modalLogoutTitle">
+                <p id="modalLogoutTitle" class="modal-logout-message">¿Quieres cerrar sesión?</p>
+            <div class="modal-logout-actions">
+                <button id="btnSi" class="btn-logout-confirm" type="button">Sí</button>
+                <button id="btnNo" class="btn-logout-cancel" type="button">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title fade-in">Información de la Empresa</h1>
+            <p class="hero-subtitle fade-in">Conoce más sobre Serviclemant y nuestro compromiso con la excelencia</p>
+        </div>
+    </section>
+
+    <!-- Cards Section -->
+    <section class="cards-section">
+        <div class="container">
+            <div class="row">
+                <!-- Card 1 - 5 columnas -->
+                <div class="col-lg-5 col-md-6 mb-4">
+                    <div class="info-card fade-in">
+                        <h3><i class="fas fa-building me-2"></i>Nuestra Empresa</h3>
+                        <p>Serviclemant Nuestro servicio está orientado principalmente al ámbito empresarial, con especial atención a instalaciones industriales, oficinas institucionales y empresas privadas.</p>
+                        <p>Nuestro servicio está orientado principalmente al ámbito empresarial, con especial atención a instalaciones industriales, oficinas institucionales y empresas privadas.</p>
+                        <ul>
+                            <li>Fundada en 2014</li>
+                            <li>Más de 500 clientes satisfechos</li>
+
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Card 2 - 7 columnas -->
+                <div class="col-lg-7 col-md-6 mb-4">
+                    <div class="info-card fade-in">
+                        <h3><i class="fas fa-star me-2"></i>Nuestros principales servicios</h3>
+                        <p>Contamos con personal especializado en la ejecución de servicios de aseo y mantenimiento en oficinas, instalaciones industriales y edificios institucionales.</p>
+                        <ul>
+                            <li><strong>mantenimiento de oficinas:</strong> Enfocado en mantener un ambiente limpio, ordenado y cómodo para el personal de oficina.</li>
+                            <li><strong>mantenimiento de instalaciones industriales:</strong> Implica mayor exigencia en limpieza de áreas amplias, maquinaria, residuos específicos y normas de seguridad.</li>
+                            <li><strong>mantenimiento de edificios institucionales:</strong> Requiere protocolos de higiene y presentación.</li>
+                            <li><strong>Limpieza de vidrios:</strong> Servicio complementario para mejorar la imagen y luminosidad de oficinas e instalaciones.</li>
+                            <li><strong>Lavado de alfombras:</strong> Orientado a oficinas y espacios institucionales con alfombrado.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chart Section -->
+    <section class="chart-section">
+        <div class="container">
+            <div class="row align-items-stretch g-4">
+                <div class="chart-container fade-in h-100">
+                    <h3 class="chart-title">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Crecimiento de la Empresa</span>
+                    </h3>
+                    <div class="chart-wrapper">
+                        <canvas id="companyChart"></canvas>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </section>
+
+    <section class="map-section">
+        <div class="container">
+            <div class="row d-flex align-items-stretch">  <!-- Flex fila principal -->
+                <div class="col-lg-6">
+                    <div class="map-container fade-in h-100 d-flex flex-column">
+                        <h3 class="map-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Nuestra Ubicación</span>
+                        </h3>
+                        <div id="map" style="flex-grow: 1;"></div> <!-- Para que el mapa ocupe espacio disponible -->
+                        <div class="address-info mt-3">
+                            <p class="address-text">Guardia Vieja 202 oficina 403 Providencia, chile</p>
+                            <a href="https://www.google.com/maps/place/Guardia+Vieja+%23202,+of+403,+8320000+Providencia,+Regi%C3%B3n+Metropolitana/@-33.4243642,-70.6100896,18z/data=!4m15!1m8!3m7!1s0x9662cf65f5a9aee3:0x3c2e5d73d621a1e4!2sGuardia+Vieja+%23202,+of+403,+8320000+Providencia,+Regi%C3%B3n+Metropolitana!3b1!8m2!3d-33.4242945!4d-70.6099353!16s%2Fg%2F11xs_70dvy!3m5!1s0x9662cf65f5a9aee3:0x3c2e5d73d621a1e4!8m2!3d-33.4242945!4d-70.6099353!16s%2Fg%2F11xs_70dvy?entry=ttu&g_ep=EgoyMDI1MDkyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-maps">
+                                <i class="fas fa-map-marker-alt me-2"></i>Abrir mapa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 d-flex flex-column justify-content-between"> <!-- Columna derecha como flex columna -->
+                    <section class="cards">
+                        <div class="info-card fade-in">
+                            <h3><i class="fas fa-cogs me-2"></i>Modalidad del Servicio</h3>
+                            <p>Los servicios se adaptan al ritmo y necesidades de cada cliente, pudiendo programarse con frecuencia diaria, semanal, quincenal, mensual o trimestral.</p>
+                            <p> La dotación del personal se define en función de la carga de trabajo y se establece conforme a lo estipulado en los contratos de prestación de servicios.</p>
+                            
+                        </div>
+                    </section>
+                    
+                    <div class="stats-panel fade-in d-flex justify-content-start gap-3 mt-4"> <!-- Flex fila para stats -->
+                        <div class="stat-card d-flex align-items-center">
+                            <div class="stat-icon me-3">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>11 años</h4>
+                                <p>de experiencia en el mercado</p>
+                            </div>
+                        </div>
+                        <div class="stat-card d-flex align-items-center">
+                            <div class="stat-icon me-3" style="background: linear-gradient(135deg, var(--primary-aqua), var(--dark-cyan));">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>+500</h4>
+                                <p>clientes satisfechos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+
+
+    <!-- Footer -->
+    <footer class="footer py-5" style="background: #0eaec8;">
+        <div class="container">
+            <div class="row gy-4 justify-content-between">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Serviclemant</h5>
+                    <p>Tu empresa de confianza para servicios de limpieza profesional. Comprometidos con la excelencia y la satisfacción del cliente.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Servicios</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="servicio.html">mantenimiento de oficinas</a></li>
+                        <li><a href="servicio.html">mantenimiento de instalaciones industriales</a></li>
+                        <li><a href="servicio.html">mantenimiento de edificios institucionales</a></li>
+                        <li><a href="servicio.html">Limpieza de vidrios</a></li>
+                        <li><a href="servicio.html">Lavado de alfombras</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i>+56 9 9499 0878</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@serviclemant.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>Guardia Vieja 202 oficina 403 Providencia</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="home.html">Inicio</a></li>
+                        <li><a href="servicio.html">Servicios</a></li>
+                        <li><a href="empresa.html">Empresa</a></li>
+                        <li><a href="home.html#contacto">Contacto</a></li>
+                        <li><a href="home.html#contacto">Trabaja con nosotros!</a></li>
+                        <li><a href="#" onclick="event.preventDefault(); abrirModalPrivacidad();">Política de Privacidad</a></li>
+                        <li><a href="#" onclick="event.preventDefault(); abrirModalTerminos();">Términos y Condiciones</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-4 mt-4 border-top border-light">
+                <p class="mb-0" style="font-size: 14px;">&copy; 2024 Serviclemant. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+       window.addEventListener('DOMContentLoaded', () => {
+        const user = JSON.parse(localStorage.getItem('usuario')); // Leer usuario del localStorage
+
+        if (user) {
+            // Ocultar links de login y registro
+            const loginLink = document.querySelector('a.nav-link[href="login.html"]');
+            const registerLink = document.querySelector('a.nav-link[href="register.html"]');
+            if (loginLink) loginLink.style.display = 'none';
+            if (registerLink) registerLink.style.display = 'none';
+
+            // Crear link de perfil
+            const nav = document.querySelector('.navbar-nav');
+            const perfilItem = document.createElement('li');
+            perfilItem.classList.add('nav-item');
+            perfilItem.innerHTML = `<a class="nav-link" href="perfil.html">Hola ${user.nombre}!</a>`;
+            nav.appendChild(perfilItem);
+
+            // Crear botón de logout
+            const logoutItem = document.createElement('li');
+            logoutItem.classList.add('nav-item');
+            logoutItem.innerHTML = `<button class="btn btn-link nav-link" onclick="logout()">Cerrar sesión</button>`;
+            nav.appendChild(logoutItem);
+            }
+        });
+
+
+        // Cerrar sesif3n (mejor experiencia accesible)
+        function logout() {
+            const modal = document.getElementById('modalLogout');
+            const btnSi = document.getElementById('btnSi');
+            const btnNo = document.getElementById('btnNo');
+
+            if (!modal || !btnSi || !btnNo) return;
+
+            // abrir modal
+            modal.classList.add('show');
+            modal.setAttribute('aria-hidden', 'false');
+
+            // focus management: enviar foco al botón de cancelar para evitar confirmaciones accidentales
+            btnNo.focus();
+
+            // Handlers
+            const confirmHandler = function() {
+                // limpiar y redirigir
+                localStorage.removeItem('usuario');
+                cleanup();
+                window.location.href = 'login.html';
+            };
+
+            const cancelHandler = function() {
+                cleanup();
+            };
+
+            const backdropHandler = function(e) {
+                if (e.target === modal) cleanup();
+            };
+
+            const escHandler = function(e) {
+                if (e.key === 'Escape') cleanup();
+            };
+
+            function cleanup() {
+                // cerrar modal y quitar listeners
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                btnSi.removeEventListener('click', confirmHandler);
+                btnNo.removeEventListener('click', cancelHandler);
+                modal.removeEventListener('click', backdropHandler);
+                document.removeEventListener('keydown', escHandler);
+            }
+
+            btnSi.addEventListener('click', confirmHandler);
+            btnNo.addEventListener('click', cancelHandler);
+            modal.addEventListener('click', backdropHandler);
+            document.addEventListener('keydown', escHandler);
+        }
+
+        // Chart.js Configuration
+        const ctx = document.getElementById('companyChart').getContext('2d');
+        const companyChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2014','2015','2016','2017','2018','2019', '2020', '2021', '2022', '2023', '2024','2025'],
+                datasets: [{
+                    label: 'servicios realizados',
+                    data: [20,30,80,80,170, 190, 180, 150, 140, 140, 150, 260],
+                    borderColor: '#00BCD4',
+                    backgroundColor: 'rgba(0, 188, 212, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.2
+                }, ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                aspectRatio: 1.5,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#2C3E50',
+                            font: {
+                                family: 'Poppins',
+                                size: 14
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            color: '#2C3E50',
+                            font: {
+                                family: 'Poppins'
+                            }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            color: '#2C3E50',
+                            font: {
+                                family: 'Poppins'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Mapa interactivo con Leaflet.js
+        function initMap() {
+            // Coordenadas de ejemplo - REEMPLAZAR con las coordenadas reales de tu empresa
+            const companyLat = -33.42424105913208; // -33.42424105913208, -70.60989111455896 Latitud de tu ubicación
+            const companyLng = -70.60989111455896; // Longitud de tu ubicación
+            
+            // Inicializar el mapa
+            const map = L.map('map').setView([companyLat, companyLng], 15);
+            
+            // Agregar capa de mapa base de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Crear icono personalizado
+            const customIcon = L.divIcon({
+                html: `
+                    <div style="
+                        background: linear-gradient(135deg, #00BCD4, #4de18b);
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        border: 3px solid white;
+                        box-shadow: 0 4px 12px rgba(0, 188, 212, 0.4);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-size: 20px;
+                    ">
+                        <i class="fas fa-building"></i>
+                    </div>
+                `,
+                className: 'custom-div-icon',
+                iconSize: [50, 50],
+                iconAnchor: [25, 25],
+                popupAnchor: [0, -25]
+            });
+            
+            // Agregar marcador personalizado
+            const marker = L.marker([companyLat, companyLng], { icon: customIcon }).addTo(map);
+            
+            // Agregar popup con información de la empresa
+            marker.bindPopup(`
+                <div style="text-align: center; padding: 10px;">
+                    <h4 style="color: #00BCD4; margin-bottom: 10px;">
+                        <i class="fas fa-building"></i> Serviclemant
+                    </h4>
+                    <p style="margin: 5px 0; color: #2C3E50;">
+                        <i class="fas fa-map-marker-alt"></i> Guardia Vieja 202, Providencia
+                    </p>
+                    <p style="margin: 5px 0; color: #2C3E50;">
+                        <i class="fas fa-phone"></i> +56 9 9499 0878
+                    </p>
+                </div>
+            `).openPopup();
+            
+            // Agregar controles de zoom personalizados
+            map.zoomControl.setPosition('topright');
+            
+            // Agregar información de copyright
+            L.control.attribution({
+                position: 'bottomright',
+                prefix: false
+            }).addTo(map);
+        }
+
+        // Llamar a initMap cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+    <!-- Modal de Términos y Condiciones -->
+    <div id="modalTerminos" aria-hidden="true">
+        <div class="modal-terminos-content" role="dialog" aria-modal="true" aria-labelledby="modalTerminosTitle">
+            <div class="modal-terminos-header">
+                <h2 id="modalTerminosTitle">Términos y Condiciones</h2>
+                <button class="modal-terminos-close" onclick="cerrarModalTerminos()" aria-label="Cerrar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-terminos-body">
+                <h3>Términos y Condiciones de Prestación de Servicios de Aseo Industrial</h3>
+                <p>Los presentes Términos y Condiciones regulan la relación entre la empresa prestadora de servicios de aseo industrial (en adelante, "la Empresa") y el cliente (en adelante, "el Cliente") al solicitar, contratar o recibir cualquiera de los servicios ofrecidos. La aceptación de una cotización, la firma de un contrato o la solicitud de un servicio implica la plena conformidad del Cliente con las condiciones aquí descritas.</p>
+
+                <h3>1. Objeto del servicio</h3>
+                <p>La Empresa ofrece servicios profesionales de aseo, mantenimiento y limpieza, incluyendo mantenimiento de oficinas, mantenimiento de instalaciones industriales, mantenimiento de edificios institucionales, limpieza de vidrios y lavado de alfombras, entre otros. Cada servicio será ejecutado de acuerdo con las necesidades del Cliente y en cumplimiento con los estándares técnicos y de calidad vigentes.</p>
+
+                <h3>2. Alcance y condiciones de ejecución</h3>
+                <p>Los servicios se realizarán conforme a la planificación acordada con el Cliente, considerando horarios, frecuencias, áreas de intervención y métodos previamente establecidos. Cualquier modificación en el alcance del servicio deberá ser solicitada por escrito y aprobada por ambas partes.</p>
+                <p>La Empresa garantizará que su personal cuente con la capacitación, los equipos y los insumos necesarios para ejecutar las labores de limpieza bajo condiciones seguras y eficientes.</p>
+
+                <h3>3. Compromiso con la calidad, el medio ambiente y la seguridad</h3>
+                <p>Para alcanzar este éxito, hemos implementado un Sistema Integrado de Gestión (SIG) que cumple con las normas ISO 9001:2015, ISO 14001:2015 e ISO 45001:2018.</p>
+                <p>Este sistema busca asegurar la calidad de los servicios, prevenir la contaminación ambiental y proteger la salud y seguridad de nuestros trabajadores, clientes y demás partes interesadas.</p>
+                <p>La Empresa se compromete a mantener una mejora continua en sus procesos, garantizando resultados consistentes y sostenibles en cada prestación de servicio.</p>
+
+                <h3>4. Responsabilidades del cliente</h3>
+                <p>El Cliente deberá proporcionar acceso adecuado a las áreas de trabajo, facilidades eléctricas y de agua, así como toda la información relevante que permita la correcta ejecución de los servicios. Asimismo, se compromete a respetar las condiciones establecidas en el contrato y a asegurar que las áreas estén libres de elementos que dificulten o representen riesgos para el personal de limpieza.</p>
+
+                <h3>5. Tarifas y condiciones de pago</h3>
+                <p>Las tarifas de los servicios serán determinadas en función del tipo de trabajo, tiempo estimado, superficie y complejidad de las actividades. El Cliente deberá efectuar los pagos en los plazos establecidos en la propuesta comercial o contrato. En caso de retraso en los pagos, la Empresa podrá suspender temporalmente los servicios hasta regularizar la situación.</p>
+
+                <h3>6. Responsabilidad y seguros</h3>
+                <p>La Empresa asume responsabilidad por cualquier daño directo ocasionado por acciones negligentes de su personal durante la ejecución del servicio. No se considerarán responsabilidades por fallas derivadas de causas ajenas o condiciones inapropiadas del área de trabajo. Todos los trabajadores están cubiertos por los seguros obligatorios establecidos por la legislación vigente.</p>
+
+                <h3>7. Protección de datos personales</h3>
+                <p>La información proporcionada por el Cliente será tratada con estricta confidencialidad y utilizada únicamente para fines administrativos, comerciales y operativos relacionados con la prestación de los servicios. La Empresa garantiza el cumplimiento de las normas legales sobre protección de datos personales.</p>
+
+                <h3>8. Modificaciones y vigencia</h3>
+                <p>La Empresa se reserva el derecho de actualizar estos Términos y Condiciones en cualquier momento. Las modificaciones serán publicadas en los canales oficiales de la Empresa y entrarán en vigor desde su fecha de publicación. Se recomienda al Cliente revisar regularmente esta información antes de solicitar un nuevo servicio.</p>
+
+                <h3>9. Jurisdicción y resolución de controversias</h3>
+                <p>Cualquier conflicto derivado de la interpretación o ejecución de estos Términos y Condiciones será resuelto conforme a las leyes vigentes del país y bajo la jurisdicción de los tribunales correspondientes al domicilio de la Empresa, salvo pacto diferente por escrito entre las partes.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funciones para abrir y cerrar el modal de términos y condiciones
+        function abrirModalTerminos() {
+            const modal = document.getElementById('modalTerminos');
+            if (modal) {
+                modal.classList.add('show');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                
+                const closeBtn = modal.querySelector('.modal-terminos-close');
+                if (closeBtn) {
+                    setTimeout(() => closeBtn.focus(), 100);
+                }
+            }
+        }
+
+        function cerrarModalTerminos() {
+            const modal = document.getElementById('modalTerminos');
+            if (modal) {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('modalTerminos');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        cerrarModalTerminos();
+                    }
+                });
+
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && modal.classList.contains('show')) {
+                        cerrarModalTerminos();
+                    }
+                });
+            }
+        });
+
+        // Funciones para abrir y cerrar el modal de política de privacidad
+        function abrirModalPrivacidad() {
+            const modal = document.getElementById('modalPrivacidad');
+            if (modal) {
+                modal.classList.add('show');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                
+                const closeBtn = modal.querySelector('.modal-privacidad-close');
+                if (closeBtn) {
+                    setTimeout(() => closeBtn.focus(), 100);
+                }
+            }
+        }
+
+        function cerrarModalPrivacidad() {
+            const modal = document.getElementById('modalPrivacidad');
+            if (modal) {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Cerrar modales al hacer clic fuera del contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalTerminos = document.getElementById('modalTerminos');
+            const modalPrivacidad = document.getElementById('modalPrivacidad');
+
+            if (modalTerminos) {
+                modalTerminos.addEventListener('click', function(e) {
+                    if (e.target === modalTerminos) {
+                        cerrarModalTerminos();
+                    }
+                });
+            }
+
+            if (modalPrivacidad) {
+                modalPrivacidad.addEventListener('click', function(e) {
+                    if (e.target === modalPrivacidad) {
+                        cerrarModalPrivacidad();
+                    }
+                });
+            }
+
+            // Cerrar modales con tecla Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (modalTerminos && modalTerminos.classList.contains('show')) {
+                        cerrarModalTerminos();
+                    }
+                    if (modalPrivacidad && modalPrivacidad.classList.contains('show')) {
+                        cerrarModalPrivacidad();
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- Modal de Política de Privacidad -->
+    <div id="modalPrivacidad" aria-hidden="true">
+        <div class="modal-privacidad-content" role="dialog" aria-modal="true" aria-labelledby="modalPrivacidadTitle">
+            <div class="modal-privacidad-header">
+                <h2 id="modalPrivacidadTitle">Política de Privacidad</h2>
+                <button class="modal-privacidad-close" onclick="cerrarModalPrivacidad()" aria-label="Cerrar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-privacidad-body">
+                <h3>Política de Privacidad</h3>
+                <p>La presente Política de Privacidad regula el tratamiento, resguardo y gestión de los datos personales recabados por nuestra empresa de aseo industrial, tanto de clientes como de empleados, proveedores y usuarios de plataformas digitales. Nos comprometemos a garantizar la máxima protección, seguridad y confidencialidad de la información, alineando nuestra gestión a rigurosos marcos legales y a las mejores prácticas del sector.</p>
+
+                <h3>1. Principios generales y ámbito de aplicación</h3>
+                <p>Nuestra Política de Privacidad se aplica a todas las interacciones con nuestra organización: prestación de servicios de aseo (en oficinas, edificios industriales, instituciones, limpieza de vidrios, lavado de alfombras, etc.), contratación, atención web y gestión interna. Así como empresas líderes del sector como 3M Chile, InterAseo y Serveo, priorizamos la transparencia, la protección normativa y el respeto a los derechos de los titulares de la información personal.</p>
+
+                <h3>2. Identidad del responsable y delegados de protección de datos</h3>
+                <p>El responsable del tratamiento de los datos es la empresa de aseo industrial indicada en cada contrato o interacción, con identificación y datos de contacto claramente informados a todos los interesados. De igual forma, si corresponde, se designa un Delegado de Protección de Datos (DPO) según dicta la normativa vigente, siguiendo los parámetros aplicados por grandes empresas del rubro y conforme a las exigencias RGPD y LOPDGDD aplicables en jurisdicciones como la Unión Europea y Latinoamérica.</p>
+
+                <h3>3. Tipos de datos recabados</h3>
+                <p>Recopilamos únicamente los datos indispensables para concretar los servicios ofrecidos y cumplir obligaciones legales y contractuales. Los datos pueden incluir:</p>
+                <ul>
+                    <li><strong>Datos identificativos:</strong> nombre, RUT/DNI, teléfono, dirección, correo electrónico.</li>
+                    <li><strong>Datos de contacto laboral o comercial</strong></li>
+                    <li><strong>Datos de navegación y técnicos cuando se utiliza nuestra web:</strong> IP, navegador, sistema operativo.</li>
+                    <li><strong>Información contractual y de facturación</strong></li>
+                    <li><strong>Información necesaria para seguridad laboral y cumplimiento normativo</strong></li>
+                </ul>
+                <p>Empresas como Serveo y InterAseo especifican con minuciosidad los datos recabados, asegurando la legitimidad en cada etapa.</p>
+
+                <h3>4. Finalidad y legitimación del tratamiento</h3>
+                <p>Los datos personales serán utilizados de manera legítima para:</p>
+                <ul>
+                    <li>Gestionar y prestar servicios de aseo y mantenimiento.</li>
+                    <li>Gestionar altas y pre-contrataciones de clientes o proveedores.</li>
+                    <li>Cumplir obligaciones legales y contractuales, como prevención de riesgos, facturación, protección de datos y seguridad en las instalaciones.</li>
+                    <li>Gestionar la relación laboral y contractual con empleados y proveedores.</li>
+                    <li>Canalizar solicitudes, reclamos y consultas, o responder requerimientos de autoridades competentes.</li>
+                    <li>Mejorar nuestros procesos y servicios, conforme a cláusulas de mejora continua presentes en políticas de empresas de referencia como 3M Chile y Kimberly-Clark Professional.</li>
+                    <li>Prevenir fraudes y proteger la seguridad de las instalaciones y los datos.</li>
+                </ul>
+                <p>La legitimación para cada tratamiento deriva principalmente del consentimiento expreso, la relación contractual o el cumplimiento de obligaciones legales.</p>
+
+                <h3>5. Confidencialidad y seguridad</h3>
+                <p>Implementamos medidas técnicas, organizativas y legales de protección de datos: controles de acceso, sistemas de encriptación, auditorías periódicas, así como cláusulas de confidencialidad firmadas por todos los empleados y contratistas, tal y como exigen las mejores prácticas de las grandes firmas del sector. Estas medidas buscan impedir accesos, divulgaciones o modificaciones indebidas, y temporalidad en la conservación de los datos según los plazos legales.</p>
+
+                <h3>6. Acceso, cesión y comunicación de datos</h3>
+                <p>No cederemos datos personales a terceros salvo autorización expresa del titular, mandato legal, obligación contractual o intereses vitales. Cuando proceda, informaremos al titular sobre el destinatario y el alcance de la comunicación, garantizando siempre la integridad y seguridad de los datos transmitidos. De manera excepcional, podremos comunicar datos por requerimiento legal, salvo que la ley prohíba esa notificación.</p>
+                <p>Otras empresas de limpieza como MG Servicios y Grupo de Limpieza San Luis aseguran no comunicar datos a terceros sin consentimiento e informan puntualmente sobre mecanismos para ejercer sus derechos.</p>
+
+                <h3>7. Derechos de los titulares</h3>
+                <p>Todo titular de datos tiene derecho a acceder, rectificar, suprimir, limitar u oponerse al tratamiento de sus datos; solicitar la portabilidad y a no ser objeto de decisiones automatizadas, así como a revocar su consentimiento en cualquier momento. Facilitamos canales para que los titulares ejerzan estos derechos de forma ágil y gratuita, en cumplimiento con obligaciones internacionales y nacionales.</p>
+
+                <h3>8. Brechas de seguridad y notificaciones</h3>
+                <p>En caso de detectar cualquier incidente que pueda afectar la confidencialidad o integridad de los datos, notificaremos de inmediato a la autoridad competente y a los titulares según lo exige la ley y como lo indican las mejores prácticas internacionales en empresas del sector.</p>
+
+                <h3>9. Conservación de los datos</h3>
+                <p>Los datos personales se conservarán solo el tiempo necesario para cumplir la finalidad de su tratamiento y los plazos de prescripción legales y contractuales. Posteriormente, serán anonimizados o eliminados de manera segura, siguiendo disposiciones de empresas como 3M y de la normativa de protección de datos.</p>
+
+                <h3>10. Transferencias internacionales</h3>
+                <p>Sólo se realizarán transferencias internacionales de datos cuando el país de destino cuente con niveles adecuados de protección o existan garantías contractuales equivalentes. Informaremos siempre de ello a los titulares afectados, siguiendo la transparencia aplicada por referentes internacionales y grandes empresas de limpieza.</p>
+
+                <h3>11. Compromiso legal y actualización de la política</h3>
+                <p>Esta política es de cumplimiento obligatorio, firme y sin excepciones para todo el personal, subcontratistas y terceros que colaboran con la empresa. Revisamos y actualizamos periódicamente la política asegurando su vigencia y adecuación a los cambios legislativos y de buenas prácticas del sector.</p>
+                <p>Toda modificación será debidamente comunicada a los titulares interesados y actualizada en los canales oficiales de la empresa. La coherencia, exhaustividad y firmeza de esta política sigue la estela de las mejores prácticas de las empresas líderes de aseo industrial.</p>
+            </div>
+        </div>
+    </div>
+    <script src="//code.tidio.co/bzlxnr23nvccqhpeifo5cugis4v4qyai.js" async></script>
+</body>
+</html>

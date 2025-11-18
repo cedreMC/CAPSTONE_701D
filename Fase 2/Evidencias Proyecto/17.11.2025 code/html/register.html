@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse - Serviclemant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Auth CSS -->
+    <link rel="stylesheet" href="style/auth.css">
+    <link rel="icon" href="img/logo2.png" type="image/png">
+    <style>
+        /* Estilos adicionales aquí */
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        /* Estilos para checkboxes alineados */
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .form-check-input {
+            margin-top: 0;
+            margin-right: 10px;
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .form-check-label {
+            line-height: 1.5;
+            flex: 1;
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Modal de Términos y Condiciones */
+        #modalTerminos {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        #modalTerminos.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-terminos-content {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            width: 75%;
+            height: 75%;
+            max-width: 900px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(-20px) scale(0.95);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            position: relative;
+        }
+
+        #modalTerminos.show .modal-terminos-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-terminos-header {
+            padding: 20px 30px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #00BCD4, #4de18b);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-terminos-header h2 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-terminos-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .modal-terminos-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-terminos-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            color: #2C3E50;
+        }
+
+        .modal-terminos-body h3 {
+            color: #0097A7;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .modal-terminos-body h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .modal-terminos-body p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-terminos-body ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-terminos-body ol li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-terminos-body strong {
+            color: #0097A7;
+        }
+
+        /* Scrollbar personalizado */
+        .modal-terminos-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-terminos-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal-terminos-body::-webkit-scrollbar-thumb {
+            background: #00BCD4;
+            border-radius: 10px;
+        }
+
+        .modal-terminos-body::-webkit-scrollbar-thumb:hover {
+            background: #0097A7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .modal-terminos-content {
+                width: 90%;
+                height: 85%;
+            }
+
+            .modal-terminos-header {
+                padding: 15px 20px;
+            }
+
+            .modal-terminos-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .modal-terminos-body {
+                padding: 20px;
+            }
+
+            .modal-terminos-body h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #modalTerminos,
+            .modal-terminos-content {
+                transition: none;
+            }
+        }
+
+        /* Modal de Política de Privacidad */
+        #modalPrivacidad {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        #modalPrivacidad.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-privacidad-content {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            width: 75%;
+            height: 75%;
+            max-width: 900px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(-20px) scale(0.95);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            position: relative;
+        }
+
+        #modalPrivacidad.show .modal-privacidad-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-privacidad-header {
+            padding: 20px 30px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #00BCD4, #4de18b);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-privacidad-header h2 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-privacidad-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .modal-privacidad-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-privacidad-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            color: #2C3E50;
+        }
+
+        .modal-privacidad-body h3 {
+            color: #0097A7;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .modal-privacidad-body h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .modal-privacidad-body p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-privacidad-body ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-privacidad-body ul li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-privacidad-body strong {
+            color: #0097A7;
+        }
+
+        /* Scrollbar personalizado */
+        .modal-privacidad-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-privacidad-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal-privacidad-body::-webkit-scrollbar-thumb {
+            background: #00BCD4;
+            border-radius: 10px;
+        }
+
+        .modal-privacidad-body::-webkit-scrollbar-thumb:hover {
+            background: #0097A7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .modal-privacidad-content {
+                width: 90%;
+                height: 85%;
+            }
+
+            .modal-privacidad-header {
+                padding: 15px 20px;
+            }
+
+            .modal-privacidad-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .modal-privacidad-body {
+                padding: 20px;
+            }
+
+            .modal-privacidad-body h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #modalPrivacidad,
+            .modal-privacidad-content {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body class="auth-page">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark auth-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <img src="img/logo2.png" class="me-2" style="width: 70px; height: 70px;">
+                SERVICLEMANT
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="servicio.html">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="empresa.html">Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Formulario de Registro -->
+    <div class="auth-container" style="margin-top: 60px; margin-bottom: 20px;">
+        <div class="form-container">
+            <h2 class="text-center">Registro de Usuario</h2>
+
+            <form id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="nombre" class="form-label">
+                        <i class="fas fa-user me-2"></i>Nombre Completo
+                    </label>
+                    <input 
+                        type="text" 
+                        id="nombre" 
+                        name="nombre" 
+                        class="form-input" 
+                        placeholder="Ingresa tu nombre completo"
+                        required
+                    >
+                    <div class="error-message" id="nombreError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope me-2"></i>Email
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="Ingresa tu email"
+                        required
+                    >
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contraseña" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Contraseña
+                    </label>
+                    <input 
+                        type="password" 
+                        id="contraseña" 
+                        name="contraseña" 
+                        class="form-input" 
+                        placeholder="Crea una contraseña segura"
+                        required
+                    >
+                    <div class="error-message" id="contraseñaError"></div>
+                    <div class="password-strength" id="passwordStrength"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmarContraseña" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Confirmar Contraseña
+                    </label>
+                    <input 
+                        type="password" 
+                        id="confirmarContraseña" 
+                        name="confirmarContraseña" 
+                        class="form-input" 
+                        placeholder="Confirma tu contraseña"
+                        required
+                    >
+                    <div class="error-message" id="confirmarContraseñaError"></div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="terminos" required>
+                        <label class="form-check-label" for="terminos">
+                            Acepto los <a href="#" class="auth-link" id="linkTerminos" onclick="event.preventDefault(); abrirModalTerminos();">términos y condiciones</a>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="privacidad" required>
+                        <label class="form-check-label" for="privacidad">
+                            Acepto la <a href="#" class="auth-link" onclick="event.preventDefault(); abrirModalPrivacidad();">política de privacidad</a>
+                        </label>
+                    </div>
+                    <div class="error-message" id="terminosError"></div>
+                    <div class="error-message" id="privacidadError"></div>
+                </div>
+
+                <button type="submit" class="btn-auth">
+                    <i href="perfil.html" class="fas fa-user-plus me-2"></i>Registrarse
+                </button>
+
+                <div class="text-center mt-4">
+                    <p class="mb-0" style="color: #666;">
+                        ¿Ya tienes cuenta? 
+                        <a href="login.html" class="auth-link">Inicia sesión aquí</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Validación del formulario de registro
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Limpiar errores anteriores
+            clearErrors();
+            
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const contraseña = document.getElementById('contraseña').value;
+            const confirmarContraseña = document.getElementById('confirmarContraseña').value;
+            const terminos = document.getElementById('terminos').checked;
+            const privacidad = document.getElementById('privacidad').checked;
+            
+            let isValid = true;
+            
+            // Validar nombre completo
+            if (nombre === '') {
+                showError('nombreError', 'El nombre completo es requerido');
+                document.getElementById('nombre').classList.add('error');
+                isValid = false;
+            } else if (nombre.length < 2) {
+                showError('nombreError', 'El nombre debe tener al menos 2 caracteres');
+                document.getElementById('nombre').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validar email
+            if (email === '') {
+                showError('emailError', 'El email es requerido');
+                document.getElementById('email').classList.add('error');
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                showError('emailError', 'Ingresa un email válido');
+                document.getElementById('email').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validar contraseña
+            if (contraseña === '') {
+                showError('contraseñaError', 'La contraseña es requerida');
+                document.getElementById('contraseña').classList.add('error');
+                isValid = false;
+            } else if (contraseña.length < 8) {
+                showError('contraseñaError', 'La contraseña debe tener al menos 8 caracteres');
+                document.getElementById('contraseña').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validar confirmación de contraseña
+            if (confirmarContraseña === '') {
+                showError('confirmarContraseñaError', 'Confirma tu contraseña');
+                document.getElementById('confirmarContraseña').classList.add('error');
+                isValid = false;
+            } else if (contraseña !== confirmarContraseña) {
+                showError('confirmarContraseñaError', 'Las contraseñas no coinciden');
+                document.getElementById('confirmarContraseña').classList.add('error');
+                isValid = false;
+            }
+            
+            // Validar términos y condiciones
+            if (!terminos) {
+                showError('terminosError', 'Debes aceptar los términos y condiciones');
+                isValid = false;
+            }
+            
+            // Validar política de privacidad
+            if (!privacidad) {
+                showError('privacidadError', 'Debes aceptar la política de privacidad');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Enviar los datos al servidor
+                const usuario = {
+                    nombre: nombre,
+                    email: email,
+                    contraseña: contraseña
+                };
+
+                fetch('http://localhost:3000/usuarios', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(usuario)
+                    
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Usuario registrado exitosamente');
+                        window.location.href = 'perfil.html';
+                    } else {
+                        alert('Hubo un error al registrar el usuario');
+                    }
+                })
+                .catch(error => {
+                    alert('Error en la conexión con el servidor');
+                });
+            }
+        });
+
+        // Función para validar email
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Función para mostrar errores
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        // Función para limpiar errores
+        function clearErrors() {
+            const errorElements = document.querySelectorAll('.error-message');
+            errorElements.forEach(element => {
+                element.style.display = 'none';
+                element.textContent = '';
+            });
+
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.classList.remove('error');
+            });
+        }
+    </script>
+    <!-- Modal de Términos y Condiciones -->
+    <div id="modalTerminos" aria-hidden="true">
+        <div class="modal-terminos-content" role="dialog" aria-modal="true" aria-labelledby="modalTerminosTitle">
+            <div class="modal-terminos-header">
+                <h2 id="modalTerminosTitle">Términos y Condiciones</h2>
+                <button class="modal-terminos-close" onclick="cerrarModalTerminos()" aria-label="Cerrar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-terminos-body">
+                <h3>Términos y Condiciones de Prestación de Servicios de Aseo Industrial</h3>
+                <p>Los presentes Términos y Condiciones regulan la relación entre la empresa prestadora de servicios de aseo industrial (en adelante, "la Empresa") y el cliente (en adelante, "el Cliente") al solicitar, contratar o recibir cualquiera de los servicios ofrecidos. La aceptación de una cotización, la firma de un contrato o la solicitud de un servicio implica la plena conformidad del Cliente con las condiciones aquí descritas.</p>
+
+                <h3>1. Objeto del servicio</h3>
+                <p>La Empresa ofrece servicios profesionales de aseo, mantenimiento y limpieza, incluyendo mantenimiento de oficinas, mantenimiento de instalaciones industriales, mantenimiento de edificios institucionales, limpieza de vidrios y lavado de alfombras, entre otros. Cada servicio será ejecutado de acuerdo con las necesidades del Cliente y en cumplimiento con los estándares técnicos y de calidad vigentes.</p>
+
+                <h3>2. Alcance y condiciones de ejecución</h3>
+                <p>Los servicios se realizarán conforme a la planificación acordada con el Cliente, considerando horarios, frecuencias, áreas de intervención y métodos previamente establecidos. Cualquier modificación en el alcance del servicio deberá ser solicitada por escrito y aprobada por ambas partes.</p>
+                <p>La Empresa garantizará que su personal cuente con la capacitación, los equipos y los insumos necesarios para ejecutar las labores de limpieza bajo condiciones seguras y eficientes.</p>
+
+                <h3>3. Compromiso con la calidad, el medio ambiente y la seguridad</h3>
+                <p>Para alcanzar este éxito, hemos implementado un Sistema Integrado de Gestión (SIG) que cumple con las normas ISO 9001:2015, ISO 14001:2015 e ISO 45001:2018.</p>
+                <p>Este sistema busca asegurar la calidad de los servicios, prevenir la contaminación ambiental y proteger la salud y seguridad de nuestros trabajadores, clientes y demás partes interesadas.</p>
+                <p>La Empresa se compromete a mantener una mejora continua en sus procesos, garantizando resultados consistentes y sostenibles en cada prestación de servicio.</p>
+
+                <h3>4. Responsabilidades del cliente</h3>
+                <p>El Cliente deberá proporcionar acceso adecuado a las áreas de trabajo, facilidades eléctricas y de agua, así como toda la información relevante que permita la correcta ejecución de los servicios. Asimismo, se compromete a respetar las condiciones establecidas en el contrato y a asegurar que las áreas estén libres de elementos que dificulten o representen riesgos para el personal de limpieza.</p>
+
+                <h3>5. Tarifas y condiciones de pago</h3>
+                <p>Las tarifas de los servicios serán determinadas en función del tipo de trabajo, tiempo estimado, superficie y complejidad de las actividades. El Cliente deberá efectuar los pagos en los plazos establecidos en la propuesta comercial o contrato. En caso de retraso en los pagos, la Empresa podrá suspender temporalmente los servicios hasta regularizar la situación.</p>
+
+                <h3>6. Responsabilidad y seguros</h3>
+                <p>La Empresa asume responsabilidad por cualquier daño directo ocasionado por acciones negligentes de su personal durante la ejecución del servicio. No se considerarán responsabilidades por fallas derivadas de causas ajenas o condiciones inapropiadas del área de trabajo. Todos los trabajadores están cubiertos por los seguros obligatorios establecidos por la legislación vigente.</p>
+
+                <h3>7. Protección de datos personales</h3>
+                <p>La información proporcionada por el Cliente será tratada con estricta confidencialidad y utilizada únicamente para fines administrativos, comerciales y operativos relacionados con la prestación de los servicios. La Empresa garantiza el cumplimiento de las normas legales sobre protección de datos personales.</p>
+
+                <h3>8. Modificaciones y vigencia</h3>
+                <p>La Empresa se reserva el derecho de actualizar estos Términos y Condiciones en cualquier momento. Las modificaciones serán publicadas en los canales oficiales de la Empresa y entrarán en vigor desde su fecha de publicación. Se recomienda al Cliente revisar regularmente esta información antes de solicitar un nuevo servicio.</p>
+
+                <h3>9. Jurisdicción y resolución de controversias</h3>
+                <p>Cualquier conflicto derivado de la interpretación o ejecución de estos Términos y Condiciones será resuelto conforme a las leyes vigentes del país y bajo la jurisdicción de los tribunales correspondientes al domicilio de la Empresa, salvo pacto diferente por escrito entre las partes.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funciones para abrir y cerrar el modal de términos y condiciones
+        function abrirModalTerminos() {
+            const modal = document.getElementById('modalTerminos');
+            if (modal) {
+                modal.classList.add('show');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+                
+                // Enfocar el modal para accesibilidad
+                const closeBtn = modal.querySelector('.modal-terminos-close');
+                if (closeBtn) {
+                    setTimeout(() => closeBtn.focus(), 100);
+                }
+            }
+        }
+
+        function cerrarModalTerminos() {
+            const modal = document.getElementById('modalTerminos');
+            if (modal) {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = ''; // Restaurar scroll del body
+            }
+        }
+
+        // Funciones para abrir y cerrar el modal de política de privacidad
+        function abrirModalPrivacidad() {
+            const modal = document.getElementById('modalPrivacidad');
+            if (modal) {
+                modal.classList.add('show');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                
+                const closeBtn = modal.querySelector('.modal-privacidad-close');
+                if (closeBtn) {
+                    setTimeout(() => closeBtn.focus(), 100);
+                }
+            }
+        }
+
+        function cerrarModalPrivacidad() {
+            const modal = document.getElementById('modalPrivacidad');
+            if (modal) {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Cerrar modales al hacer clic fuera del contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalTerminos = document.getElementById('modalTerminos');
+            const modalPrivacidad = document.getElementById('modalPrivacidad');
+
+            if (modalTerminos) {
+                modalTerminos.addEventListener('click', function(e) {
+                    if (e.target === modalTerminos) {
+                        cerrarModalTerminos();
+                    }
+                });
+            }
+
+            if (modalPrivacidad) {
+                modalPrivacidad.addEventListener('click', function(e) {
+                    if (e.target === modalPrivacidad) {
+                        cerrarModalPrivacidad();
+                    }
+                });
+            }
+
+            // Cerrar modales con tecla Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (modalTerminos && modalTerminos.classList.contains('show')) {
+                        cerrarModalTerminos();
+                    }
+                    if (modalPrivacidad && modalPrivacidad.classList.contains('show')) {
+                        cerrarModalPrivacidad();
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- Modal de Política de Privacidad -->
+    <div id="modalPrivacidad" aria-hidden="true">
+        <div class="modal-privacidad-content" role="dialog" aria-modal="true" aria-labelledby="modalPrivacidadTitle">
+            <div class="modal-privacidad-header">
+                <h2 id="modalPrivacidadTitle">Política de Privacidad</h2>
+                <button class="modal-privacidad-close" onclick="cerrarModalPrivacidad()" aria-label="Cerrar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-privacidad-body">
+                <h3>Política de Privacidad</h3>
+                <p>La presente Política de Privacidad regula el tratamiento, resguardo y gestión de los datos personales recabados por nuestra empresa de aseo industrial, tanto de clientes como de empleados, proveedores y usuarios de plataformas digitales. Nos comprometemos a garantizar la máxima protección, seguridad y confidencialidad de la información, alineando nuestra gestión a rigurosos marcos legales y a las mejores prácticas del sector.</p>
+
+                <h3>1. Principios generales y ámbito de aplicación</h3>
+                <p>Nuestra Política de Privacidad se aplica a todas las interacciones con nuestra organización: prestación de servicios de aseo (en oficinas, edificios industriales, instituciones, limpieza de vidrios, lavado de alfombras, etc.), contratación, atención web y gestión interna. Así como empresas líderes del sector como 3M Chile, InterAseo y Serveo, priorizamos la transparencia, la protección normativa y el respeto a los derechos de los titulares de la información personal.</p>
+
+                <h3>2. Identidad del responsable y delegados de protección de datos</h3>
+                <p>El responsable del tratamiento de los datos es la empresa de aseo industrial indicada en cada contrato o interacción, con identificación y datos de contacto claramente informados a todos los interesados. De igual forma, si corresponde, se designa un Delegado de Protección de Datos (DPO) según dicta la normativa vigente, siguiendo los parámetros aplicados por grandes empresas del rubro y conforme a las exigencias RGPD y LOPDGDD aplicables en jurisdicciones como la Unión Europea y Latinoamérica.</p>
+
+                <h3>3. Tipos de datos recabados</h3>
+                <p>Recopilamos únicamente los datos indispensables para concretar los servicios ofrecidos y cumplir obligaciones legales y contractuales. Los datos pueden incluir:</p>
+                <ul>
+                    <li><strong>Datos identificativos:</strong> nombre, RUT/DNI, teléfono, dirección, correo electrónico.</li>
+                    <li><strong>Datos de contacto laboral o comercial</strong></li>
+                    <li><strong>Datos de navegación y técnicos cuando se utiliza nuestra web:</strong> IP, navegador, sistema operativo.</li>
+                    <li><strong>Información contractual y de facturación</strong></li>
+                    <li><strong>Información necesaria para seguridad laboral y cumplimiento normativo</strong></li>
+                </ul>
+                <p>Empresas como Serveo y InterAseo especifican con minuciosidad los datos recabados, asegurando la legitimidad en cada etapa.</p>
+
+                <h3>4. Finalidad y legitimación del tratamiento</h3>
+                <p>Los datos personales serán utilizados de manera legítima para:</p>
+                <ul>
+                    <li>Gestionar y prestar servicios de aseo y mantenimiento.</li>
+                    <li>Gestionar altas y pre-contrataciones de clientes o proveedores.</li>
+                    <li>Cumplir obligaciones legales y contractuales, como prevención de riesgos, facturación, protección de datos y seguridad en las instalaciones.</li>
+                    <li>Gestionar la relación laboral y contractual con empleados y proveedores.</li>
+                    <li>Canalizar solicitudes, reclamos y consultas, o responder requerimientos de autoridades competentes.</li>
+                    <li>Mejorar nuestros procesos y servicios, conforme a cláusulas de mejora continua presentes en políticas de empresas de referencia como 3M Chile y Kimberly-Clark Professional.</li>
+                    <li>Prevenir fraudes y proteger la seguridad de las instalaciones y los datos.</li>
+                </ul>
+                <p>La legitimación para cada tratamiento deriva principalmente del consentimiento expreso, la relación contractual o el cumplimiento de obligaciones legales.</p>
+
+                <h3>5. Confidencialidad y seguridad</h3>
+                <p>Implementamos medidas técnicas, organizativas y legales de protección de datos: controles de acceso, sistemas de encriptación, auditorías periódicas, así como cláusulas de confidencialidad firmadas por todos los empleados y contratistas, tal y como exigen las mejores prácticas de las grandes firmas del sector. Estas medidas buscan impedir accesos, divulgaciones o modificaciones indebidas, y temporalidad en la conservación de los datos según los plazos legales.</p>
+
+                <h3>6. Acceso, cesión y comunicación de datos</h3>
+                <p>No cederemos datos personales a terceros salvo autorización expresa del titular, mandato legal, obligación contractual o intereses vitales. Cuando proceda, informaremos al titular sobre el destinatario y el alcance de la comunicación, garantizando siempre la integridad y seguridad de los datos transmitidos. De manera excepcional, podremos comunicar datos por requerimiento legal, salvo que la ley prohíba esa notificación.</p>
+                <p>Otras empresas de limpieza como MG Servicios y Grupo de Limpieza San Luis aseguran no comunicar datos a terceros sin consentimiento e informan puntualmente sobre mecanismos para ejercer sus derechos.</p>
+
+                <h3>7. Derechos de los titulares</h3>
+                <p>Todo titular de datos tiene derecho a acceder, rectificar, suprimir, limitar u oponerse al tratamiento de sus datos; solicitar la portabilidad y a no ser objeto de decisiones automatizadas, así como a revocar su consentimiento en cualquier momento. Facilitamos canales para que los titulares ejerzan estos derechos de forma ágil y gratuita, en cumplimiento con obligaciones internacionales y nacionales.</p>
+
+                <h3>8. Brechas de seguridad y notificaciones</h3>
+                <p>En caso de detectar cualquier incidente que pueda afectar la confidencialidad o integridad de los datos, notificaremos de inmediato a la autoridad competente y a los titulares según lo exige la ley y como lo indican las mejores prácticas internacionales en empresas del sector.</p>
+
+                <h3>9. Conservación de los datos</h3>
+                <p>Los datos personales se conservarán solo el tiempo necesario para cumplir la finalidad de su tratamiento y los plazos de prescripción legales y contractuales. Posteriormente, serán anonimizados o eliminados de manera segura, siguiendo disposiciones de empresas como 3M y de la normativa de protección de datos.</p>
+
+                <h3>10. Transferencias internacionales</h3>
+                <p>Sólo se realizarán transferencias internacionales de datos cuando el país de destino cuente con niveles adecuados de protección o existan garantías contractuales equivalentes. Informaremos siempre de ello a los titulares afectados, siguiendo la transparencia aplicada por referentes internacionales y grandes empresas de limpieza.</p>
+
+                <h3>11. Compromiso legal y actualización de la política</h3>
+                <p>Esta política es de cumplimiento obligatorio, firme y sin excepciones para todo el personal, subcontratistas y terceros que colaboran con la empresa. Revisamos y actualizamos periódicamente la política asegurando su vigencia y adecuación a los cambios legislativos y de buenas prácticas del sector.</p>
+                <p>Toda modificación será debidamente comunicada a los titulares interesados y actualizada en los canales oficiales de la empresa. La coherencia, exhaustividad y firmeza de esta política sigue la estela de las mejores prácticas de las empresas líderes de aseo industrial.</p>
+            </div>
+        </div>
+    </div>
+    <script src="//code.tidio.co/bzlxnr23nvccqhpeifo5cugis4v4qyai.js" async></script>
+</body>
+</html>
