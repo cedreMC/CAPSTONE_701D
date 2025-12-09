@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviclemant - Servicios de Limpieza Profesional</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" href="img/logo2.png" type="image/png">
+
+
+
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <style>
+        /* ===== VARIABLES CSS PROFESIONALES ===== */
+        :root {
+            /* Paleta de colores principal */
+            --primary-color: #00BCD4;
+            --primary-dark: #0097A7;
+            --primary-light: #4DD0E1;
+            --secondary-color: #4de18b;
+            --secondary-dark: #2E7D32;
+            --secondary-light: #81C784;
+            
+            /* Colores de acento */
+            --accent-cyan: #26C6DA;
+            --accent-aqua: #B2EBF2;
+            --accent-teal: #00695C;
+            
+            /* Colores neutros */
+            --text-primary: #1A1A1A;
+            --text-secondary: #4A4A4A;
+            --text-muted: #757575;
+            --text-light: #FFFFFF;
+            --text-inverse: #FAFAFA;
+            
+            /* Fondos */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --bg-tertiary: #E3F2FD;
+            --bg-dark: #263238;
+            --bg-overlay: rgba(0, 0, 0, 0.5);
+            
+            /* Sombras */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.25);
+            --shadow-colored: 0 8px 32px rgba(0, 188, 212, 0.3);
+            
+            /* Espaciado */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+            
+            /* Tipografía */
+            --font-family-primary: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+            --font-size-6xl: 3.75rem;
+            
+            /* Pesos de fuente */
+            --font-weight-light: 300;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            --font-weight-extrabold: 800;
+            
+            /* Radios de borde */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
+            
+            /* Transiciones */
+            --transition-fast: 0.15s ease-in-out;
+            --transition-normal: 0.3s ease-in-out;
+            --transition-slow: 0.5s ease-in-out;
+            
+            /* Z-index */
+            --z-dropdown: 1000;
+            --z-sticky: 1020;
+            --z-fixed: 1030;
+            --z-modal: 1040;
+            --z-popover: 1050;
+            --z-tooltip: 1060;
+        }
+
+        /* ===== RESET Y BASE ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-family-primary);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-normal);
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===== UTILIDADES ===== */
+        .container-custom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            color: var(--text-light);
+            font-weight: var(--font-weight-semibold);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-colored);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 188, 212, 0.4);
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .btn-gradient:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            color: var(--text-light);
+            font-weight: var(--font-weight-semibold);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-colored);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 188, 212, 0.4);
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        /* ===== NAVBAR PROFESIONAL ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: transparent;
+            backdrop-filter: blur(0px);
+            transition: all var(--transition-normal);
+            padding: var(--spacing-lg) 0;
+            z-index: var(--z-fixed);
+            border-bottom: 1px solid transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-md) 0;
+            border-bottom-color: rgba(0, 188, 212, 0.1);
+        }
+
+        /* Cuando el menú móvil esté abierto: efecto más natural y profesional */
+        .navbar.menu-open {
+            background-color: rgba(255,255,255,0.92) !important; /* sutil, permite algo de contexto */
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            border-bottom-color: rgba(0,0,0,0.04);
+        }
+
+        /* Ajustes de contraste cuando el menú está abierto (texto/iconos más oscuros) */
+        .navbar.menu-open .navbar-brand,
+        .navbar.menu-open .nav-link,
+        .navbar.menu-open .navbar-toggler {
+            color: #0b3b2e; /* tono oscuro y profesional */
+        }
+        .navbar.menu-open .navbar-toggler .navbar-toggler-icon {
+            filter: none; /* asegurar contraste del icono */
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all var(--transition-normal);
+        }
+
+        .navbar-brand:hover {
+            color: var(--accent-aqua);
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
+
+        .navbar-brand img {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-normal);
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .navbar.scrolled .navbar-brand {
+            color: var(--primary-dark);
+        }
+
+        .navbar.scrolled .navbar-brand:hover {
+            color: var(--primary-color);
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            list-style: none;
+            margin: 0;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-base);
+            text-decoration: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-aqua);
+            transition: all var(--transition-normal);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::before {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-aqua);
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
+
+        .navbar.scrolled .nav-link {
+            color: var(--text-secondary);
+        }
+
+        .navbar.scrolled .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .navbar.scrolled .nav-link::before {
+            background: var(--primary-color);
+        }
+
+        .custom-toggler .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,100,0,0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+        }
+
+        .custom-toggler.navbar-toggler {
+            border-color: rgb(18, 194, 121);
+            border-radius: 113px;
+            border-width: 3px; /* Ajusta este valor para mayor grosor */
+              background-color: #f7f7f762; /* Cambia #fff por cualquier color sólido */
+
+        }
+        
+
+        /* ===== HERO SECTION MEJORADO ===== */
+        .carousel-item {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 188, 212, 0.7) 0%, 
+                rgba(77, 225, 139, 0.5) 50%, 
+                rgba(0, 151, 167, 0.8) 100%);
+            z-index: 1;
+        }
+
+        .carousel-item:nth-child(1) {
+            background-image: url('img/Como-limpiar-oficinas-con-gente-trabajando-scaled.jpg');
+        }
+
+        .carousel-item:nth-child(2) {
+            background-image: url('img/limpieza-de-pisos-industriales.jpg');
+        }
+
+        .carousel-item:nth-child(3) {
+            background-image: url('img/oficina-limpieza-personas-tiro-completo_23-2150454568.jpg');
+        }
+
+        .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: var(--spacing-xl);
+        }
+
+        .carousel-caption h1 {
+            font-size: var(--font-size-6xl);
+            font-weight: var(--font-weight-extrabold);
+            color: var(--text-light);
+            margin-bottom: var(--spacing-lg);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+        }
+
+        .carousel-caption p {
+            font-size: var(--font-size-xl);
+            color: var(--text-inverse);
+            margin-bottom: var(--spacing-2xl);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0.95;
+        }
+
+        /* Controles del carousel */
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            transition: all var(--transition-normal);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .carousel-control-prev {
+            left: var(--spacing-xl);
+        }
+
+        .carousel-control-next {
+            right: var(--spacing-xl);
+        }
+
+        .carousel:hover .carousel-control-prev,
+        .carousel:hover .carousel-control-next {
+            opacity: 1;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-indicators {
+            display: none;
+        }
+
+        /* ===== SECCIÓN SERVICIOS INDUSTRIALES ===== */
+        .industrial-services-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-3xl);
+            align-items: center;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 80vh;
+        }
+
+        .industrial-services-text-block {
+            padding: var(--spacing-xl);
+        }
+
+        .industrial-services-text-block h2 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.3;
+        }
+
+        .industrial-services-text-block p {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .industrial-services-text-block strong {
+            color: var(--primary-color);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .industrial-services-text-block em {
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+
+        .industrial-services-text-block .btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            color: var(--text-light);
+            font-weight: var(--font-weight-semibold);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-colored);
+            text-decoration: none;
+        }
+
+        .industrial-services-text-block .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 188, 212, 0.4);
+            color: var(--text-light);
+        }
+
+        .industrial-services-image-block {
+            position: relative;
+        }
+
+        .industrial-services-image-block img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-xl);
+            transition: all var(--transition-slow);
+        }
+
+        .industrial-services-image-block:hover img {
+            transform: scale(1.02);
+            box-shadow: 0 20px 80px rgba(0, 188, 212, 0.2);
+        }
+
+        .services-section {
+            padding: var(--spacing-3xl) 0;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            position: relative;
+        }
+
+        .services-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(0,188,212,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--spacing-3xl);
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title h2 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-md);
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: var(--radius-full);
+        }
+
+        .section-title p {
+            font-size: var(--font-size-lg);
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            margin-bottom: var(--spacing-xl);
+            border: 1px solid rgba(0, 188, 212, 0.1);
+            position: relative;
+            overflow: hidden;
+            height: 90%;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 188, 212, 0.05), transparent);
+            transition: left var(--transition-slow);
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-color);
+        }
+
+        .service-icon {
+            font-size: var(--font-size-5xl);
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-lg);
+            transition: all var(--transition-normal);
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+            color: var(--secondary-color);
+        }
+
+        .service-card h3 {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+            text-transform: capitalize;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .cta-form {
+            margin-top: var(--spacing-lg);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ===== SECCIÓN ABOUT ===== */
+        #nosotros {
+            padding: var(--spacing-3xl) ;
+            background: var(--bg-primary);
+        }
+
+        #nosotros h2 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        #nosotros .lead {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            font-weight: var(--font-weight-medium);
+        }
+
+        #nosotros ul li {
+            padding: var(--spacing-sm) 0;
+            font-size: var(--font-size-base);
+            color: var(--text-secondary);
+        }
+
+        #nosotros ul li i {
+            color: var(--primary-color);
+            margin-right: var(--spacing-md);
+        }
+
+        #nosotros img {
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-slow);
+        }
+
+        #nosotros img:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* ===== FOOTER PROFESIONAL ===== */
+        .footer {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
+            padding: var(--spacing-3xl) 0 var(--spacing-xl);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+            pointer-events: none; /* Permite que los clicks “pasen” a los elementos debajo */
+        }
+
+        .footer h5 {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-light);
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+        }
+
+        .footer p,
+        .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            line-height: 1.7;
+        }
+
+        .footer a:hover {
+            color: var(--accent-aqua);
+            text-decoration: none;
+        }
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer ul li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* Capitalizar primera letra de todos los textos del footer */
+        .footer p::first-letter,
+        .footer a::first-letter,
+        .footer li::first-letter {
+            text-transform: uppercase;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: var(--spacing-2xl);
+            padding-top: var(--spacing-lg);
+            text-align: center;
+            position: relative;
+        }
+
+        /* ===== ANIMACIONES PROFESIONALES ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animación de entrada escalonada */
+        .fade-in:nth-child(1) { transition-delay: 0.1s; }
+        .fade-in:nth-child(2) { transition-delay: 0.2s; }
+        .fade-in:nth-child(3) { transition-delay: 0.3s; }
+        .fade-in:nth-child(4) { transition-delay: 0.4s; }
+        .fade-in:nth-child(5) { transition-delay: 0.5s; }
+        .fade-in:nth-child(6) { transition-delay: 0.6s; }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .industrial-services-wrapper {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-2xl);
+                text-align: center;
+            }
+            
+            .carousel-caption h1 {
+                 font-size: calc(1em + 1vw)
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Dejar que Bootstrap controle la visibilidad (.collapse / .show).
+               Aplicar layout en columna sólo cuando el collapse está abierto (clase .show). */
+            .navbar-collapse.collapse .navbar-nav {
+                display: none; /* estado cerrado: ocultar el menú (seguro si collapse no cambia display) */
+            }
+            .navbar-collapse.collapse.show .navbar-nav {
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-md);
+                width: 100%;
+            }
+            /* Mejorar apariencia de los links dentro del menú colapsado cuando está abierto */
+            .navbar-collapse.collapse.show .nav-link {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                width: 100%;
+            }
+
+            .carousel-caption h1 {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .carousel-caption p {
+                font-size: var(--font-size-base);
+            }
+
+            /* Ajustes para todos los slides: centrar y hacer responsivos H1, P y botones */
+            .carousel-caption {
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: var(--spacing-lg);
+                max-width: 95%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 0.75rem;
+                text-align: center;
+            }
+
+            .carousel-caption h1 {
+                /* responsive sizing: min 1.25rem, preferred 6vw, max 2rem */
+                font-size: clamp(1.25rem, 6vw, 2rem);
+                line-height: 1.08;
+                margin: 0 0 0.5rem 0;
+                word-break: keep-all;
+            }
+
+            .carousel-caption p {
+                font-size: clamp(0.95rem, 3.5vw, 1.15rem);
+                margin: 0 0 0.75rem 0;
+                max-width: 100%;
+            }
+
+            .carousel-caption .btn {
+                width: auto;
+                padding: 0.55rem 1rem;
+                font-size: 1rem;
+                align-self: center;
+            }
+
+            /* Ajustes extra para pantallas muy pequeñas */
+            @media (max-width: 360px) {
+                .carousel-caption h1 {
+                    font-size: 1.1rem;
+                }
+                .carousel-caption p {
+                    font-size: 0.9rem;
+                }
+                .carousel-caption .btn {
+                    font-size: 0.95rem;
+                    padding: 0.45rem 0.85rem;
+                }
+            }
+            
+            .section-title h2 {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .industrial-services-text-block h2 {
+                font-size: var(--font-size-3xl);
+            }
+        }
+
+/* ===== MODAL DE CERRAR SESIÓN (estilo fijo, inspirado en home.html) ===== */
+        #modalLogout {
+            display: none; /* se muestra cuando se añade .show */
+            position: fixed;
+            inset: 0;
+            z-index: 3000; /* muy alto para que esté por encima de todo */
+            background: rgba(5, 18, 24, 0.45); /* más oscuro y sutil */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 200ms ease-in-out, visibility 200ms ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #modalLogout.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-logout-content {
+            background: #ffffff;
+            color: #1A1A1A;
+            padding: 20px 24px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            max-width: 420px;
+            width: 100%;
+            transform: translateY(-8px) scale(0.98);
+            transition: transform 220ms ease-in-out, opacity 220ms ease-in-out;
+            opacity: 0;
+        }
+
+        /* animar el contenido cuando el modal aparece */
+        #modalLogout.show .modal-logout-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* pequeña barra de acento y icono decorativo */
+        .modal-logout-accent {
+            height: 6px;
+            width: 72px;
+            background: linear-gradient(90deg, #00BCD4, #0097A7);
+            border-radius: 6px;
+            margin: 0 auto 12px auto;
+            box-shadow: 0 6px 18px rgba(0,188,212,0.08);
+        }
+
+        .modal-logout-icon {
+            font-size: 26px;
+            color: #00BCD4;
+            margin-bottom: 8px;
+        }
+
+        .modal-logout-message {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #1A1A1A;
+        }
+
+        .modal-logout-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+
+        .btn-logout-confirm,
+        .btn-logout-cancel {
+            padding: 0.55rem 1rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            min-width: 110px;
+            transition: transform 150ms ease-in-out, box-shadow 150ms ease-in-out;
+        }
+
+        .btn-logout-confirm {
+            background: linear-gradient(90deg, #00BCD4, #0097A7);
+            color: #ffffff;
+            box-shadow: 0 8px 24px rgba(0,188,212,0.18);
+        }
+
+        .btn-logout-cancel {
+            background: transparent;
+            color: #1A1A1A;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .btn-logout-confirm:hover { transform: translateY(-3px); }
+        .btn-logout-cancel:hover { background: rgba(0,0,0,0.04); }
+
+        #modalLogout .btn-logout-confirm:focus,
+        #modalLogout .btn-logout-cancel:focus {
+            outline: 3px solid rgba(38,198,218,0.22);
+            outline-offset: 2px;
+        }
+
+        /* Ajustes para móviles */
+        @media (max-width: 480px) {
+            .modal-logout-content { padding: 14px; max-width: 95%; }
+            .modal-logout-message { font-size: 1rem; }
+            .btn-logout-confirm, .btn-logout-cancel { padding: 0.45rem 0.75rem; min-width: 90px; font-size: 0.95rem; }
+            .modal-logout-accent { width: 56px; height: 5px; }
+        }
+
+        /* Preferencias de movimiento reducido */
+        @media (prefers-reduced-motion: reduce) {
+            .modal-logout-content,
+            #modalLogout { transition: none; transform: none; }
+        }
+
+        /* Modal de Términos y Condiciones */
+        #modalTerminos {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        #modalTerminos.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-terminos-content {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            width: 75%;
+            height: 75%;
+            max-width: 900px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(-20px) scale(0.95);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            position: relative;
+        }
+
+        #modalTerminos.show .modal-terminos-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-terminos-header {
+            padding: 20px 30px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-terminos-header h2 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-terminos-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .modal-terminos-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-terminos-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            color: var(--text-primary);
+        }
+
+        .modal-terminos-body h3 {
+            color: var(--primary-dark);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .modal-terminos-body h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .modal-terminos-body p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-terminos-body ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-terminos-body ol li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-terminos-body strong {
+            color: var(--primary-dark);
+        }
+
+        /* Scrollbar personalizado */
+        .modal-terminos-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-terminos-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal-terminos-body::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .modal-terminos-body::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .modal-terminos-content {
+                width: 90%;
+                height: 85%;
+            }
+
+            .modal-terminos-header {
+                padding: 15px 20px;
+            }
+
+            .modal-terminos-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .modal-terminos-body {
+                padding: 20px;
+            }
+
+            .modal-terminos-body h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #modalTerminos,
+            .modal-terminos-content {
+                transition: none;
+            }
+        }
+
+        /* Modal de Política de Privacidad */
+        #modalPrivacidad {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        #modalPrivacidad.show {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-privacidad-content {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            width: 75%;
+            height: 75%;
+            max-width: 900px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(-20px) scale(0.95);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            position: relative;
+        }
+
+        #modalPrivacidad.show .modal-privacidad-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-privacidad-header {
+            padding: 20px 30px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-privacidad-header h2 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-privacidad-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .modal-privacidad-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-privacidad-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            color: var(--text-primary);
+        }
+
+        .modal-privacidad-body h3 {
+            color: var(--primary-dark);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .modal-privacidad-body h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .modal-privacidad-body p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-privacidad-body ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-privacidad-body ul li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-privacidad-body strong {
+            color: var(--primary-dark);
+        }
+
+        /* Scrollbar personalizado */
+        .modal-privacidad-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-privacidad-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal-privacidad-body::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .modal-privacidad-body::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .modal-privacidad-content {
+                width: 90%;
+                height: 85%;
+            }
+
+            .modal-privacidad-header {
+                padding: 15px 20px;
+            }
+
+            .modal-privacidad-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .modal-privacidad-body {
+                padding: 20px;
+            }
+
+            .modal-privacidad-body h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #modalPrivacidad,
+            .modal-privacidad-content {
+                transition: none;
+            }
+        }
+    </style>
+    <!-- Global Loading System -->
+    <link rel="stylesheet" href="style/loading.css">
+    <script src="../js/global-loading.js"></script>
+</head>
+<body>
+    <!-- Navbar --> 
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo2.png" class="me-3" style="width: 70px; height: 70px;">
+                SERVICLEMANT
+            </a>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="servicio.html">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="empresa.html">Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Coloca esto antes de body -->
+    <div id="modalLogout" aria-hidden="true">
+        <div class="modal-logout-content" role="dialog" aria-modal="true" aria-labelledby="modalLogoutTitle">
+                <p id="modalLogoutTitle" class="modal-logout-message">¿Quieres cerrar sesión?</p>
+            <div class="modal-logout-actions">
+                <button id="btnSi" class="btn-logout-confirm" type="button">Sí</button>
+                <button id="btnNo" class="btn-logout-cancel" type="button">No</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Hero Section / Carrusel Principal -->
+    <section id="inicio">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">           
+
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="carousel-caption">
+                        <h1 >Limpieza Profesional</h1>
+                        <p>Servicios de limpieza de alta calidad para edificios institucionales y empresas</p>
+                        <a href="servicio.html" class="btn btn-primary-custom btn-lg" >Solicitar Presupuesto</a>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="carousel-caption">
+                        <h1>Resultados Garantizados</h1>
+                        <p>Comprometidos con la excelencia en cada servicio</p>
+                        <a href="#servicios" class="btn btn-primary-custom btn-lg">Ver Servicios</a>
+                    </div>
+                </div>
+                
+                <div class="carousel-item">
+                    <div class="carousel-caption">
+                        <h1>Experiencia y Confianza</h1>
+                        <p>llevamos 11 años trabajando para usted</p><p> años brindando servicios de limpieza de nivel industrial</p>
+                        <a href="empresa.html" class="btn btn-primary-custom btn-lg">Conocer Más</a>
+                    </div>
+                </div>
+            </div>
+        
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </section>
+    <div class="industrial-services-wrapper">
+        <div class="industrial-services-text-block">
+            <h2>Servicios de <strong>Limpieza Industrial</strong></h2>
+            <p>
+                <strong>Expertos en limpieza profesional para empresas en Santiago.</strong><br>
+                En Serviclemant no solo limpiamos; garantizamos espacios impecables, seguros y eficientes para operar. Nuestros servicios de <em>limpieza industrial en Santiago</em> están diseñados para plantas, centros logísticos, oficinas corporativas y entornos de alta exigencia.
+            </p>
+            <a href="servicio.html" class="btn">Ver Servicios de Limpieza Industrial</a>
+        </div>
+        <div class="industrial-services-image-block">
+            <img src="img/funciones-del-personal-de-limpieza-en-hospitales.jpg" alt="Equipo de limpieza industrial" />
+        </div>
+    </div>
+    
+    
+
+    <!-- Services Section -->
+
+    <!--
+    mantenimiento de oficinas
+    mantenimiento de instalaciones industriales
+    mantenimiento de edificios institucionales
+    Limpieza de vidrios
+    Lavado de alfombras-->
+    <section id="servicios" class="services-section">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Nuestros Servicios</h2>
+                <p>Ofrecemos una amplia gama de servicios de limpieza profesional</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fa-solid fa-city"></i>
+                        </div>
+                        <h3>mantenimiento de oficinas</h3>
+                        <p>Ofrecemos un servicio integral de mantenimiento de oficinas, que incluye limpieza de pisos, mobiliario, vidrios y alfombras, desinfección de baños y áreas comunes, recolección de residuos y reposición de insumos, asegurando espacios limpios, seguros y funcionales para su empresa. </p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>mantenimiento de instalaciones industriales</h3>
+                        <p>Brindamos un servicio especializado en mantenimiento de instalaciones industriales, enfocado en la limpieza profunda de áreas de producción, bodegas y maquinarias, control de residuos y desinfección de espacios críticos.  nuestro equipo garantiza ambientes seguros.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <h3>mantenimiento de edificios institucionales</h3>
+                        <p>Ofrecemos mantenimiento integral para edificios institucionales, asegurando que cada área se mantenga en perfecto estado. Desde limpieza y reparación hasta el cuidado de instalaciones, confortables y eficientes para todas las actividades institucionales.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 col-md-6">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-droplet"></i>
+                        </div>
+                        <h3>Limpieza de vidrios</h3>
+                        <p>Ofrecemos servicios de limpieza de vidrios en oficinas, edificios y espacios industriales, garantizando superficies limpias, transparentes y libres de manchas, mejorando la imagen y la luminosidad de los ambientes.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <h3>Lavado de alfombras</h3>
+                        <p>Ofrecemos servicios profesionales de limpieza de vidrios para oficinas, edificios y espacios industriales, asegurando superficies impecables, libres de manchas y con máxima transparencia, mejorando tanto la imagen como la luminosidad de sus instalaciones..</p>
+                        <form action="empresa.html" method="get" class="cta-form">
+                            <button type="submit" class="btn btn-primary-custom btn-lg">Conocer más!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="nosotros" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="fade-in">
+                        <h2 class="mb-4" style="color: var(--primary-dark);">¿Por qué elegir Serviclemant?</h2>
+                        <p class="lead mb-4">Somos una empresa especializada en servicios de limpieza profesional con más de 10 años de experiencia en el mercado.</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Personal capacitado y confiable</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Productos ecológicos y seguros</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Equipos modernos y eficientes</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Garantía de satisfacción</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Precios competitivos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="fade-in">
+                        <img src="img/img-home.jpg" 
+                             alt="Equipo de limpieza profesional" class="img-fluid rounded shadow">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5" style="background: #0eaec8;">
+        <div class="container">
+            <div class="row gy-4 justify-content-between">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Serviclemant</h5>
+                    <p>Tu empresa de confianza para servicios de limpieza profesional. Comprometidos con la excelencia y la satisfacción del cliente.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Servicios</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="empresa.html">mantenimiento de oficinas</a></li>
+                        <li><a href="empresa.html">mantenimiento de instalaciones industriales</a></li>
+                        <li><a href="empresa.html">mantenimiento de edificios institucionales</a></li>
+                        <li><a href="empresa.html">Limpieza de vidrios</a></li>
+                        <li><a href="empresa.html">Lavado de alfombras</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i>+56 9 9499 0878</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@serviclemant.cl</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>Guardia Vieja 202 oficina 403 Providencia</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="home.html">Inicio</a></li>
+                        <li><a href="empresa.html">Servicios</a></li>
+                        <li><a href="empresa.html">Empresa</a></li>
+                        <li><a href="home.html#contacto">Contacto</a></li>
+                        <li><a href="TrabajaConNosotros.html">Trabaja con nosotros!</a></li>
+                        <li><a href="#" onclick="event.preventDefault(); abrirModalPrivacidad();">Política de Privacidad</a></li>
+                        <li><a href="#" onclick="event.preventDefault(); abrirModalTerminos();">Términos y Condiciones</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-4 mt-4 border-top border-light">
+                <p class="mb-0" style="font-size: 14px;">&copy; 2024 Serviclemant. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+        const user = JSON.parse(localStorage.getItem('usuario')); // Leer usuario del localStorage
+
+        if (user) {
+            // Ocultar links de login y registro
+            const loginLink = document.querySelector('a.nav-link[href="login.html"]');
+            const registerLink = document.querySelector('a.nav-link[href="register.html"]');
+            if (loginLink) loginLink.style.display = 'none';
+            if (registerLink) registerLink.style.display = 'none';
+
+            // Crear link de perfil
+            const nav = document.querySelector('.navbar-nav');
+            const perfilItem = document.createElement('li');
+            perfilItem.classList.add('nav-item');
+            perfilItem.innerHTML = `<a class="nav-link" href="perfil.html">Hola ${user.nombre}!</a>`;
+            nav.appendChild(perfilItem);
+
+            // Crear botón de logout
+            const logoutItem = document.createElement('li');
+            logoutItem.classList.add('nav-item');
+            logoutItem.innerHTML = `<button class="btn btn-link nav-link" onclick="logout()">Cerrar sesión</button>`;
+            nav.appendChild(logoutItem);
+            }
+        });
+
+        // Cerrar sesión (mejor experiencia accesible)
+        function logout() {
+            const modal = document.getElementById('modalLogout');
+            const btnSi = document.getElementById('btnSi');
+            const btnNo = document.getElementById('btnNo');
+
+            if (!modal || !btnSi || !btnNo) return;
+
+            // abrir modal
+            modal.classList.add('show');
+            modal.setAttribute('aria-hidden', 'false');
+
+            // focus management: enviar foco al botón de cancelar para evitar confirmaciones accidentales
+            btnNo.focus();
+
+            // Handlers
+            const confirmHandler = function() {
+                // limpiar y redirigir
+                localStorage.removeItem('usuario');
+                cleanup();
+                window.location.href = 'login.html';
+            };
+
+            const cancelHandler = function() {
+                cleanup();
+            };
+
+            const backdropHandler = function(e) {
+                if (e.target === modal) cleanup();
+            };
+
+            const escHandler = function(e) {
+                if (e.key === 'Escape') cleanup();
+            };
+
+            function cleanup() {
+                // cerrar modal y quitar listeners
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                btnSi.removeEventListener('click', confirmHandler);
+                btnNo.removeEventListener('click', cancelHandler);
+                modal.removeEventListener('click', backdropHandler);
+                document.removeEventListener('keydown', escHandler);
+            }
+
+            btnSi.addEventListener('click', confirmHandler);
+            btnNo.addEventListener('click', cancelHandler);
+            modal.addEventListener('click', backdropHandler);
+            document.addEventListener('keydown', escHandler);
+        }
+
+        // Función para Google Translate
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'es',
+                includedLanguages: 'es,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mejorar funcionalidad del menú móvil
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+        const navLinks = document.querySelectorAll('.navbar-collapse .nav-link');
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Auto-advance carousel principal
+        const heroCarousel = document.getElementById('heroCarousel');
+        if (heroCarousel) {
+            const heroCarouselInstance = new bootstrap.Carousel(heroCarousel, {
+                interval: 5000,
+                wrap: true
+            });
+        }
+        
+          // Mejorar la experiencia táctil en móviles
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.navbar-collapse .nav-link').forEach(link => {
+                link.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                link.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        }
+        
+    </script>
+    <script>
+        // Asegurarse de que el comportamiento solo aplique cuando exista el collapse
+        (function() {
+            const navbar = document.querySelector('.navbar');
+            const collapseEl = document.getElementById('navbarSupportedContent');
+            if (!navbar || !collapseEl) return;
+
+            // Usar los eventos 'shown' / 'hidden' para aplicar estilos al terminar la animación
+            collapseEl.addEventListener('shown.bs.collapse', function() {
+                // Pequeña demora para que la apertura se sienta natural
+                setTimeout(() => navbar.classList.add('menu-open'), 60);
+            });
+
+            collapseEl.addEventListener('hidden.bs.collapse', function() {
+                // Quitar inmediatamente para que la navegación vuelva a transparente
+                navbar.classList.remove('menu-open');
+            });
+
+            // Si el usuario cambia tamaño de ventana, asegurarnos de limpiar clases
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    navbar.classList.remove('menu-open');
+                }
+            });
+        })();
+    </script>
+
+    <!-- Modal de Términos y Condiciones -->
+    <div id="modalTerminos" aria-hidden="true">
+        <div class="modal-terminos-content" role="dialog" aria-modal="true" aria-labelledby="modalTerminosTitle">
+            <div class="modal-terminos-header">
+                <h2 id="modalTerminosTitle">Términos y Condiciones</h2>
+                <button class="modal-terminos-close" onclick="cerrarModalTerminos()" aria-label="Cerrar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-terminos-body">
+                <h3>Términos y Condiciones de Prestación de Servicios de Aseo Industrial</h3>
+                <p>Los presentes Términos y Condiciones regulan la relación entre la empresa prestadora de servicios de aseo industrial (en adelante, "la Empresa") y el cliente (en adelante, "el Cliente") al solicitar, contratar o recibir cualquiera de los servicios ofrecidos. La aceptación de una cotización, la firma de un contrato o la solicitud de un servicio implica la plena conformidad del Cliente con las condiciones aquí descritas.</p>
+
+                <h3>1. Objeto del servicio</h3>
+                <p>La Empresa ofrece servicios profesionales de aseo, mantenimiento y limpieza, incluyendo mantenimiento de oficinas, mantenimiento de instalaciones industriales, mantenimiento de edificios institucionales, limpieza de vidrios y lavado de alfombras, entre otros. Cada servicio será ejecutado de acuerdo con las necesidades del Cliente y en cumplimiento con los estándares técnicos y de calidad vigentes.</p>
+
+                <h3>2. Alcance y condiciones de ejecución</h3>
+                <p>Los servicios se realizarán conforme a la planificación acordada con el Cliente, considerando horarios, frecuencias, áreas de intervención y métodos previamente establecidos. Cualquier modificación en el alcance del servicio deberá ser solicitada por escrito y aprobada por ambas partes.</p>
+                <p>La Empresa garantizará que su personal cuente con la capacitación, los equipos y los insumos necesarios para ejecutar las labores de limpieza bajo condiciones seguras y eficientes.</p>
+
+                <h3>3. Compromiso con la calidad, el medio ambiente y la seguridad</h3>
+                <p>Para alcanzar este éxito, hemos implementado un Sistema Integrado de Gestión (SIG) que cumple con las normas ISO 9001:2015, ISO 14001:2015 e ISO 45001:2018.</p>
+                <p>Este sistema busca asegurar la calidad de los servicios, prevenir la contaminación ambiental y proteger la salud y seguridad de nuestros trabajadores, clientes y demás partes interesadas.</p>
+                <p>La Empresa se compromete a mantener una mejora continua en sus procesos, garantizando resultados consistentes y sostenibles en cada prestación de servicio.</p>
+
+                <h3>4. Responsabilidades del cliente</h3>
+                <p>El Cliente deberá proporcionar acceso adecuado a las áreas de trabajo, facilidades eléctricas y de agua, así como toda la información relevante que permita la correcta ejecución de los servicios. Asimismo, se compromete a respetar las condiciones establecidas en el contrato y a asegurar que las áreas estén libres de elementos que dificulten o representen riesgos para el personal de limpieza.</p>
+
+                <h3>5. Tarifas y condiciones de pago</h3>
+                <p>Las tarifas de los servicios serán determinadas en función del tipo de trabajo, tiempo estimado, superficie y complejidad de las actividades. El Cliente deberá efectuar los pagos en los plazos establecidos en la propuesta comercial o contrato. En caso de retraso en los pagos, la Empresa podrá suspender temporalmente los servicios hasta regularizar la situación.</p>
+
+                <h3>6. Responsabilidad y seguros</h3>
+                <p>La Empresa asume responsabilidad por cualquier daño directo ocasionado por acciones negligentes de su personal durante la ejecución del servicio. No se considerarán responsabilidades por fallas derivadas de causas ajenas o condiciones inapropiadas del área de trabajo. Todos los trabajadores están cubiertos por los seguros obligatorios establecidos por la legislación vigente.</p>
+
+                <h3>7. Protección de datos personales</h3>
+                <p>La información proporcionada por el Cliente será tratada con estricta confidencialidad y utilizada únicamente para fines administrativos, comerciales y operativos relacionados con la prestación de los servicios. La Empresa garantiza el cumplimiento de las normas legales sobre protección de datos personales.</p>
+
+                <h3>8. Modificaciones y vigencia</h3>
+                <p>La Empresa se reserva el derecho de actualizar estos Términos y Condiciones en cualquier momento. Las modificaciones serán publicadas en los canales oficiales de la Empresa y entrarán en vigor desde su fecha de publicación. Se recomienda al Cliente revisar regularmente esta información antes de solicitar un nuevo servicio.</p>
+
+                <h3>9. Jurisdicción y resolución de controversias</h3>
+                <p>Cualquier conflicto derivado de la interpretación o ejecución de estos Términos y Condiciones será resuelto conforme a las leyes vigentes del país y bajo la jurisdicción de los tribunales correspondientes al domicilio de la Empresa, salvo pacto diferente por escrito entre las partes.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funciones para abrir y cerrar el modal de términos y condiciones
+        function abrirModalTerminos() {
+            const modal = document.getElementById('modalTerminos');
+            if (modal) {
+                modal.classList.add('show');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                
+                const closeBtn = modal.querySelector('.modal-terminos-close');
+                if (closeBtn) {
+                    setTimeout(() => closeBtn.focus(), 100);
+                }
+            }
+        }
+
+        function cerrarModalTerminos() {
+            const modal = document.getElementById('modalTerminos');
+            if (modal) {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('modalTerminos');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        cerrarModalTerminos();
+                    }
+                });
+
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && modal.classList.contains('show')) {
+                        cerrarModalTerminos();
+                    }
+                });
+            }
+        });
+
+        // Funciones para abrir y cerrar el modal de política de privacidad
+        function abrirModalPrivacidad() {
+            const modal = document.getElementById('modalPrivacidad');
+            if (modal) {
+                modal.classList.add('show');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                
+                const closeBtn = modal.querySelector('.modal-privacidad-close');
+                if (closeBtn) {
+                    setTimeout(() => closeBtn.focus(), 100);
+                }
+            }
+        }
+
+        function cerrarModalPrivacidad() {
+            const modal = document.getElementById('modalPrivacidad');
+            if (modal) {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Cerrar modales al hacer clic fuera del contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            const modalTerminos = document.getElementById('modalTerminos');
+            const modalPrivacidad = document.getElementById('modalPrivacidad');
+
+            if (modalTerminos) {
+                modalTerminos.addEventListener('click', function(e) {
+                    if (e.target === modalTerminos) {
+                        cerrarModalTerminos();
+                    }
+                });
+            }
+
+            if (modalPrivacidad) {
+                modalPrivacidad.addEventListener('click', function(e) {
+                    if (e.target === modalPrivacidad) {
+                        cerrarModalPrivacidad();
+                    }
+                });
+            }
+
+            // Cerrar modales con tecla Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (modalTerminos && modalTerminos.classList.contains('show')) {
+                        cerrarModalTerminos();
+                    }
+                    if (modalPrivacidad && modalPrivacidad.classList.contains('show')) {
+                        cerrarModalPrivacidad();
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- Modal de Política de Privacidad -->
+    <div id="modalPrivacidad" aria-hidden="true">
+        <div class="modal-privacidad-content" role="dialog" aria-modal="true" aria-labelledby="modalPrivacidadTitle">
+            <div class="modal-privacidad-header">
+                <h2 id="modalPrivacidadTitle">Política de Privacidad</h2>
+                <button class="modal-privacidad-close" onclick="cerrarModalPrivacidad()" aria-label="Cerrar modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-privacidad-body">
+                <h3>Política de Privacidad</h3>
+                <p>La presente Política de Privacidad regula el tratamiento, resguardo y gestión de los datos personales recabados por nuestra empresa de aseo industrial, tanto de clientes como de empleados, proveedores y usuarios de plataformas digitales. Nos comprometemos a garantizar la máxima protección, seguridad y confidencialidad de la información, alineando nuestra gestión a rigurosos marcos legales y a las mejores prácticas del sector.</p>
+
+                <h3>1. Principios generales y ámbito de aplicación</h3>
+                <p>Nuestra Política de Privacidad se aplica a todas las interacciones con nuestra organización: prestación de servicios de aseo (en oficinas, edificios industriales, instituciones, limpieza de vidrios, lavado de alfombras, etc.), contratación, atención web y gestión interna. Así como empresas líderes del sector como 3M Chile, InterAseo y Serveo, priorizamos la transparencia, la protección normativa y el respeto a los derechos de los titulares de la información personal.</p>
+
+                <h3>2. Identidad del responsable y delegados de protección de datos</h3>
+                <p>El responsable del tratamiento de los datos es la empresa de aseo industrial indicada en cada contrato o interacción, con identificación y datos de contacto claramente informados a todos los interesados. De igual forma, si corresponde, se designa un Delegado de Protección de Datos (DPO) según dicta la normativa vigente, siguiendo los parámetros aplicados por grandes empresas del rubro y conforme a las exigencias RGPD y LOPDGDD aplicables en jurisdicciones como la Unión Europea y Latinoamérica.</p>
+
+                <h3>3. Tipos de datos recabados</h3>
+                <p>Recopilamos únicamente los datos indispensables para concretar los servicios ofrecidos y cumplir obligaciones legales y contractuales. Los datos pueden incluir:</p>
+                <ul>
+                    <li><strong>Datos identificativos:</strong> nombre, RUT/DNI, teléfono, dirección, correo electrónico.</li>
+                    <li><strong>Datos de contacto laboral o comercial</strong></li>
+                    <li><strong>Datos de navegación y técnicos cuando se utiliza nuestra web:</strong> IP, navegador, sistema operativo.</li>
+                    <li><strong>Información contractual y de facturación</strong></li>
+                    <li><strong>Información necesaria para seguridad laboral y cumplimiento normativo</strong></li>
+                </ul>
+                <p>Empresas como Serveo y InterAseo especifican con minuciosidad los datos recabados, asegurando la legitimidad en cada etapa.</p>
+
+                <h3>4. Finalidad y legitimación del tratamiento</h3>
+                <p>Los datos personales serán utilizados de manera legítima para:</p>
+                <ul>
+                    <li>Gestionar y prestar servicios de aseo y mantenimiento.</li>
+                    <li>Gestionar altas y pre-contrataciones de clientes o proveedores.</li>
+                    <li>Cumplir obligaciones legales y contractuales, como prevención de riesgos, facturación, protección de datos y seguridad en las instalaciones.</li>
+                    <li>Gestionar la relación laboral y contractual con empleados y proveedores.</li>
+                    <li>Canalizar solicitudes, reclamos y consultas, o responder requerimientos de autoridades competentes.</li>
+                    <li>Mejorar nuestros procesos y servicios, conforme a cláusulas de mejora continua presentes en políticas de empresas de referencia como 3M Chile y Kimberly-Clark Professional.</li>
+                    <li>Prevenir fraudes y proteger la seguridad de las instalaciones y los datos.</li>
+                </ul>
+                <p>La legitimación para cada tratamiento deriva principalmente del consentimiento expreso, la relación contractual o el cumplimiento de obligaciones legales.</p>
+
+                <h3>5. Confidencialidad y seguridad</h3>
+                <p>Implementamos medidas técnicas, organizativas y legales de protección de datos: controles de acceso, sistemas de encriptación, auditorías periódicas, así como cláusulas de confidencialidad firmadas por todos los empleados y contratistas, tal y como exigen las mejores prácticas de las grandes firmas del sector. Estas medidas buscan impedir accesos, divulgaciones o modificaciones indebidas, y temporalidad en la conservación de los datos según los plazos legales.</p>
+
+                <h3>6. Acceso, cesión y comunicación de datos</h3>
+                <p>No cederemos datos personales a terceros salvo autorización expresa del titular, mandato legal, obligación contractual o intereses vitales. Cuando proceda, informaremos al titular sobre el destinatario y el alcance de la comunicación, garantizando siempre la integridad y seguridad de los datos transmitidos. De manera excepcional, podremos comunicar datos por requerimiento legal, salvo que la ley prohíba esa notificación.</p>
+                <p>Otras empresas de limpieza como MG Servicios y Grupo de Limpieza San Luis aseguran no comunicar datos a terceros sin consentimiento e informan puntualmente sobre mecanismos para ejercer sus derechos.</p>
+
+                <h3>7. Derechos de los titulares</h3>
+                <p>Todo titular de datos tiene derecho a acceder, rectificar, suprimir, limitar u oponerse al tratamiento de sus datos; solicitar la portabilidad y a no ser objeto de decisiones automatizadas, así como a revocar su consentimiento en cualquier momento. Facilitamos canales para que los titulares ejerzan estos derechos de forma ágil y gratuita, en cumplimiento con obligaciones internacionales y nacionales.</p>
+
+                <h3>8. Brechas de seguridad y notificaciones</h3>
+                <p>En caso de detectar cualquier incidente que pueda afectar la confidencialidad o integridad de los datos, notificaremos de inmediato a la autoridad competente y a los titulares según lo exige la ley y como lo indican las mejores prácticas internacionales en empresas del sector.</p>
+
+                <h3>9. Conservación de los datos</h3>
+                <p>Los datos personales se conservarán solo el tiempo necesario para cumplir la finalidad de su tratamiento y los plazos de prescripción legales y contractuales. Posteriormente, serán anonimizados o eliminados de manera segura, siguiendo disposiciones de empresas como 3M y de la normativa de protección de datos.</p>
+
+                <h3>10. Transferencias internacionales</h3>
+                <p>Sólo se realizarán transferencias internacionales de datos cuando el país de destino cuente con niveles adecuados de protección o existan garantías contractuales equivalentes. Informaremos siempre de ello a los titulares afectados, siguiendo la transparencia aplicada por referentes internacionales y grandes empresas de limpieza.</p>
+
+                <h3>11. Compromiso legal y actualización de la política</h3>
+                <p>Esta política es de cumplimiento obligatorio, firme y sin excepciones para todo el personal, subcontratistas y terceros que colaboran con la empresa. Revisamos y actualizamos periódicamente la política asegurando su vigencia y adecuación a los cambios legislativos y de buenas prácticas del sector.</p>
+                <p>Toda modificación será debidamente comunicada a los titulares interesados y actualizada en los canales oficiales de la empresa. La coherencia, exhaustividad y firmeza de esta política sigue la estela de las mejores prácticas de las empresas líderes de aseo industrial.</p>
+            </div>
+        </div>
+    </div>
+    <!--<script src="//code.tidio.co/bzlxnr23nvccqhpeifo5cugis4v4qyai.js" async></script> -->
+</body>
+</html>

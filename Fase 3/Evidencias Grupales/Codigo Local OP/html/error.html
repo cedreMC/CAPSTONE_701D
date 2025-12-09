@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Serviclemant</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/logo2.png" type="image/png">
+    
+    <!-- Loading CSS -->
+    <link rel="stylesheet" href="style/loading.css">
+    
+    <style>
+        :root {
+            --primary-cyan: #00BCD4;
+            --primary-aqua: #4de18b;
+            --secondary-cyan: #26C6DA;
+            --dark-cyan: #0097A7;
+            --light-aqua: #B2EBF2;
+            --text-dark: #2C3E50;
+            --text-light: #FFFFFF;
+            --bg-light: #F8F9FA;
+            --error-red: #f44336;
+            --error-dark: #d32f2f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-aqua) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-dark);
+        }
+
+        .error-container {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--error-red), var(--error-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(244, 67, 54, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .error-code {
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--error-red);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+
+        .error-message {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-aqua));
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4);
+            color: white;
+        }
+
+        .btn-back {
+            background: white;
+            color: var(--primary-cyan);
+            border: 2px solid var(--primary-cyan);
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            background: var(--primary-cyan);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .error-details {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            font-size: 14px;
+            color: #666;
+            text-align: left;
+        }
+
+        .error-details strong {
+            color: var(--text-dark);
+        }
+
+        /* Iconos específicos por tipo de error */
+        .error-icon.not-found i::before {
+            content: "\f057"; /* fa-times-circle */
+        }
+
+        .error-icon.server-error i::before {
+            content: "\f071"; /* fa-exclamation-triangle */
+        }
+
+        .error-icon.forbidden i::before {
+            content: "\f023"; /* fa-lock */
+        }
+
+        .error-icon.timeout i::before {
+            content: "\f017"; /* fa-clock */
+        }
+
+        .error-icon.unauthorized i::before {
+            content: "\f2f6"; /* fa-user-lock */
+        }
+
+        .error-icon.rate-limit i::before {
+            content: "\f017"; /* fa-clock */
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 40px 24px;
+            }
+
+            .error-code {
+                font-size: 56px;
+            }
+
+            .error-title {
+                font-size: 24px;
+            }
+
+            .error-message {
+                font-size: 16px;
+            }
+
+            .error-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 50px;
+            }
+
+            .error-actions {
+                flex-direction: column;
+            }
+
+            .btn-home,
+            .btn-back {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon" id="errorIcon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <div class="error-code" id="errorCode">500</div>
+        <h1 class="error-title" id="errorTitle">Error del Servidor</h1>
+        <p class="error-message" id="errorMessage">
+            Ha ocurrido un error inesperado. Por favor, intenta nuevamente más tarde.
+        </p>
+        
+        <div class="error-actions">
+            <a href="home.html" class="btn-home">
+                <i class="fas fa-home"></i>
+                Volver al Inicio
+            </a>
+            <button onclick="window.history.back()" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Volver Atrás
+            </button>
+        </div>
+
+        <div class="error-details" id="errorDetails" style="display: none;">
+            <strong>Detalles del error:</strong><br>
+            <span id="errorDetailsText"></span>
+        </div>
+    </div>
+
+    <!-- Global Loading Script -->
+    <script src="../js/global-loading.js"></script>
+
+    <script>
+        // Obtener parámetros de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorType = urlParams.get('type') || 'unknown';
+        const errorStatus = urlParams.get('status') || '500';
+        const errorMessage = decodeURIComponent(urlParams.get('message') || 'Ha ocurrido un error inesperado');
+
+        // Configurar icono según el tipo de error
+        const errorIcon = document.getElementById('errorIcon');
+        const iconMap = {
+            'not-found': 'fa-search',
+            'server-error': 'fa-exclamation-triangle',
+            'forbidden': 'fa-lock',
+            'timeout': 'fa-clock',
+            'unauthorized': 'fa-user-lock',
+            'rate-limit': 'fa-hourglass-half',
+            'unknown': 'fa-exclamation-circle'
+        };
+
+        const iconClass = iconMap[errorType] || iconMap['unknown'];
+        errorIcon.innerHTML = `<i class="fas ${iconClass}"></i>`;
+        errorIcon.classList.add(errorType);
+
+        // Configurar código de error
+        document.getElementById('errorCode').textContent = errorStatus;
+
+        // Configurar título según el tipo
+        const titleMap = {
+            'not-found': 'Página No Encontrada',
+            'server-error': 'Error del Servidor',
+            'forbidden': 'Acceso Denegado',
+            'timeout': 'Tiempo de Espera Agotado',
+            'unauthorized': 'No Autorizado',
+            'rate-limit': 'Demasiadas Solicitudes',
+            'unknown': 'Error Desconocido'
+        };
+
+        document.getElementById('errorTitle').textContent = titleMap[errorType] || titleMap['unknown'];
+        document.getElementById('errorMessage').textContent = errorMessage;
+
+        // Mostrar detalles si están disponibles (solo en desarrollo)
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            const errorDetails = document.getElementById('errorDetails');
+            const errorDetailsText = document.getElementById('errorDetailsText');
+            errorDetails.style.display = 'block';
+            errorDetailsText.innerHTML = `
+                Tipo: ${errorType}<br>
+                Estado: ${errorStatus}<br>
+                Mensaje: ${errorMessage}
+            `;
+        }
+
+        // Prevenir que el loading se muestre en esta página
+        if (window.GlobalLoading) {
+            window.GlobalLoading.hide();
+        }
+    </script>
+</body>
+</html>
+

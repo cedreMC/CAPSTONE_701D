@@ -1,0 +1,119 @@
+/* ============================= */
+/*  ESTILO GLOBAL (FORGOT + RESET) */
+/* ============================= */
+
+:root {
+    --gradient-bg: linear-gradient(145deg, #0b253a, #082230, #0a3145);
+    --gradient-btn: linear-gradient(90deg, #0ec7c0, #19e58c);
+    --aqua-light: #34f5c5;
+    --aqua-soft: #d2f7ff;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background: radial-gradient(circle at top, #ccfff5, #b7f7ea, #a8f0e4);
+}
+
+/* TARJETA */
+.auth-card {
+    width: 450px;
+    background: var(--gradient-bg);
+    padding: 40px 45px;
+    border-radius: 26px;
+    text-align: center;
+    color: white;
+
+    box-shadow:
+        0 25px 60px rgba(0, 255, 200, 0.35),
+        0 10px 25px rgba(0, 180, 200, 0.25);
+
+    animation: fadeUp 0.55s ease-out;
+}
+
+.auth-card h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--aqua-light);
+}
+
+.auth-desc {
+    font-size: 15px;
+    color: var(--aqua-soft);
+    margin-bottom: 25px;
+}
+
+/* LABEL */
+.auth-card label {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    color: var(--aqua-soft);
+    margin-bottom: 6px;
+}
+
+/* INPUT */
+.auth-card input {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 10px;
+    border: 1px solid #c9fff5;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.auth-card input:focus {
+    outline: none;
+    border-color: #0ee5d0;
+    box-shadow: 0 0 6px rgba(0, 255, 230, 0.6);
+}
+
+/* BOTÓN */
+.auth-card button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    color: white;
+    background: var(--gradient-btn);
+
+    box-shadow:
+        0 8px 20px rgba(0, 255, 200, 0.35),
+        0 4px 12px rgba(0, 255, 200, 0.22);
+
+    transition: 0.25s ease;
+}
+
+.auth-card button:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 12px 30px rgba(0, 255, 200, 0.45),
+        0 5px 15px rgba(0, 255, 200, 0.3);
+}
+
+/* MENSAJES */
+.auth-error {
+    color: #ff9999;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.auth-success {
+    color: #2affc6;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* ANIMACIÓN */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0);     }
+}
